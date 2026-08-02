@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "issue_id": "TUI-260803-01",
+  "publication_date": "03 August 2026",
+  "edition_code": "TUI-260803",
+  "status": "published",
+  "topic_number": 1,
+  "issue_title": "Reforming National Entrance Examination Governance and Academic Assessment",
+  "rating": 5.0,
+  "editorial_sources": [
+    "Editorial 1"
+  ],
+  "gs_mapping": {
+    "display": "GS II | Governance | Education and Human Resource Development",
+    "paper": "GS II",
+    "subject": "Governance",
+    "syllabus": "Education and Human Resource Development"
+  },
+  "todays_question": "How can India build a credible examination system that ensures fairness, autonomy, and meaningful assessment?",
+  "recall_anchors": [
+    "Radhakrishnan Committee",
+    "National Testing Agency",
+    "Computer-Adaptive Testing",
+    "Psychometrics",
+    "Academic Autonomy"
+  ],
+  "knowledge_points": [
+    {
+      "number": 1,
+      "heading": "Institutional Reform",
+      "explanation": "The 2024 Radhakrishnan Committee proposed restructuring the National Testing Agency into a statutory, professionally managed institution. Strong governance, specialised functional divisions, and legal backing improve examination credibility, accountability, and operational independence."
+    },
+    {
+      "number": 2,
+      "heading": "Assessment Philosophy",
+      "explanation": "Entrance examinations should evaluate analytical ability, conceptual understanding, and application rather than rote memorisation. Sound Psychometrics enables scientifically designed assessments that improve reliability, fairness, and measurement of genuine academic competence."
+    },
+    {
+      "number": 3,
+      "heading": "Technology Integration",
+      "explanation": "Computer-Adaptive Testing adjusts question difficulty according to candidate performance, improving precision while reducing opportunities for malpractice. Secure digital infrastructure, biometric verification, cybersecurity, and standardised testing centres strengthen examination integrity."
+    },
+    {
+      "number": 4,
+      "heading": "Academic Ownership",
+      "explanation": "High-quality examinations require continuous involvement of universities, professional institutions, and subject experts. Academic Autonomy ensures question quality, curriculum relevance, institutional responsibility, and greater public confidence in national assessment systems."
+    },
+    {
+      "number": 5,
+      "heading": "Implementation Challenges",
+      "explanation": "Institutional reforms require adequate staffing, specialised expertise, statutory support, sustainable funding, and administrative capacity. Long-term success depends on coordinated governance rather than isolated technological solutions or temporary crisis management."
+    }
+  ],
+  "quick_facts": [
+    "Radhakrishnan Committee (2024): Recommended transforming the National Testing Agency into a statutory institution with specialised functional verticals for examination governance.",
+    "National Testing Agency: Established in 2018 as an autonomous organisation under the Ministry of Education to conduct major national entrance examinations.",
+    "Computer-Adaptive Testing: Widely used in international examinations such as the GRE, where question difficulty changes according to candidate responses.",
+    "Psychometrics: The scientific discipline concerned with designing, validating, and evaluating tests to ensure reliability, validity, and fairness of assessments."
+  ],
+  "key_takeaway": "Credible public examinations require strong institutions, scientific assessment methods, academic participation, and transparent governance rather than relying solely on technological safeguards.",
+  "mains_question": "How can India build a credible examination system that ensures fairness, autonomy, and meaningful assessment?",
+  "mains_answer": {
+    "paragraphs": [
+      "A credible national examination system is essential for ensuring merit-based access to higher education while maintaining public trust. Beyond preventing malpractice, examinations must accurately measure knowledge, analytical ability, and academic potential through transparent and professionally managed institutions.",
+      "Institutional reforms should strengthen the National Testing Agency with statutory status, specialised functional divisions, and adequate professional capacity as recommended by the Radhakrishnan Committee. Scientific assessment practices such as Psychometrics and Computer-Adaptive Testing can improve reliability and fairness while secure digital infrastructure, biometric verification, and cybersecurity protect examination integrity. Equally important is Academic Autonomy through active participation of universities, professional bodies, and subject experts in question design, evaluation standards, and curriculum alignment. Sustainable recruitment, legal backing, and administrative coordination are necessary for effective implementation.",
+      "India's examination reforms should balance technological innovation with institutional independence and academic expertise. A transparent, professionally governed assessment system will enhance fairness, improve educational quality, and strengthen confidence in national entrance examinations."
+    ],
+    "full_text": "A credible national examination system is essential for ensuring merit-based access to higher education while maintaining public trust. Beyond preventing malpractice, examinations must accurately measure knowledge, analytical ability, and academic potential through transparent and professionally managed institutions.\n\nInstitutional reforms should strengthen the National Testing Agency with statutory status, specialised functional divisions, and adequate professional capacity as recommended by the Radhakrishnan Committee. Scientific assessment practices such as Psychometrics and Computer-Adaptive Testing can improve reliability and fairness while secure digital infrastructure, biometric verification, and cybersecurity protect examination integrity. Equally important is Academic Autonomy through active participation of universities, professional bodies, and subject experts in question design, evaluation standards, and curriculum alignment. Sustainable recruitment, legal backing, and administrative coordination are necessary for effective implementation.\n\nIndia's examination reforms should balance technological innovation with institutional independence and academic expertise. A transparent, professionally governed assessment system will enhance fairness, improve educational quality, and strengthen confidence in national entrance examinations."
+  },
+  "daily_mcqs": [
+    {
+      "number": 1,
+      "question": "Psychometrics is primarily concerned with:",
+      "options": {
+        "A": "Digital encryption of examination data",
+        "B": "Scientific measurement and evaluation of human abilities through tests",
+        "C": "Recruitment of examination officials",
+        "D": "Financial management of educational institutions"
+      },
+      "correct_answer": "B",
+      "explanation": "Psychometrics deals with designing, validating, and analysing assessments to measure knowledge, aptitude, skills, and other human attributes reliably and fairly."
+    },
+    {
+      "number": 2,
+      "question": "Which one of the following is the principal advantage of Computer-Adaptive Testing?",
+      "options": {
+        "A": "Every candidate receives identical question papers.",
+        "B": "Question difficulty changes according to candidate performance.",
+        "C": "It eliminates the need for examination centres.",
+        "D": "It guarantees identical scores across multiple attempts."
+      },
+      "correct_answer": "B",
+      "explanation": "Computer-Adaptive Testing dynamically adjusts question difficulty based on previous responses, improving measurement accuracy and examination efficiency."
+    },
+    {
+      "number": 3,
+      "question": "Consider the following statements regarding a credible national examination system:\n\nAcademic participation improves question quality and assessment standards.\nTechnological safeguards alone are sufficient to guarantee examination integrity.\nStatutory institutional autonomy can strengthen public confidence.\n\nWhich of the statements given above are correct?",
+      "options": {
+        "A": "1 only",
+        "B": "1 and 3 only",
+        "C": "2 and 3 only",
+        "D": "1, 2 and 3"
+      },
+      "correct_answer": "B",
+      "explanation": "Statements 1 and 3 are correct. Technology is important but cannot substitute institutional governance, academic expertise, and accountability."
+    }
+  ],
+  "repository_saved_at": "2026-08-02T23:29:29",
+  "content_hash": "f6b93c2ec271d574c4fda5cbe81deb8e7be71475f1a05aadd42c1b4c45b845a7"
+}

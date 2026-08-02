@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temporary files
+*.tmp
+
+# Preview PDFs (regenerated every run)
+output/previews/
+
+# Temporary backups
+INPUT_DATA_BACKUP.txt
+INPUT_DATA_TEST_BACKUP.txt
+INPUT_DATA_PRODUCTION_BACKUP.txt
+project_files.txt
