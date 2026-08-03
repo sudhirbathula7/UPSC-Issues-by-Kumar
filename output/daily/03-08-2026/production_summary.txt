@@ -17,6 +17,6 @@ Standard PDF    : UPSC_Issues_by_Kumar.pdf
 Pro PDF         : UPSC_Issues_by_Kumar_Pro.pdf
 Repository       : Updated
 Daily Archive    : Created
-Duration         : 1.4 seconds
+Duration         : 1.5 seconds
 
 ========================================================================
