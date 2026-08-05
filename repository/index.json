@@ -11,6 +11,17 @@
     "content_hash": "f6b93c2ec271d574c4fda5cbe81deb8e7be71475f1a05aadd42c1b4c45b845a7"
   },
   {
+    "issue_id": "UAK-260803-01",
+    "publication_date": "03 August 2026",
+    "edition_code": "UAK-260803",
+    "topic_number": 1,
+    "issue_title": "Reforming National Entrance Examination Governance and Academic Assessment",
+    "rating": 5.0,
+    "gs_paper": "GS II",
+    "gs_subject": "Governance",
+    "content_hash": "83bea26c70ed3a44c230829b30632db3411cad5100d3bb3ab3f02331644acec6"
+  },
+  {
     "issue_id": "TUI-260803-02",
     "publication_date": "03 August 2026",
     "edition_code": "TUI-260803",
@@ -20,6 +31,17 @@
     "gs_paper": "GS II",
     "gs_subject": "Polity",
     "content_hash": "afe2b543893136d6ef326c7265e53d34dc1ef7c21f66b700c345c1a6d9b77f98"
+  },
+  {
+    "issue_id": "UAK-260803-02",
+    "publication_date": "03 August 2026",
+    "edition_code": "UAK-260803",
+    "topic_number": 2,
+    "issue_title": "Balancing Democratic Protest Rights with Proportionate Public Order Policing",
+    "rating": 4.8,
+    "gs_paper": "GS II",
+    "gs_subject": "Polity",
+    "content_hash": "42a4b111afda6a6fc5be2ebccf09c5d91fa7d64d383d661d404e78ba847be557"
   },
   {
     "issue_id": "TUI-260803-03",
@@ -33,6 +55,17 @@
     "content_hash": "673d943afcc16c7869176d683f58aeae4c97f5e1bd8edad29f9f352db17cab41"
   },
   {
+    "issue_id": "UAK-260803-03",
+    "publication_date": "03 August 2026",
+    "edition_code": "UAK-260803",
+    "topic_number": 3,
+    "issue_title": "Reorienting Agricultural Support from Minimum Prices to Sustainable Farm Income",
+    "rating": 4.7,
+    "gs_paper": "GS III",
+    "gs_subject": "Agriculture",
+    "content_hash": "caa927957c16b780682e32350d4a36b27fa01ff3c72ac8c264512d71de87c8f4"
+  },
+  {
     "issue_id": "TUI-260803-04",
     "publication_date": "03 August 2026",
     "edition_code": "TUI-260803",
@@ -42,5 +75,16 @@
     "gs_paper": "GS II",
     "gs_subject": "International Relations",
     "content_hash": "e455bbeb6151cd85282d8592f5deae51f719ea26e976508786a13bf9491c8b37"
+  },
+  {
+    "issue_id": "UAK-260803-04",
+    "publication_date": "03 August 2026",
+    "edition_code": "UAK-260803",
+    "topic_number": 4,
+    "issue_title": "Challenges of Gaza Demilitarisation and Sustainable Post-Conflict Peacebuilding",
+    "rating": 4.4,
+    "gs_paper": "GS II",
+    "gs_subject": "International Relations",
+    "content_hash": "8b4d716b904e59fcea98738c70740c2ba63fb0074b1c709129a625525fc12c93"
   }
 ]

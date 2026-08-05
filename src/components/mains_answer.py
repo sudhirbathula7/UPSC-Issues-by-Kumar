@@ -185,7 +185,7 @@ def draw_mains_answer(
     answer_style = paragraph_style(
         name="MainsAnswer",
         font_name=FONT_REGULAR,
-        font_size=MAINS_TEXT_SIZE,
+        font_size=MAINS_TEXT_SIZE+ 1,
         leading=MAINS_LEADING,
         text_color=BLACK,
         alignment=TA_JUSTIFY,

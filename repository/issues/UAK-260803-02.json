@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "issue_id": "UAK-260803-02",
+  "publication_date": "03 August 2026",
+  "edition_code": "UAK-260803",
+  "status": "published",
+  "topic_number": 2,
+  "issue_title": "Balancing Democratic Protest Rights with Proportionate Public Order Policing",
+  "rating": 4.8,
+  "editorial_sources": [
+    "Editorial 2"
+  ],
+  "gs_mapping": {
+    "display": "GS II | Polity | Fundamental Rights",
+    "paper": "GS II",
+    "subject": "Polity",
+    "syllabus": "Fundamental Rights"
+  },
+  "todays_question": "How can constitutional democracies protect peaceful protest while ensuring proportionate policing and public order?",
+  "recall_anchors": [
+    "Article 19",
+    "Proportionality",
+    "Graduated Response",
+    "Independent Inquiry",
+    "Seventh Schedule"
+  ],
+  "knowledge_points": [
+    {
+      "number": 1,
+      "heading": "Constitutional Protection",
+      "explanation": "Peaceful protest is a democratic means of expressing dissent and influencing public policy. Article 19 protects freedom of speech and peaceful assembly while permitting only reasonable restrictions to safeguard legitimate public interests."
+    },
+    {
+      "number": 2,
+      "heading": "Proportionate Policing",
+      "explanation": "Law enforcement must use only the minimum force necessary to address actual threats. The principle of Proportionality requires police action to remain lawful, necessary, reasonable, and appropriate to the circumstances."
+    },
+    {
+      "number": 3,
+      "heading": "Graduated Response",
+      "explanation": "Modern crowd management follows a Graduated Response by prioritising communication, warnings, protective equipment, negotiation, and controlled escalation before resorting to stronger crowd-control measures to minimise injuries and preserve public confidence."
+    },
+    {
+      "number": 4,
+      "heading": "Independent Oversight",
+      "explanation": "Allegations of excessive force require impartial investigation to maintain institutional credibility. Independent Inquiry, evidence preservation, medical documentation, and transparent accountability mechanisms strengthen both public trust and professional policing standards."
+    },
+    {
+      "number": 5,
+      "heading": "Uniform Standards",
+      "explanation": "Policing is a State subject under the Seventh Schedule, leading to variations in training and operational practices. National protocols can promote consistent documentation, accountability, and human-rights-compliant crowd-control procedures across States."
+    }
+  ],
+  "quick_facts": [
+    "Article 19(1)(a) and Article 19(1)(b): Guarantee freedom of speech and the right to assemble peacefully without arms, reasonable restrictions under Articles 19(2) and 19(3).",
+    "Seventh Schedule: Places \"Police\" and \"Public Order\" in the State List, making States primarily responsible for policing and law-and-order administration.",
+    "UN Basic Principles on the Use of Force and Firearms: Require law-enforcement officials to use force only when necessary, lawful, and proportionate to a legitimate objective.",
+    "Prakash Singh v. Union of India (2006): The Supreme Court directed structural police reforms, including State Security Commissions and Police Complaints Authorities to improve accountability."
+  ],
+  "key_takeaway": "Constitutional democracy protects peaceful dissent most effectively when policing remains lawful, proportionate, transparent, and accountable while preserving both public order and civil liberties.",
+  "mains_question": "How can constitutional democracies protect peaceful protest while ensuring proportionate policing and public order?",
+  "mains_answer": {
+    "paragraphs": [
+      "Peaceful protest is an essential feature of constitutional democracy because it enables citizens to express dissent and influence public decision-making. At the same time, the State has a legitimate responsibility to maintain public order, protect life, and safeguard the rights of other citizens.",
+      "Article 19 guarantees freedom of speech and peaceful assembly while permitting reasonable restrictions in the interests of public order. Therefore, police action should always satisfy the principle of Proportionality by using only the minimum force necessary. A Graduated Response involving dialogue, warnings, adequate protective equipment, and controlled escalation should precede coercive measures wherever possible. Since policing falls under the Seventh Schedule, operational standards vary across States. National protocols, proper documentation, medical assistance after use of force, evidence preservation, and Independent Inquiry into serious incidents can improve accountability and public confidence. The Prakash Singh judgment further emphasises institutional reforms that strengthen police professionalism and oversight.",
+      "A democratic society must neither criminalise peaceful dissent nor tolerate violence. Protecting civil liberties through accountable, proportionate, and transparent policing strengthens the rule of law and reinforces public trust in constitutional institutions."
+    ],
+    "full_text": "Peaceful protest is an essential feature of constitutional democracy because it enables citizens to express dissent and influence public decision-making. At the same time, the State has a legitimate responsibility to maintain public order, protect life, and safeguard the rights of other citizens.\n\nArticle 19 guarantees freedom of speech and peaceful assembly while permitting reasonable restrictions in the interests of public order. Therefore, police action should always satisfy the principle of Proportionality by using only the minimum force necessary. A Graduated Response involving dialogue, warnings, adequate protective equipment, and controlled escalation should precede coercive measures wherever possible. Since policing falls under the Seventh Schedule, operational standards vary across States. National protocols, proper documentation, medical assistance after use of force, evidence preservation, and Independent Inquiry into serious incidents can improve accountability and public confidence. The Prakash Singh judgment further emphasises institutional reforms that strengthen police professionalism and oversight.\n\nA democratic society must neither criminalise peaceful dissent nor tolerate violence. Protecting civil liberties through accountable, proportionate, and transparent policing strengthens the rule of law and reinforces public trust in constitutional institutions."
+  },
+  "daily_mcqs": [
+    {
+      "number": 1,
+      "question": "Which of the following rights directly protects peaceful public demonstrations under the Constitution of India?",
+      "options": {
+        "A": "Article 21",
+        "B": "Article 19(1)(b)",
+        "C": "Article 32",
+        "D": "Article 226"
+      },
+      "correct_answer": "B",
+      "explanation": "Article 19(1)(b) guarantees the right to assemble peacefully and without arms, subject to reasonable restrictions under Article 19(3)."
+    },
+    {
+      "number": 2,
+      "question": "The principle of \"Proportionality\" in policing implies that:",
+      "options": {
+        "A": "Police may use maximum force whenever public inconvenience occurs.",
+        "B": "Police action should be necessary and limited to the minimum force required.",
+        "C": "Every protest requires prior judicial approval.",
+        "D": "Public order always overrides fundamental rights."
+      },
+      "correct_answer": "B",
+      "explanation": "Proportionality requires that force be lawful, necessary, and no greater than what is reasonably required to address the actual threat."
+    },
+    {
+      "number": 3,
+      "question": "Consider the following statements:\n\nPolice and Public Order are subjects under the State List of the Seventh Schedule.\nIndependent investigation into allegations of excessive police force enhances institutional credibility.\nPeaceful assembly under Article 19 is an absolute right without any restrictions.\n\nWhich of the statements given above are correct?",
+      "options": {
+        "A": "1 and 2 only",
+        "B": "2 and 3 only",
+        "C": "1 and 3 only",
+        "D": "1, 2 and 3"
+      },
+      "correct_answer": "A",
+      "explanation": "Statements 1 and 2 are correct. Article 19 protects peaceful assembly but allows reasonable restrictions in the interests of public order and other constitutionally recognised grounds."
+    }
+  ],
+  "repository_saved_at": "2026-08-05T16:48:58",
+  "content_hash": "42a4b111afda6a6fc5be2ebccf09c5d91fa7d64d383d661d404e78ba847be557"
+}

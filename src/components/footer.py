@@ -22,7 +22,7 @@ from src.pdf.theme import (
 )
 
 
-TELEGRAM_HANDLE = "@upscissuesbykumar"
+TELEGRAM_HANDLE = "@upscanchorwithkumar"
 
 
 @dataclass(frozen=True)

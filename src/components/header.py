@@ -42,13 +42,16 @@ def draw_header(
     show_bottom_line: bool = True,
 ) -> None:
     padding_x = 2 * mm
-    padding_y = 1.3 * mm
+    padding_y = 1 * mm
 
     inner = Rect(
         x=rect.x + padding_x,
         y=rect.y + padding_y,
         width=rect.width - 2 * padding_x,
-        height=rect.height - 2 * padding_y,
+        height=max(
+            0,
+            rect.height - 2 * padding_y,
+        ),
     )
 
     # --------------------------------------------------------
@@ -59,7 +62,7 @@ def draw_header(
         canvas.saveState()
 
         canvas.setStrokeColor(BLACK)
-        canvas.setLineWidth(0.6)
+        canvas.setLineWidth(0.45)
 
         canvas.line(
             rect.x,
@@ -74,19 +77,20 @@ def draw_header(
     # BRAND LOGO
     # --------------------------------------------------------
 
-    logo_width = (
-        13.5 * mm
+    logo_size = (
+        13 * mm
         if compact
-        else 15.5 * mm
+        else 14* mm
     )
-
-    logo_height = inner.height
 
     logo_rect = Rect(
         x=inner.x,
-        y=inner.y,
-        width=logo_width,
-        height=logo_height,
+        y=(
+            inner.centre_y
+            - logo_size / 2
+        ),
+        width=logo_size,
+        height=logo_size,
     )
 
     draw_logo(
@@ -102,12 +106,11 @@ def draw_header(
 
     title_x = (
         logo_rect.right
-        + 3 * mm
+        + 2.5 * mm
     )
 
     title_area_width = (
-        inner.width
-        * 0.43
+        inner.width * 0.46
     )
 
     preferred_title_size = (
@@ -121,13 +124,12 @@ def draw_header(
         font_name=FONT_BOLD,
         preferred_size=preferred_title_size,
         available_width=title_area_width,
-        minimum_size=12,
+        minimum_size=10.5,
     )
 
-    # Title moved slightly downward.
     title_baseline = (
-        rect.top
-        - 7.6 * mm
+        inner.centre_y
+        + 1.1 * mm
     )
 
     draw_text(
@@ -140,10 +142,17 @@ def draw_header(
         color=BLACK,
     )
 
-    # Subtitle moved slightly upward.
+    fitted_subtitle_size = fit_font_size(
+        text=data.subtitle,
+        font_name=FONT_BOLD,
+        preferred_size=HEADER_SUBTITLE_SIZE,
+        available_width=title_area_width,
+        minimum_size=6.5,
+    )
+
     subtitle_baseline = (
-        rect.y
-        + 4.5 * mm
+        inner.y
+        + 1.15 * mm
     )
 
     draw_text(
@@ -152,7 +161,7 @@ def draw_header(
         x=title_x,
         y=subtitle_baseline,
         font_name=FONT_BOLD,
-        font_size=HEADER_SUBTITLE_SIZE,
+        font_size=fitted_subtitle_size,
         color=BLACK,
     )
 
@@ -183,7 +192,6 @@ def draw_header(
         minimum_size=6.5,
     )
 
-    # Measure the actual date width.
     date_text_width = canvas.stringWidth(
         date_text,
         FONT_BOLD,
@@ -191,12 +199,12 @@ def draw_header(
     )
 
     calendar_size = (
-        8.5 * mm
+        6.7 * mm
         if compact
-        else 9.5 * mm
+        else 7.2 * mm
     )
 
-    calendar_gap = 2 * mm
+    calendar_gap = 1.7 * mm
 
     calendar_rect = Rect(
         x=(
@@ -206,9 +214,8 @@ def draw_header(
             - calendar_size
         ),
         y=(
-            rect.centre_y
+            inner.centre_y
             - calendar_size / 2
-            + 0.8 * mm
         ),
         width=calendar_size,
         height=calendar_size,
@@ -221,15 +228,14 @@ def draw_header(
         preserve_aspect_ratio=True,
     )
 
-    # Metadata moved slightly upward.
     date_baseline = (
-        rect.centre_y
-        + 2.3 * mm
+        inner.centre_y
+        + 1.5 * mm
     )
 
     code_baseline = (
-        date_baseline
-        - 4.1 * mm
+        inner.centre_y
+        - 2.2 * mm
     )
 
     canvas.saveState()

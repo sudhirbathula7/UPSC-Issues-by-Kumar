@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import src.branding as BRAND
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
@@ -12,16 +12,15 @@ from reportlab.lib.units import mm
 # PROJECT
 # ============================================================
 
-PROJECT_NAME: Final[str] = "UPSC Issues by Kumar"
+PROJECT_NAME: Final[str] = BRAND.BRAND_NAME
 
-PUBLICATION_TITLE: Final[str] = "TODAY'S UPSC ISSUES"
+PUBLICATION_TITLE: Final[str] = BRAND.PUBLICATION_TITLE
 
-PUBLICATION_SUBTITLE: Final[str] = "UPSC Issues by Kumar"
+PUBLICATION_SUBTITLE: Final[str] = BRAND.PUBLICATION_SUBTITLE
 
 PROJECT_VERSION: Final[str] = "1.0"
 
 DEBUG: Final[bool] = True
-
 
 # ============================================================
 # FILES
@@ -60,13 +59,13 @@ PAGE_WIDTH: Final[float] = A4[0]
 
 PAGE_HEIGHT: Final[float] = A4[1]
 
-PAGE_MARGIN_LEFT: Final[float] = 12 * mm
+PAGE_MARGIN_LEFT: Final[float] = 11 * mm
 
-PAGE_MARGIN_RIGHT: Final[float] = 12 * mm
+PAGE_MARGIN_RIGHT: Final[float] = 11 * mm
 
-PAGE_MARGIN_TOP: Final[float] = 8 * mm
+PAGE_MARGIN_TOP: Final[float] = 6 * mm
 
-PAGE_MARGIN_BOTTOM: Final[float] = 8 * mm
+PAGE_MARGIN_BOTTOM: Final[float] = 6 * mm
 
 
 CONTENT_WIDTH: Final[float] = (

@@ -18,19 +18,19 @@ from src.config import (
 # PUBLICATION IDENTITY
 # ============================================================
 
-TELEGRAM_HANDLE: Final[str] = "@upscissuesbykumar"
+TELEGRAM_HANDLE: Final[str] = "@upscissueswithkumar"
 
 # Keep empty until the final website/domain is confirmed.
 WEBSITE: Final[str] = ""
 
-EDITION_PREFIX: Final[str] = "TUI"
+EDITION_PREFIX: Final[str] = "UAK"
 
 STANDARD_PDF_FILENAME: Final[str] = (
-    "UPSC_Issues_by_Kumar.pdf"
+    "UPSC_Anchor_with_Kumar.pdf"
 )
 
 PRO_PDF_FILENAME: Final[str] = (
-    "UPSC_Issues_by_Kumar_Pro.pdf"
+    "UPSC_Anchor_with_Kumar_Pro.pdf"
 )
 
 

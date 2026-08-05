@@ -45,17 +45,17 @@ PAGE_HEIGHT = CONTENT_HEIGHT
 # PAGE DIMENSIONS
 # ============================================================
 
-HEADER_HEIGHT = 18 * mm
-FOOTER_HEIGHT = 8 * mm
+HEADER_HEIGHT = 12 * mm
+FOOTER_HEIGHT = 6 * mm
 
-PAGE_SECTION_GAP = 2 * mm
-ISSUE_GAP = 2 * mm
-COLUMN_GAP = 2 * mm
+PAGE_SECTION_GAP = 1.2 * mm
+ISSUE_GAP = 1.2 * mm
+COLUMN_GAP = 1.2 * mm
 
-QUESTION_PANEL_HEIGHT = 27 * mm
+QUESTION_PANEL_HEIGHT = 21 * mm
 
-# 83% curiosity area and 17% GS Mapping.
-GS_MAPPING_RATIO = 0.17
+# 86% curiosity area and 14% GS Mapping.
+GS_MAPPING_RATIO = 0.15
 
 # Equal-width Knowledge Points and right-side columns.
 KNOWLEDGE_COLUMN_RATIO = 0.50

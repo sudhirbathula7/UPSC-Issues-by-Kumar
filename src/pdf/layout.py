@@ -47,18 +47,18 @@ PAGE_HEIGHT = CONTENT_HEIGHT
 # MASTER FULL-PAGE DIMENSIONS
 # ============================================================
 
-HEADER_HEIGHT = 18 * mm
-FOOTER_HEIGHT = 8 * mm
+HEADER_HEIGHT = 12 * mm
+FOOTER_HEIGHT = 6 * mm
 
-SECTION_GAP = 2 * mm
-COLUMN_GAP = 2 * mm
+SECTION_GAP = 1.2 * mm
+COLUMN_GAP = 1.2* mm
 
-QUESTION_PANEL_HEIGHT = 30 * mm
+QUESTION_PANEL_HEIGHT = 21 * mm
 
 # Top question-panel split:
-# 83% Curiosity Question
-# 17% GS Mapping
-GS_MAPPING_RATIO = 0.17
+# 86% Curiosity Question
+# 14% GS Mapping
+GS_MAPPING_RATIO = 0.15
 
 TOP_CONTENT_LEFT_RATIO = 0.50
 BOTTOM_CONTENT_LEFT_RATIO = 0.50

@@ -2,17 +2,14 @@ from __future__ import annotations
 
 import os
 import time
+from datetime import datetime
 from pathlib import Path
 
 from src.config import PREVIEW_PATH
 from src.pdf.font_loader import register_fonts
 from src.pdf.pdf_generator import generate_pdf
 from src.pdf.pro_pdf_generator import generate_pro_pdf
-from src.publication import (
-    PRO_PDF_FILENAME,
-    STANDARD_PDF_FILENAME,
-    build_publication_metadata,
-)
+from src.publication import build_publication_metadata
 from src.repository.repository_manager import (
     complete_repository_and_archive,
 )
@@ -43,6 +40,47 @@ def open_generated_file(
 
 
 # ============================================================
+# OUTPUT FILENAMES
+# ============================================================
+
+def build_output_filenames(
+    publication_date_iso: str,
+) -> tuple[str, str]:
+    """
+    Build output filenames from the publication date.
+
+    Example:
+        2026-08-05
+
+    Outputs:
+        uak_260805_pdf.pdf
+        uak_260805_pro_pdf.pdf
+    """
+
+    parsed_date = datetime.strptime(
+        publication_date_iso,
+        "%Y-%m-%d",
+    )
+
+    compact_date = parsed_date.strftime(
+        "%y%m%d"
+    )
+
+    standard_filename = (
+        f"uak_{compact_date}_pdf.pdf"
+    )
+
+    pro_filename = (
+        f"uak_{compact_date}_pro_pdf.pdf"
+    )
+
+    return (
+        standard_filename,
+        pro_filename,
+    )
+
+
+# ============================================================
 # MAIN
 # ============================================================
 
@@ -64,13 +102,20 @@ def main() -> None:
         build_publication_metadata()
     )
 
+    (
+        standard_pdf_filename,
+        pro_pdf_filename,
+    ) = build_output_filenames(
+        metadata.publication_date_iso
+    )
+
     # ========================================================
     # STANDARD PDF
     # ========================================================
 
     pdf_output_file = (
         PREVIEW_PATH
-        / STANDARD_PDF_FILENAME
+        / standard_pdf_filename
     )
 
     generated_pdf = generate_pdf(
@@ -99,7 +144,7 @@ def main() -> None:
 
     pro_output_file = (
         PREVIEW_PATH
-        / PRO_PDF_FILENAME
+        / pro_pdf_filename
     )
 
     generated_pro_pdf = generate_pro_pdf(

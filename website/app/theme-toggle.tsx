@@ -2,60 +2,41 @@
 
 import { useEffect, useState } from "react";
 
-
 type Theme = "light" | "dark";
-
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const savedTheme =
-      window.localStorage.getItem("site-theme") as
-        | Theme
-        | null;
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
 
     const preferredTheme: Theme =
       savedTheme ??
-      (
-        window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches
-          ? "dark"
-          : "light"
-      );
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
 
-    document.documentElement.dataset.theme =
-      preferredTheme;
-
+    document.documentElement.dataset.theme = preferredTheme;
     setTheme(preferredTheme);
     setMounted(true);
   }, []);
 
   function toggleTheme() {
     const nextTheme: Theme =
-      theme === "light"
-        ? "dark"
-        : "light";
+      theme === "dark" ? "light" : "dark";
 
-    document.documentElement.dataset.theme =
-      nextTheme;
-
-    window.localStorage.setItem(
-      "site-theme",
-      nextTheme,
-    );
-
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("theme", nextTheme);
     setTheme(nextTheme);
   }
 
   if (!mounted) {
     return (
       <button
-        className="theme-toggle"
         type="button"
-        aria-label="Change website theme"
+        className="theme-toggle"
+        aria-label="Change colour theme"
       >
         ◐
       </button>
@@ -64,21 +45,21 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className="theme-toggle"
       type="button"
+      className="theme-toggle"
       onClick={toggleTheme}
       aria-label={
-        theme === "light"
-          ? "Switch to dark mode"
-          : "Switch to light mode"
+        theme === "dark"
+          ? "Switch to light mode"
+          : "Switch to dark mode"
       }
       title={
-        theme === "light"
-          ? "Dark mode"
-          : "Light mode"
+        theme === "dark"
+          ? "Switch to light mode"
+          : "Switch to dark mode"
       }
     >
-      {theme === "light" ? "☾" : "☀"}
+      {theme === "dark" ? "☀" : "☾"}
     </button>
   );
 }

@@ -27,7 +27,7 @@ from src.pdf.theme import (
 def paragraph_style(
     name: str,
     font_name: str = FONT_REGULAR,
-    font_size: float = 8,
+    font_size: float = 8.5,
     leading: float = 10,
     text_color=BLACK,
     alignment: int = TA_LEFT,
@@ -92,7 +92,7 @@ def draw_text(
     x,
     y,
     font_name=FONT_REGULAR,
-    font_size=8,
+    font_size=8.5,
     color=BLACK,
 ):
 
@@ -107,7 +107,7 @@ def draw_centered_text(
     x,
     y,
     font_name=FONT_REGULAR,
-    font_size=8,
+    font_size=8.5,
     color=BLACK,
 ):
 
@@ -126,7 +126,7 @@ def draw_right_text(
     x,
     y,
     font_name=FONT_REGULAR,
-    font_size=8,
+    font_size=8.5,
     color=BLACK,
 ):
 

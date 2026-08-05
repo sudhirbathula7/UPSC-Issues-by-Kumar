@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "issue_id": "UAK-260803-04",
+  "publication_date": "03 August 2026",
+  "edition_code": "UAK-260803",
+  "status": "published",
+  "topic_number": 4,
+  "issue_title": "Challenges of Gaza Demilitarisation and Sustainable Post-Conflict Peacebuilding",
+  "rating": 4.4,
+  "editorial_sources": [
+    "Editorial 3"
+  ],
+  "gs_mapping": {
+    "display": "GS II | International Relations | West Asia",
+    "paper": "GS II",
+    "subject": "International Relations",
+    "syllabus": "West Asia"
+  },
+  "todays_question": "How can durable peace in Gaza balance security concerns, humanitarian needs, and political reconciliation?",
+  "recall_anchors": [
+    "Two-State Solution",
+    "Demilitarisation",
+    "Humanitarian Law",
+    "Collective Punishment",
+    "Post-Conflict Reconstruction"
+  ],
+  "knowledge_points": [
+    {
+      "number": 1,
+      "heading": "Conflict Resolution",
+      "explanation": "Long-term peace requires addressing both immediate security concerns and the underlying political dispute. The internationally supported Two-State Solution remains the most widely accepted framework for achieving lasting peace between Israel and Palestine."
+    },
+    {
+      "number": 2,
+      "heading": "Demilitarisation",
+      "explanation": "Demilitarisation seeks to reduce or eliminate armed capabilities to prevent renewed conflict. Successful implementation depends on credible security guarantees, mutual trust, phased commitments, and effective international monitoring by neutral institutions."
+    },
+    {
+      "number": 3,
+      "heading": "Humanitarian Protection",
+      "explanation": "International Humanitarian Law requires parties to armed conflict to protect civilians and ensure access to food, medicine, and essential services. Humanitarian assistance must remain independent of political or military negotiations during armed conflicts."
+    },
+    {
+      "number": 4,
+      "heading": "Collective Punishment",
+      "explanation": "Collective Punishment occurs when civilian populations are penalised for actions they did not individually commit. International humanitarian law prohibits measures that intentionally inflict suffering on civilians to achieve military or political objectives."
+    },
+    {
+      "number": 5,
+      "heading": "Peacebuilding",
+      "explanation": "Post-Conflict Reconstruction extends beyond rebuilding infrastructure to restoring governance, public services, livelihoods, and institutional legitimacy. Sustainable peace depends on inclusive political arrangements, economic recovery, and long-term reconciliation among affected communities."
+    }
+  ],
+  "quick_facts": [
+    "Fourth Geneva Convention (1949): Provides legal protection to civilians during armed conflict and prohibits collective punishment in occupied territories.",
+    "United Nations Relief and Works Agency (UNRWA): Supports Palestinian refugees by providing education, healthcare, and humanitarian assistance across the region.",
+    "Two-State Solution: Envisions Israel and an independent Palestinian state coexisting peacefully based on negotiated political arrangements.",
+    "Oslo Accords (1993–95): Established mutual recognition between Israel and the Palestine Liberation Organization (PLO) and created the Palestinian Authority as an interim self-governing body."
+  ],
+  "key_takeaway": "Lasting peace in conflict zones requires balancing legitimate security concerns with humanitarian obligations, inclusive political dialogue, and sustainable post-conflict reconstruction.",
+  "mains_question": "How can durable peace in Gaza balance security concerns, humanitarian needs, and political reconciliation?",
+  "mains_answer": {
+    "paragraphs": [
+      "Achieving durable peace in Gaza requires addressing both immediate security challenges and the deeper political causes of the conflict. Sustainable peace cannot rely solely on military arrangements but must also protect civilians, restore governance, and create conditions for long-term political stability.",
+      "Demilitarisation can reduce the risk of renewed violence when implemented through phased agreements, credible security guarantees, and international monitoring. At the same time, International Humanitarian Law requires uninterrupted humanitarian access, protection of civilians, and prohibits Collective Punishment irrespective of ongoing negotiations. Post-Conflict Reconstruction should restore housing, healthcare, education, and essential infrastructure while rebuilding institutions capable of delivering public services. Political reconciliation through negotiations based on the Two-State Solution remains central to addressing competing national aspirations and reducing the likelihood of recurring conflict. International organisations and regional stakeholders also have an important role in facilitating dialogue, humanitarian assistance, and reconstruction efforts.",
+      "Enduring peace demands that security, humanitarian protection, and political settlement advance together rather than sequentially. A balanced, rules-based approach offers the strongest foundation for stability and regional cooperation."
+    ],
+    "full_text": "Achieving durable peace in Gaza requires addressing both immediate security challenges and the deeper political causes of the conflict. Sustainable peace cannot rely solely on military arrangements but must also protect civilians, restore governance, and create conditions for long-term political stability.\n\nDemilitarisation can reduce the risk of renewed violence when implemented through phased agreements, credible security guarantees, and international monitoring. At the same time, International Humanitarian Law requires uninterrupted humanitarian access, protection of civilians, and prohibits Collective Punishment irrespective of ongoing negotiations. Post-Conflict Reconstruction should restore housing, healthcare, education, and essential infrastructure while rebuilding institutions capable of delivering public services. Political reconciliation through negotiations based on the Two-State Solution remains central to addressing competing national aspirations and reducing the likelihood of recurring conflict. International organisations and regional stakeholders also have an important role in facilitating dialogue, humanitarian assistance, and reconstruction efforts.\n\nEnduring peace demands that security, humanitarian protection, and political settlement advance together rather than sequentially. A balanced, rules-based approach offers the strongest foundation for stability and regional cooperation."
+  },
+  "daily_mcqs": [
+    {
+      "number": 1,
+      "question": "Which of the following international legal instruments specifically provides protection to civilians during armed conflict and prohibits collective punishment?",
+      "options": {
+        "A": "United Nations Charter",
+        "B": "Fourth Geneva Convention",
+        "C": "Vienna Convention on Diplomatic Relations",
+        "D": "Rome Statute of the International Criminal Court"
+      },
+      "correct_answer": "B",
+      "explanation": "The Fourth Geneva Convention (1949) protects civilians during armed conflict and expressly prohibits collective punishment and other forms of unlawful treatment."
+    },
+    {
+      "number": 2,
+      "question": "The concept of \"Demilitarisation\" primarily refers to:",
+      "options": {
+        "A": "Expansion of military alliances.",
+        "B": "Reduction or elimination of armed military capabilities in a specified area.",
+        "C": "Replacement of civilian governments by military administration.",
+        "D": "Complete withdrawal from international treaties."
+      },
+      "correct_answer": "B",
+      "explanation": "Demilitarisation aims to reduce or remove military capabilities to lower the risk of conflict and improve prospects for peace."
+    },
+    {
+      "number": 3,
+      "question": "Consider the following statements:\n\nInternational Humanitarian Law requires protection of civilians during armed conflict.\nThe Two-State Solution seeks the peaceful coexistence of Israel and an independent Palestinian state.\nCollective Punishment is recognised as a lawful method of enforcing compliance during armed conflict.\n\nWhich of the statements given above are correct?",
+      "options": {
+        "A": "1 and 2 only",
+        "B": "2 and 3 only",
+        "C": "1 and 3 only",
+        "D": "1, 2 and 3"
+      },
+      "correct_answer": "A",
+      "explanation": "Statements 1 and 2 are correct. International humanitarian law prohibits collective punishment, making Statement 3 incorrect."
+    }
+  ],
+  "repository_saved_at": "2026-08-05T16:48:58",
+  "content_hash": "8b4d716b904e59fcea98738c70740c2ba63fb0074b1c709129a625525fc12c93"
+}

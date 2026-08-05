@@ -113,22 +113,13 @@ def _draw_section_title(
     )
 
     canvas.saveState()
-
-    canvas.setFillColor(
-        HEADING_BLUE,
-    )
-
-    canvas.setFont(
-        FONT_BOLD,
-        SECTION_TITLE_SIZE,
-    )
-
+    canvas.setFillColor(HEADING_BLUE)
+    canvas.setFont(FONT_BOLD, SECTION_TITLE_SIZE)
     canvas.drawString(
         icon_rect.right + icon_gap,
         heading_baseline,
         title,
     )
-
     canvas.restoreState()
 
     return heading_rect
@@ -241,13 +232,8 @@ def _select_text_sizes(
     float,
     tuple[_MeasuredMCQ, ...],
 ]:
-    question_size = float(
-        MCQ_QUESTION_SIZE
-    )
-
-    option_size = float(
-        MCQ_OPTION_SIZE
-    )
+    question_size = float(MCQ_QUESTION_SIZE)
+    option_size = float(MCQ_OPTION_SIZE)
 
     original_option_size = max(
         float(MCQ_OPTION_SIZE),
@@ -280,15 +266,9 @@ def _select_text_sizes(
         )
 
         total_height = (
-            sum(
-                item.height
-                for item in measured
-            )
+            sum(item.height for item in measured)
             + minimum_gap
-            * max(
-                0,
-                len(measured) - 1,
-            )
+            * max(0, len(measured) - 1)
         )
 
         if total_height <= available_height:
@@ -344,17 +324,87 @@ def _draw_bullet(
     y: float,
 ) -> None:
     canvas.saveState()
-
-    canvas.setFillColor(
-        BLACK,
-    )
-
+    canvas.setFillColor(BLACK)
     canvas.circle(
         x,
         y,
         0.75 * mm,
         stroke=0,
         fill=1,
+    )
+    canvas.restoreState()
+
+
+# ============================================================
+# ANSWER KEY FOOTER
+# ============================================================
+
+def _normalise_correct_option(
+    correct_option: str | None,
+) -> str:
+    if not correct_option:
+        return "-"
+
+    option = correct_option.strip().upper()
+
+    if option.startswith("(") and option.endswith(")"):
+        option = option[1:-1].strip()
+
+    if option in {"A", "B", "C", "D"}:
+        return option
+
+    return "-"
+
+
+def _build_answer_key(
+    questions: tuple[MCQ, ...],
+) -> str:
+    answers = [
+        (
+            f"{index}-"
+            f"{_normalise_correct_option(mcq.correct_option)}"
+        )
+        for index, mcq in enumerate(
+            questions,
+            start=1,
+        )
+    ]
+
+    return "Answer Key  •  " + "  •  ".join(answers)
+
+
+def _draw_answer_key_footer(
+    canvas: Canvas,
+    rect: Rect,
+    questions: tuple[MCQ, ...],
+) -> None:
+    separator_y = rect.top - 0.8 * mm
+
+    canvas.saveState()
+
+    canvas.setStrokeColorRGB(
+        0.78,
+        0.78,
+        0.78,
+    )
+    canvas.setLineWidth(0.35)
+    canvas.line(
+        rect.x,
+        separator_y,
+        rect.right,
+        separator_y,
+    )
+
+    canvas.setFillColorRGB(
+        0.28,
+        0.28,
+        0.28,
+    )
+    canvas.setFont(FONT_BOLD, 7.2)
+    canvas.drawCentredString(
+        rect.centre_x,
+        rect.y + 1.45 * mm,
+        _build_answer_key(questions),
     )
 
     canvas.restoreState()
@@ -380,15 +430,25 @@ def draw_mcqs(
         title=data.title,
     )
 
-    # Reduced top gap below the heading.
+    footer_height = 6 * mm
+    footer_bottom_margin = 1.5 * mm
+
+    footer_rect = Rect(
+        x=rect.x + 3 * mm,
+        y=rect.y + footer_bottom_margin,
+        width=rect.width - 6 * mm,
+        height=footer_height,
+    )
+
+    content_bottom = footer_rect.top + 1.2 * mm
+
     content_rect = Rect(
         x=rect.x + 2.5 * mm,
-        y=rect.y + 3 * mm,
+        y=content_bottom,
         width=rect.width - 5 * mm,
-        height=(
-            heading_rect.y
-            - rect.y
-            - 3 * mm
+        height=max(
+            0,
+            heading_rect.y - content_bottom,
         ),
     )
 
@@ -436,10 +496,7 @@ def draw_mcqs(
         distributed_gap = max(
             minimum_mcq_gap,
             available_gap_space
-            / (
-                len(measured_questions)
-                - 1
-            ),
+            / (len(measured_questions) - 1),
         )
     else:
         distributed_gap = 0
@@ -447,19 +504,13 @@ def draw_mcqs(
     required_height = (
         total_text_height
         + distributed_gap
-        * max(
-            0,
-            len(measured_questions) - 1,
-        )
+        * max(0, len(measured_questions) - 1)
     )
 
     if required_height > content_rect.height:
         distributed_gap = minimum_mcq_gap
 
-    current_top = (
-        content_rect.top
-        + 0.2 * mm
-    )
+    current_top = content_rect.top + 0.2 * mm
 
     for measured in measured_questions:
         paragraph_bottom = (
@@ -480,10 +531,7 @@ def draw_mcqs(
 
         _draw_bullet(
             canvas=canvas,
-            x=(
-                content_rect.x
-                + 1.3 * mm
-            ),
+            x=content_rect.x + 1.3 * mm,
             y=bullet_y,
         )
 
@@ -491,3 +539,9 @@ def draw_mcqs(
             paragraph_bottom
             - distributed_gap
         )
+
+    _draw_answer_key_footer(
+        canvas=canvas,
+        rect=footer_rect,
+        questions=questions,
+    )
