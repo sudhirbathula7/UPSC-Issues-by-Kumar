@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.units import mm
@@ -129,14 +130,131 @@ def _draw_section_title(
 # MCQ TEXT
 # ============================================================
 
+def _format_mcq_question(
+    question: str,
+) -> str:
+    """
+    Format MCQ questions for the PDF.
+
+    UPSC statement-based questions are normalised into:
+
+    Consider the following statements:
+
+    1. Statement one
+    2. Statement two
+    3. Statement three
+
+    Which of the statements given above are correct?
+
+    This works whether the source question contains real line breaks
+    or whether the converter has collapsed the statements into one line.
+    """
+    raw = (
+        question
+        .replace("\r\n", "\n")
+        .replace("\r", "\n")
+        .strip()
+    )
+
+    if not raw:
+        return ""
+
+    # --------------------------------------------------------
+    # STATEMENT-BASED UPSC MCQ
+    # --------------------------------------------------------
+    statement_match = re.search(
+        r"(?is)^\s*Consider\s+the\s+following\s+statements\s*:?\s*(.*?)"
+        r"\s*(Which\s+of\s+the\s+statements\s+given\s+above\s+are\s+correct\s*\??)\s*$",
+        raw,
+    )
+
+    if statement_match:
+        statement_text = statement_match.group(1).strip()
+        tail = statement_match.group(2).strip()
+
+        # Prefer existing line-separated statements.
+        statement_lines = [
+            line.strip()
+            for line in statement_text.split("\n")
+            if line.strip()
+        ]
+
+        # If the converter has collapsed everything into one line,
+        # split the statement block at sentence boundaries.
+        if len(statement_lines) < 2:
+            statement_lines = [
+                part.strip()
+                for part in re.split(
+                    r"(?<=[.!?])\s+",
+                    statement_text,
+                )
+                if part.strip()
+            ]
+
+        # Remove any numbering already supplied by the model.
+        cleaned_statements = []
+        for statement in statement_lines:
+            statement = re.sub(
+                r"^\s*\d+\s*[.)]\s*",
+                "",
+                statement,
+            ).strip()
+
+            if statement:
+                cleaned_statements.append(statement)
+
+        if cleaned_statements:
+            parts = [
+                "Consider the following statements:",
+                "<br/><br/>",
+            ]
+
+            for index, statement in enumerate(
+                cleaned_statements,
+                start=1,
+            ):
+                parts.append(
+                    f"{index}. {statement}"
+                )
+
+                if index < len(cleaned_statements):
+                    parts.append("<br/>")
+
+            parts.extend(
+                [
+                    "<br/><br/>",
+                    tail,
+                ]
+            )
+
+            return "".join(parts)
+
+    # --------------------------------------------------------
+    # NORMAL MCQ
+    # --------------------------------------------------------
+    lines = [
+        line.strip()
+        for line in raw.split("\n")
+        if line.strip()
+    ]
+
+    if not lines:
+        return ""
+
+    return "<br/>".join(lines)
+
 def _build_mcq_text(
     mcq: MCQ,
     question_size: float,
 ) -> str:
+    formatted_question = _format_mcq_question(
+        mcq.question
+    )
+
     return (
         f"<font name='{FONT_BOLD}' "
         f"size='{question_size}'>"
-        f"{mcq.question}"
+        f"{formatted_question}"
         f"</font>"
         f"<br/><br/>"
         f"A. {mcq.options[0]}"

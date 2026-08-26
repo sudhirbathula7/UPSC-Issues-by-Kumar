@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "publication_date": "07 August 2026",
+  "edition_code": "UAK-260807",
+  "issue_count": 2,
+  "issue_ids": [
+    "UAK-260807-01",
+    "UAK-260807-02"
+  ],
+  "standard_pdf": {
+    "generated": true,
+    "filename": "uak_260807_pdf.pdf"
+  },
+  "pro_pdf": {
+    "generated": true,
+    "filename": "uak_260807_pro_pdf.pdf"
+  },
+  "repository_updated": true,
+  "daily_archive_created": true,
+  "created_at": "2026-08-26T14:05:21"
+}

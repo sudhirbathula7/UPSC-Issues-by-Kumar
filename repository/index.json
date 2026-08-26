@@ -86,5 +86,27 @@
     "gs_paper": "GS II",
     "gs_subject": "International Relations",
     "content_hash": "8b4d716b904e59fcea98738c70740c2ba63fb0074b1c709129a625525fc12c93"
+  },
+  {
+    "issue_id": "UAK-260807-01",
+    "publication_date": "07 August 2026",
+    "edition_code": "UAK-260807",
+    "topic_number": 1,
+    "issue_title": "Strengthening India's Response to Cross-Border Digital Financial Fraud",
+    "rating": 4.9,
+    "gs_paper": "GS III",
+    "gs_subject": "Internal Security",
+    "content_hash": "822858dba02eadb91f7fa35fe244e2a0c8a7d31c08805f9dfdb6ce902e8542f0"
+  },
+  {
+    "issue_id": "UAK-260807-02",
+    "publication_date": "07 August 2026",
+    "edition_code": "UAK-260807",
+    "topic_number": 2,
+    "issue_title": "Expanding Affordable Medical Education for Equitable Healthcare Delivery",
+    "rating": 4.8,
+    "gs_paper": "GS II",
+    "gs_subject": "Health",
+    "content_hash": "bc3c3c22bd7d5b126524865177ee1563e41798665be14b432b2007e5e23168f4"
   }
 ]

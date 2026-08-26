@@ -390,17 +390,22 @@ def _parse_gs_mapping(
     value: str,
 ) -> dict[str, str]:
 
-    parts = [
-        part.strip()
-        for part in re.split(
-            r"\s*[•|]\s*",
-            value,
-        )
-        if part.strip()
-    ]
+    value = _clean(value)
+
+    if "|" not in value and "•" not in value:
+        parts = _nonempty_lines(value)
+    else:
+        parts = [
+            part.strip()
+            for part in re.split(
+                r"\s*[•|]\s*",
+                value,
+            )
+            if part.strip()
+        ]
 
     return {
-        "display": value.strip(),
+        "display": " | ".join(parts),
         "paper": (
             parts[0]
             if len(parts) > 0
@@ -412,14 +417,11 @@ def _parse_gs_mapping(
             else ""
         ),
         "syllabus": (
-            " • ".join(
-                parts[2:]
-            )
+            " • ".join(parts[2:])
             if len(parts) > 2
             else ""
         ),
     }
-
 
 # ============================================================
 # KNOWLEDGE POINT
@@ -458,9 +460,20 @@ def _parse_quick_facts(
     value: str,
 ) -> list[str]:
 
-    lines = _nonempty_lines(
-        value
-    )
+    lines = _nonempty_lines(value)
+
+    # Case 1: Four plain lines (no bullets)
+    if (
+        len(lines) == 4
+        and all(
+            not re.match(
+                r"^[•*\-]\s+",
+                line,
+            )
+            for line in lines
+        )
+    ):
+        return lines
 
     facts: list[str] = []
 
