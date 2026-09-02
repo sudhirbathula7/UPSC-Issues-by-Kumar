@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0",
+  "publication_date": "30 August 2026",
+  "publication_date_iso": "2026-08-30",
+  "topic_count": 1,
+  "topics": [
+    {
+      "topic_number": 1,
+      "issue_title": "Strengthening Fire Safety in Hospital Intensive Care Units",
+      "rating": 4.5,
+      "editorial_sources": [
+        "Editorial 1"
+      ],
+      "gs_mapping": {
+        "display": "GS II | Health | GS III | Disaster Management",
+        "paper": "GS II",
+        "subject": "Health",
+        "syllabus": "GS III • Disaster Management"
+      },
+      "todays_question": "How can India strengthen fire safety systems to protect highly vulnerable patients in ICUs?",
+      "recall_anchors": [
+        "Electrical Overload",
+        "RACE Protocol",
+        "Electrical Harmonics",
+        "Layered Protection",
+        "Power Audits"
+      ],
+      "knowledge_points": [
+        {
+          "number": 1,
+          "heading": "ICU Fire Vulnerability",
+          "explanation": "ICUs combine dense electrical equipment, continuous power demand, oxygen-enriched conditions and patients unable to self-evacuate. Enclosed layouts can rapidly accumulate smoke, making ordinary building-level fire precautions insufficient for protecting critically ill patients."
+        },
+        {
+          "number": 2,
+          "heading": "Electrical Overloading Risk",
+          "explanation": "Modern hospitals depend on ventilators, warmers, monitors and other high-load devices. Increased appliance density, ageing wiring, overloaded circuits and inadequate maintenance can generate excessive heat, insulation failure or electrical faults capable of initiating fires."
+        },
+        {
+          "number": 3,
+          "heading": "RACE Protocol",
+          "explanation": "The RACE framework structures immediate hospital fire response: Rescue people in danger, raise the Alarm, Confine fire and smoke, and Extinguish the fire when safe or Evacuate occupants according to established procedures."
+        },
+        {
+          "number": 4,
+          "heading": "Electrical Harmonics",
+          "explanation": "Electronic medical equipment can draw distorted electrical currents, creating harmonics that increase heating in neutral conductors, transformers and connections. Such degradation may develop without conventional breakers tripping, making specialised power-quality audits important for prevention."
+        },
+        {
+          "number": 5,
+          "heading": "Layered Fire Protection",
+          "explanation": "Effective ICU safety requires multiple independent safeguards rather than reliance on one measure. Safe electrical design, alarms, sprinklers, compartmentation, accessible exits, evacuation protocols, equipment maintenance and trained personnel collectively reduce both fire probability and consequences."
+        }
+      ],
+      "quick_facts": [
+        "In August 2026, a fire in the NICU of Amravati District Women’s Hospital killed three newborns; a ventilator-related fault was suspected.",
+        "The 2026 National Guidelines on Fire and Life Safety in Healthcare Facilities specifically cover high-risk areas including ICUs, NICUs, PICUs and operation theatres.",
+        "Following the August 2026 Amravati NICU tragedy, Nashik authorities directed government and private hospitals to conduct immediate fire and electrical safety audits of ICUs.",
+        "The National Neonatology Forum’s fire-safety advisory recommends mandatory fire-safety certification for hospitals, especially those with NICUs, alongside periodic mock drills and inspections."
+      ],
+      "key_takeaway": "India’s healthcare fire safety challenge is fundamentally about safeguarding the most vulnerable through preventive governance, technological reliability and institutional preparedness.",
+      "mains_question": "Why are Intensive Care Units particularly vulnerable to fire-related disasters? Examine the measures required to strengthen prevention, preparedness and emergency response in Indian hospitals?",
+      "mains_answer": {
+        "paragraphs": [
+          "Intensive Care Units are uniquely vulnerable to fires because they combine continuous electrical demand, sophisticated medical equipment, oxygen-enriched environments and critically ill patients with limited mobility. Consequently, even a small electrical fault can rapidly become a life-threatening emergency requiring specialised safeguards",
+          "Several factors magnify ICU fire risks. Ventilators, monitors, warmers and other devices place sustained loads on electrical systems, while ageing wiring, poor maintenance and electrical harmonics can cause overheating. Oxygen does not itself burn but accelerates combustion, increasing fire intensity. Enclosed ICU layouts can also permit rapid smoke accumulation, while sedated, neonatal or critically ill patients cannot self-evacuate.",
+          "Prevention therefore requires independent power arrangements for major equipment, periodic electrical and power-quality audits, safe separation of oxygen outlets from electrical sockets, automatic alarms and sprinklers, and rigorous equipment maintenance. Preparedness should include trained staff, regular drills, clear responsibilities and mandatory fire-safety certification. Emergency response should follow protocols such as RACE—Rescue, Alarm, Confine and Extinguish/Evacuate—with multiple exits and horizontal evacuation routes enabling patients to reach protected areas without immediately using stairways."
+        ],
+        "full_text": "Intensive Care Units are uniquely vulnerable to fires because they combine continuous electrical demand, sophisticated medical equipment, oxygen-enriched environments and critically ill patients with limited mobility. Consequently, even a small electrical fault can rapidly become a life-threatening emergency requiring specialised safeguards\n\nSeveral factors magnify ICU fire risks. Ventilators, monitors, warmers and other devices place sustained loads on electrical systems, while ageing wiring, poor maintenance and electrical harmonics can cause overheating. Oxygen does not itself burn but accelerates combustion, increasing fire intensity. Enclosed ICU layouts can also permit rapid smoke accumulation, while sedated, neonatal or critically ill patients cannot self-evacuate.\n\nPrevention therefore requires independent power arrangements for major equipment, periodic electrical and power-quality audits, safe separation of oxygen outlets from electrical sockets, automatic alarms and sprinklers, and rigorous equipment maintenance. Preparedness should include trained staff, regular drills, clear responsibilities and mandatory fire-safety certification. Emergency response should follow protocols such as RACE—Rescue, Alarm, Confine and Extinguish/Evacuate—with multiple exits and horizontal evacuation routes enabling patients to reach protected areas without immediately using stairways."
+      },
+      "daily_mcqs": [
+        {
+          "number": 1,
+          "question": "With reference to fire vulnerability in hospital ICUs, consider the following statements:\n\n1. Oxygen-enriched environments can accelerate combustion.\n2. Critically ill patients may be unable to evacuate without assistance.\n3. Conventional circuit breakers necessarily detect all harmful effects associated with electrical harmonics.\n\nWhich of the statements given above are correct?",
+          "options": {
+            "A": "1 and 2 only",
+            "B": "2 and 3 only",
+            "C": "1 and 3 only",
+            "D": "1, 2 and 3"
+          },
+          "correct_answer": "A",
+          "explanation": "Oxygen enrichment can intensify combustion, while ICU patients often require assisted evacuation. Harmonic-related overheating can develop without conventional breakers necessarily tripping."
+        },
+        {
+          "number": 2,
+          "question": "A hospital wants to reduce the risk of electrical fires in a technology-intensive NICU. Consider the following measures:\n\n1. Periodic electrical and power-quality audits\n2. Independent power arrangements for major equipment\n3. Regular inspection and maintenance of electrical equipment\n4. Reliance exclusively on conventional circuit breakers\n\nWhich of the above would be most appropriate?",
+          "options": {
+            "A": "1 and 4 only",
+            "B": "1, 2 and 3 only",
+            "C": "2, 3 and 4 only",
+            "D": "1, 2, 3 and 4"
+          },
+          "correct_answer": "B",
+          "explanation": "Layered electrical protection requires audits, appropriate power arrangements and preventive maintenance. Exclusive reliance on conventional breakers can leave risks such as harmonic-related degradation insufficiently detected."
+        },
+        {
+          "number": 3,
+          "question": "Which of the following best reflects a layered approach to hospital fire safety?",
+          "options": {
+            "A": "Obtaining fire certification once and relying primarily on firefighting equipment",
+            "B": "Concentrating exclusively on evacuation after a fire begins",
+            "C": "Combining prevention, detection, infrastructure safeguards, staff preparedness, evacuation planning and regulatory oversight",
+            "D": "Replacing electrical equipment periodically without modifying institutional procedures"
+          },
+          "correct_answer": "C",
+          "explanation": "Effective fire safety combines measures that prevent ignition, detect emergencies early, contain hazards, facilitate evacuation and ensure continuing institutional preparedness and accountability."
+        }
+      ]
+    }
+  ]
+}

@@ -1,273 +1,273 @@
 PUBLICATION DATE
 
-07.08.26
+01.09.2026
 
 TOPIC 1
+
 ISSUE TITLE
 
-Strengthening India's Response to Cross-Border Digital Financial Fraud
+Private-Sector Expansion and Quality of AYUSH Medical Education
 
 RATING
 
-4.9
+4.5
 
 EDITORIAL SOURCE(S)
 
-Editorial 1
+The Hindu
 
 GS MAPPING
 
-GS III
-Internal Security
-Cyber Security
+GS Paper II — Health, Education, Government Policies and Regulatory Institutions
 
 TODAY'S QUESTION
 
-How can India effectively combat evolving digital financial fraud while protecting citizens and ensuring accountability?
+How can India expand AYUSH education while ensuring credible training and effective quality regulation?
 
 RECALL ANCHORS
 
-Digital Arrest
-
-Mule Accounts
-
-e-Zero FIR
-
-MuleHunter.AI
-
-ASEAN Cooperation
+Capacity Gap
+Clinical Exposure
+Faculty Shortfalls
+Regulatory Oversight
+Incentive Misalignment
 
 KNOWLEDGE POINT 1
-Digital Fraud Evolution
 
-Digital Arrest scams have evolved from simple phishing into organised cyber-enabled crime.
+AYUSH Education System
+
+AYUSH medical education covers traditional and alternative systems such as Ayurveda and homoeopathy, requiring specialised colleges, teaching hospitals, qualified faculty, clinical exposure and appropriate regulatory oversight.
 
 KNOWLEDGE POINT 2
-Financial Crime Networks
 
-Cybercriminals rapidly move stolen funds through Mule Accounts spread across multiple jurisdictions. Such layered transactions conceal beneficiaries, complicate investigations and require coordinated banking, technological and law-enforcement responses to trace illicit financial flows.
+Private-Sector Expansion
+
+Private institutions increasingly drive AYUSH education growth, creating additional capacity but also raising concerns that financial incentives may encourage higher student intake without proportionate investment in faculty and infrastructure.
 
 KNOWLEDGE POINT 3
-Institutional Response
 
-India has strengthened cybercrime governance through e-Zero FIR, specialised cybercrime coordination centres, temporary debit-hold mechanisms and AI-based detection systems such as MuleHunter.AI. These measures improve early intervention, evidence preservation and recovery of stolen funds.
+Quality Capacity Gap
+
+Rapidly increasing seats can strain educational quality when teaching staff, laboratories, hospital beds and clinical services do not expand proportionately, weakening students’ practical exposure and institutional capacity.
 
 KNOWLEDGE POINT 4
-Cross-Border Challenges
 
-Many organised cyber fraud networks operate beyond India's jurisdiction from overseas scam compounds. Differences in domestic laws, weak enforcement and complex extradition processes make prosecution difficult despite successful detection within India.
+Clinical Training Quality
+
+Medical education depends not merely on classroom teaching but meaningful clinical exposure; inadequate hospital facilities, patient attendance or bed occupancy can restrict students’ opportunities to develop practical competence.
 
 KNOWLEDGE POINT 5
-International Cooperation
 
-Sustainable prevention requires intelligence sharing, diplomatic engagement, mutual legal assistance and coordinated enforcement with regional partners including ASEAN Cooperation. Strong international collaboration disrupts criminal infrastructure while improving prosecution, victim protection and cyber resilience.
+Quality-Control Reform
+
+Sustainable expansion requires stronger inspections, credible faculty verification, enforcement of admission limits and infrastructure standards, alongside regulatory mechanisms that align institutional incentives with educational quality.
 
 QUICK FACTS
-Indian Cyber Crime Coordination Centre (I4C): Functions under the Ministry of Home Affairs to coordinate cybercrime prevention, investigation, capacity building and public awareness across India.
-National Cyber Crime Reporting Portal: Enables citizens to report cyber offences online and supports rapid action, including financial transaction freezing in eligible cases.
-Interpol Financial Crime Programme: Facilitates international intelligence exchange, operational coordination and capacity building against transnational cyber-enabled financial crimes.
-Digital Personal Data Protection Act, 2023: Strengthens India's data governance framework by promoting responsible data processing and protecting personal information against misuse.
+
+In 2024, non-government institutions accounted for 86% of Ayurveda colleges and 85% of homoeopathy colleges, demonstrating private-sector dominance in AYUSH education.
+Between 2021 and 2024, permitted AYUSH seats increased by 43%, while total admission capacity rose by 25%, indicating rapid expansion of medical education.
+During 2021–2024, the Centre’s AYURGYAN allocation for AYUSH education, training, research, innovation and capacity-building increased nearly sixfold alongside expanding educational capacity.
+A 2020 Journal of Ayurveda and Integrative Medicine article reported that many institutions had teaching-staff shortfalls exceeding 50% against the standards then applicable.
+
 KEY TAKEAWAY
 
-Modern cyber fraud demands an integrated response combining technology, financial regulation, effective policing and international cooperation to protect citizens and strengthen digital trust.
+Expanding AYUSH education sustainably requires growth in seats to be matched by qualified faculty, clinical exposure, adequate infrastructure and rigorous regulatory oversight.
 
 MAINS QUESTION
 
-How can India effectively combat evolving digital financial fraud while protecting citizens and ensuring accountability?
+Examine the challenges posed by private-sector-led expansion of AYUSH medical education in India. Suggest measures to ensure quality and accountability.
 
 MAINS ANSWER
 
-India's rapidly expanding digital economy has increased opportunities for financial inclusion but has also created new avenues for organised cyber fraud. Addressing evolving digital financial crime requires balancing technological innovation with effective regulation, citizen protection and coordinated law enforcement.
+India’s AYUSH education system is expanding rapidly, with private institutions providing much of the educational capacity. While such participation can improve access and availability of seats, expansion without corresponding improvements in teaching and clinical infrastructure can undermine educational quality and accountability.
 
-Cybercriminals increasingly exploit fake official identities, deepfakes, social engineering and complex financial networks involving mule accounts. India has responded through measures such as the Indian Cyber Crime Coordination Centre, the National Cyber Crime Reporting Portal, e-Zero FIR, AI-based detection tools and faster banking interventions for freezing suspicious transactions. However, low conviction rates, jurisdictional challenges and overseas scam networks continue to limit deterrence. Strengthening digital literacy, improving cyber forensic capabilities, enhancing inter-agency coordination and ensuring time-bound investigation are equally important. International cooperation through mutual legal assistance, intelligence sharing and regional partnerships is essential to dismantle transnational cybercrime ecosystems.
+Private-sector-led expansion creates several challenges. Revenue linked to admissions can encourage institutions to increase student intake without proportionately expanding faculty, laboratories, hospital beds and clinical facilities. Inadequate teaching staff and limited patient exposure can weaken practical training and professional competence. Persistent deficiencies are particularly significant because AYUSH education requires both theoretical instruction and meaningful clinical experience. Regulatory non-compliance, including failures concerning inspections, faculty strength and admission requirements, further complicates quality assurance. Addressing these concerns requires rigorous inspections, transparent institutional grading and credible verification of faculty and infrastructure. Regulators should strictly enforce admission limits and link permitted seats to demonstrated teaching and clinical capacity. Public disclosure of inspection findings can strengthen accountability. Simultaneously, regulatory standards should ensure that expansion remains consistent with evidence-based evaluation, educational quality and patient welfare.
 
-A resilient cyber ecosystem depends upon combining advanced technology, efficient institutions, informed citizens and sustained international collaboration. Such a comprehensive approach can reduce cyber fraud while strengthening confidence in India's expanding digital economy.
+Private participation can contribute substantially to expanding AYUSH education, but numerical growth cannot substitute for institutional capability. Aligning commercial incentives with rigorous academic, clinical and regulatory standards is essential for producing competent practitioners and protecting public confidence.
 
 DAILY MCQ 1
 
-Q. Which institution functions as India's nodal agency for coordinating efforts against cybercrime?
+With reference to AYUSH medical education in India, consider the following statements:
 
-A. National Investigation Agency
-
-B. Indian Cyber Crime Coordination Centre (I4C)
-
-C. National Informatics Centre
-
-D. National Crime Records Bureau
-
-Correct Answer: B
-
-Explanation: I4C functions under the Ministry of Home Affairs and coordinates cybercrime prevention, investigation, capacity building and awareness across the country.
-
-DAILY MCQ 2
-
-Q. The primary purpose of mule accounts in digital financial fraud is to:
-
-A. Increase banking competition
-
-B. Hide the movement and ownership of illicit funds
-
-C. Improve digital payment security
-
-D. Reduce transaction costs
-
-Correct Answer: B
-
-Explanation: Mule accounts are used to rapidly transfer stolen money across multiple accounts, making tracing and recovery difficult.
-
-DAILY MCQ 3
-
-Q. Consider the following statements:
-
-e-Zero FIR enables quicker registration of cybercrime complaints before jurisdiction is determined.
-Artificial intelligence tools can assist banks in detecting suspicious financial transactions.
-International cooperation has no role in investigating cross-border cybercrime.
+Non-government institutions accounted for more than four-fifths of Ayurveda colleges in 2024.
+Non-government institutions accounted for more than four-fifths of homoeopathy colleges in 2024.
+Permitted AYUSH seats declined between 2021 and 2024.
 
 Which of the statements given above are correct?
 
 A. 1 only
-
 B. 1 and 2 only
-
 C. 2 and 3 only
-
 D. 1, 2 and 3
 
-Correct Answer: B
+Answer: B
 
-Explanation: Statements 1 and 2 are correct. Cross-border cybercrime investigations depend significantly on international cooperation, making Statement 3 incorrect.
+Explanation: In 2024, non-government institutions accounted for 86% of Ayurveda and 85% of homoeopathy colleges. Permitted seats increased by 43% between 2021 and 2024.
 
+DAILY MCQ 2
+
+Consider the following pairs:
+
+Qualified faculty — Teaching capacity
+Teaching hospitals — Clinical exposure
+Laboratories — Practical training
+Higher student intake — Automatic improvement in educational quality
+
+How many of the above pairs are correctly matched?
+
+A. Only one
+B. Only two
+C. Only three
+D. All four
+
+Answer: C
+
+Explanation: The first three correctly connect institutional resources with educational functions. Increasing student intake does not automatically improve quality and may strain existing capacity.
+
+DAILY MCQ 3
+
+In the context of private-sector-led expansion of professional education, “incentive misalignment” would most appropriately refer to:
+
+A. Increasing institutional expenditure whenever student intake rises
+B. Financial incentives encouraging greater admissions without proportionate investment in educational capacity
+C. Regulators reducing admission capacity despite complete compliance
+D. Students preferring private institutions over public institutions
+
+Answer: B
+
+Explanation: When revenue depends heavily on admissions, institutions may have incentives to maximise intake while limiting expensive investments in faculty, laboratories and clinical infrastructure.
 
 TOPIC 2
+
 ISSUE TITLE
 
-Expanding Affordable Medical Education for Equitable Healthcare Delivery
+Vulture Conservation and Bird-Safe Power Infrastructure
 
 RATING
 
-4.8
+4.5
 
 EDITORIAL SOURCE(S)
 
-Editorial 2
+The Hindu
 
 GS MAPPING
 
-GS II
-Health
-Health Infrastructure
+GS Paper III — Environment, Biodiversity Conservation and Infrastructure
 
 TODAY'S QUESTION
 
-How can India expand medical education while ensuring affordability, quality, and equitable healthcare access?
+How can India protect recovering vulture populations from emerging threats posed by expanding power infrastructure?
 
 RECALL ANCHORS
 
-National Medical Commission
-
-District Hospitals
-
-Capitation Fee
-
-AIIMS
-
-Rural Service
+Ecological Scavengers
+Diclofenac Threat
+Electrocution Risk
+Bird-Safe Infrastructure
+Preventive Planning
 
 KNOWLEDGE POINT 1
-Expanding Capacity
 
-India has significantly increased MBBS seats to address the shortage of doctors and reduce dependence on foreign medical education. Expanding training capacity strengthens the healthcare workforce but must be accompanied by equitable access and quality.
+Ecological Scavengers
+
+Vultures rapidly consume animal carcasses, limiting their persistence in the environment and thereby helping regulate scavenger populations, disease transmission risks and broader ecosystem sanitation.
+
 KNOWLEDGE POINT 2
-Affordability Challenge
 
-Rapid growth has largely occurred in private medical colleges, where high tuition fees and Capitation Fee practices can restrict access for deserving students. Affordable education remains essential for creating an inclusive medical workforce.
+Electrocution Mechanism
+
+Vultures can be electrocuted when their large wingspans simultaneously bridge energised conductors or connect energised and grounded components, allowing dangerous electrical current to pass through them.
 
 KNOWLEDGE POINT 3
-Quality Regulation
 
-The National Medical Commission regulates standards for medical education through accreditation, inspections and curriculum oversight. Effective monitoring, transparent assessments and strict compliance ensure that expansion does not compromise educational quality.
+Behavioural Vulnerability
+
+Vultures frequently perch on elevated structures and congregate around predictable food sources, making electrical installations particularly hazardous when carcasses or food waste attract birds nearby.
 
 KNOWLEDGE POINT 4
-Regional Imbalance
 
-Medical colleges are concentrated in economically stronger regions, while underserved rural areas continue to face shortages of qualified doctors. Expanding institutions attached to District Hospitals and strengthening AIIMS-like institutions can improve regional equity.
+Infrastructure Expansion Risk
+
+Expanding electricity infrastructure can create new wildlife hazards when transmission and distribution systems are designed without considering bird behaviour, body dimensions and ecologically sensitive locations.
 
 KNOWLEDGE POINT 5
-Retaining Doctors
 
-Compulsory Rural Service alone cannot ensure long-term availability of healthcare professionals. Competitive salaries, housing, educational facilities for families, career progression and better working conditions are necessary to attract and retain doctors in underserved areas.
+Bird-Safe Infrastructure
+
+Separating feeding sites from electrical infrastructure, insulating conductors, increasing component spacing and installing safe perches can reduce opportunities for vultures and other birds to complete electrical circuits.
 
 QUICK FACTS
-National Medical Commission (NMC): Established under the National Medical Commission Act, 2019, replacing the Medical Council of India to regulate medical education and professional standards.
-District Hospital Medical Colleges: The Centrally Sponsored Scheme supports establishment of medical colleges attached to district hospitals, expanding both medical education and healthcare infrastructure.
-National Health Policy, 2017: Emphasises strengthening human resources for health and improving equitable access to quality healthcare services.
-AIIMS Network: Expansion of All India Institutes of Medical Sciences aims to improve tertiary healthcare, medical education and research across different regions of India.
+
+India’s vulture population declined by 99.5% by 2007 from around four crore in the 1980s, severely affecting several major vulture species.
+Diclofenac, a veterinary painkiller that causes kidney damage in vultures feeding on treated cattle carcasses, was identified as the principal cause of the historic population crash.
+India banned veterinary use of diclofenac, while additional bans introduced in 2023 targeted aceclofenac and ketoprofen to reduce pharmaceutical threats to vultures.
+An official survey reported in 2025 found vultures nesting at only 50% of their historic nesting sites, highlighting the continuing fragility of their recovery.
+
 KEY TAKEAWAY
 
-Expanding medical education achieves national health goals only when affordability, quality regulation and equitable distribution of healthcare professionals advance together.
+Infrastructure development and biodiversity conservation must advance together by integrating wildlife behaviour, ecological vulnerability and preventive safeguards into power-system planning.
 
 MAINS QUESTION
 
-How can India expand medical education while ensuring affordability, quality, and equitable healthcare access?
+“Infrastructure development must incorporate biodiversity safeguards at the planning and design stages.” Discuss in the context of electrocution risks faced by vultures in India.
 
 MAINS ANSWER
 
-India's growing demand for healthcare professionals requires continuous expansion of medical education. However, increasing the number of MBBS seats alone cannot ensure universal healthcare unless education remains affordable, maintains high quality and supports equitable distribution of doctors.
+India’s infrastructure expansion is essential for economic development and universal access to electricity, but poorly designed power systems can impose unintended ecological costs. Vulture electrocution illustrates why biodiversity considerations must become integral to infrastructure planning rather than corrective measures introduced after wildlife losses occur.
 
-While private investment has accelerated seat creation, high tuition fees and capitation practices may reduce opportunities for meritorious students. The National Medical Commission plays a central role in maintaining educational standards through accreditation and inspections. Government initiatives such as establishing medical colleges attached to district hospitals and expanding AIIMS-like institutions strengthen public capacity. At the same time, addressing regional imbalances requires incentives for rural service, better infrastructure, competitive remuneration, career advancement and supportive living conditions for healthcare professionals.
+Vultures are particularly vulnerable because their large wingspans can bridge conductors or energised and grounded components, causing electrocution. Their tendency to perch on elevated structures and congregate near predictable food sources further increases exposure. This is especially concerning because Indian vulture populations remain fragile after their historic collapse caused by veterinary diclofenac. Persistent additional mortality can therefore undermine recovery and even threaten local populations. Biodiversity safeguards should begin with ecological risk assessments identifying nesting, feeding and congregation sites before power infrastructure is located. Carcass dumps and other feeding sites should be separated from dangerous electrical installations. In high-risk areas, conductors can be insulated, spacing between electrical components increased, and safe perches installed. Wildlife mortality should also be systematically monitored because electrocution deaths may remain under-reported. Cooperation among power utilities, conservation agencies and local authorities can institutionalise such preventive measures.
 
-A balanced strategy combining public investment, effective regulation and targeted incentives can produce a competent, accessible and equitably distributed medical workforce capable of meeting India's long-term healthcare needs.
+Development and conservation need not be competing objectives. Incorporating species behaviour and ecological vulnerability into infrastructure location, design and operation can prevent avoidable mortality while allowing electricity networks to expand sustainably, making biodiversity protection an integral component of responsible infrastructure governance.
 
 DAILY MCQ 1
 
-Q. The National Medical Commission primarily regulates:
+With reference to vultures in India, consider the following statements:
 
-A. Pharmaceutical manufacturing
-
-B. Medical education and professional standards
-
-C. Public health insurance
-
-D. Hospital accreditation only
-
-Correct Answer: B
-
-Explanation: The National Medical Commission regulates medical education, professional ethics and standards for medical practitioners under the NMC Act, 2019.
-
-DAILY MCQ 2
-
-Q. Which of the following is most likely to improve long-term availability of doctors in rural India?
-
-A. Increasing private college fees
-
-B. Restricting postgraduate admissions
-
-C. Providing career incentives and better working conditions
-
-D. Limiting establishment of government medical colleges
-
-Correct Answer: C
-
-Explanation: Sustainable rural healthcare depends on incentives such as better salaries, housing, career progression and quality infrastructure rather than compulsory service alone.
-
-DAILY MCQ 3
-
-Q. Consider the following statements:
-
-Medical colleges attached to district hospitals strengthen both healthcare delivery and medical education.
-High tuition fees in private medical colleges can affect equitable access to medical education.
-Expanding MBBS seats alone automatically ensures equitable distribution of doctors.
+India’s vulture population declined by about 99.5% by 2007 from its level in the 1980s.
+Veterinary diclofenac was a major cause of the population collapse.
+Vulture electrocution can occur when a bird bridges two conductors simultaneously.
 
 Which of the statements given above are correct?
 
-A. 1 only
-
-B. 1 and 2 only
-
-C. 2 and 3 only
-
+A. 1 and 2 only
+B. 2 and 3 only
+C. 1 and 3 only
 D. 1, 2 and 3
 
-Correct Answer: B
+Answer: D
 
-Explanation: Statements 1 and 2 are correct. Merely increasing seats does not ensure that doctors will be distributed equitably across rural and underserved regions.
+Explanation: India experienced an extraordinary vulture decline linked primarily to diclofenac poisoning. Large wingspans also make vultures vulnerable to bridging electrical components and suffering electrocution.
+
+DAILY MCQ 2
+
+Which of the following measures can reduce electrocution risks to vultures?
+
+Separating feeding sites from electrical infrastructure
+Insulating dangerous conductors
+Increasing spacing between energised and grounded components
+Installing safe perches
+
+Select the correct answer using the code below:
+
+A. 1 and 2 only
+B. 1, 2 and 3 only
+C. 2, 3 and 4 only
+D. 1, 2, 3 and 4
+
+Answer: D
+
+Explanation: These measures reduce either vultures’ exposure to hazardous installations or their ability to bridge electrical components, integrating biodiversity safeguards into power infrastructure.
+
+DAILY MCQ 3
+
+The vulture-electrocution problem best illustrates which principle of environmental governance?
+
+A. Environmental protection should begin only after measurable population decline occurs.
+B. Infrastructure planning should incorporate species-specific ecological and behavioural risks before significant damage occurs.
+C. Wildlife conservation requires stopping infrastructure development in biodiversity-rich regions.
+D. Chemical pollution is necessarily a greater biodiversity threat than physical infrastructure.
+
+Answer: B
+
+Explanation: Preventive planning can identify ecological vulnerabilities early and incorporate safeguards into infrastructure location and design before avoidable wildlife mortality becomes severe.

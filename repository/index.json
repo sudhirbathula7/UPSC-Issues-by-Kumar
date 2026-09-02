@@ -108,5 +108,38 @@
     "gs_paper": "GS II",
     "gs_subject": "Health",
     "content_hash": "bc3c3c22bd7d5b126524865177ee1563e41798665be14b432b2007e5e23168f4"
+  },
+  {
+    "issue_id": "UAK-260824-01",
+    "publication_date": "24 August 2026",
+    "edition_code": "UAK-260824",
+    "topic_number": 1,
+    "issue_title": "Reforming Industrial Relations Law Amid Evolving Employment Structures",
+    "rating": 4.9,
+    "gs_paper": "GS III",
+    "gs_subject": "Economy",
+    "content_hash": "900872ef9c304733a6114b5acf426ec931a67b6d5ed33d417fc8712b7d2e0ffb"
+  },
+  {
+    "issue_id": "UAK-260824-02",
+    "publication_date": "24 August 2026",
+    "edition_code": "UAK-260824",
+    "topic_number": 2,
+    "issue_title": "Assessing Industrial Growth Through Demand and Energy Security",
+    "rating": 4.7,
+    "gs_paper": "GS III",
+    "gs_subject": "Economy",
+    "content_hash": "38a73430c8f056b29db74cd882f24370b3356185844dd5c6644f32c5f9e864b5"
+  },
+  {
+    "issue_id": "UAK-260830-01",
+    "publication_date": "30 August 2026",
+    "edition_code": "UAK-260830",
+    "topic_number": 1,
+    "issue_title": "Strengthening Fire Safety in Hospital Intensive Care Units",
+    "rating": 4.5,
+    "gs_paper": "GS II",
+    "gs_subject": "Health",
+    "content_hash": "5bf3f6243073e5202ffc58ce36b098a65f4f62936dc04b850a399a1307e04ea9"
   }
 ]

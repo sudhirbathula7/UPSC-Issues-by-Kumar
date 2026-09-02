@@ -2,19 +2,18 @@
 UPSC ISSUES BY KUMAR — PRODUCTION SUMMARY
 ========================================================================
 
-Publication Date : 07 August 2026
-Edition Code     : UAK-260807
-Issues Published : 2
+Publication Date : 30 August 2026
+Edition Code     : UAK-260830
+Issues Published : 1
 
 Issue IDs
 ------------------------------------------------------------------------
-UAK-260807-01
-UAK-260807-02
+UAK-260830-01
 
-Standard PDF    : uak_260807_pdf.pdf
-Pro PDF         : uak_260807_pro_pdf.pdf
+Standard PDF    : uak_260830_pdf.pdf
+Pro PDF         : uak_260830_pro_pdf.pdf
 Repository       : Updated
 Daily Archive    : Created
-Duration         : 1.4 seconds
+Duration         : 1.1 seconds
 
 ========================================================================
