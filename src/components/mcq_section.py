@@ -252,18 +252,18 @@ def _build_mcq_text(
     )
 
     return (
-        f"<font name='{FONT_BOLD}' "
-        f"size='{question_size}'>"
-        f"{formatted_question}"
-        f"</font>"
-        f"<br/><br/>"
-        f"A. {mcq.options[0]}"
-        f"<br/>"
-        f"B. {mcq.options[1]}"
-        f"<br/>"
-        f"C. {mcq.options[2]}"
-        f"<br/>"
-        f"D. {mcq.options[3]}"
+    f"<font name='{FONT_BOLD}' "
+    f"size='{question_size}'>"
+    f"{formatted_question}"
+    f"</font>"
+    f"<br/>"
+    f"A. {mcq.options[0]}"
+    f"<br/>"
+    f"B. {mcq.options[1]}"
+    f"<br/>"
+    f"C. {mcq.options[2]}"
+    f"<br/>"
+    f"D. {mcq.options[3]}"
     )
 
 
@@ -585,7 +585,7 @@ def draw_mcqs(
         - bullet_text_gap
     )
 
-    minimum_mcq_gap = 4 * mm
+    minimum_mcq_gap = 2 * mm
 
     (
         _question_size,

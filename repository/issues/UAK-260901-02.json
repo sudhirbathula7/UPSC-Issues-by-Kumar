@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "issue_id": "UAK-260901-02",
+  "publication_date": "01 September 2026",
+  "edition_code": "UAK-260901",
+  "status": "published",
+  "topic_number": 2,
+  "issue_title": "Vulture Conservation and Bird-Safe Power Infrastructure",
+  "rating": 4.5,
+  "editorial_sources": [
+    "The Hindu"
+  ],
+  "gs_mapping": {
+    "display": "GS Paper III | Environment | Biodiversity Conservation and Infrastructure",
+    "paper": "GS Paper III",
+    "subject": "Environment",
+    "syllabus": "Biodiversity Conservation and Infrastructure"
+  },
+  "todays_question": "How can India protect recovering vulture populations from emerging threats posed by expanding power infrastructure?",
+  "recall_anchors": [
+    "Ecological Scavengers",
+    "Diclofenac Threat",
+    "Electrocution Risk",
+    "Bird-Safe Infrastructure",
+    "Preventive Planning"
+  ],
+  "knowledge_points": [
+    {
+      "number": 1,
+      "heading": "Ecological Scavengers",
+      "explanation": "Vultures rapidly consume animal carcasses, limiting their persistence in the environment and thereby helping regulate scavenger populations, disease transmission risks and broader ecosystem sanitation."
+    },
+    {
+      "number": 2,
+      "heading": "Electrocution Mechanism",
+      "explanation": "Vultures can be electrocuted when their large wingspans simultaneously bridge energised conductors or connect energised and grounded components, allowing dangerous electrical current to pass through them."
+    },
+    {
+      "number": 3,
+      "heading": "Behavioural Vulnerability",
+      "explanation": "Vultures frequently perch on elevated structures and congregate around predictable food sources, making electrical installations particularly hazardous when carcasses or food waste attract birds nearby."
+    },
+    {
+      "number": 4,
+      "heading": "Infrastructure Expansion Risk",
+      "explanation": "Expanding electricity infrastructure can create new wildlife hazards when transmission and distribution systems are designed without considering bird behaviour, body dimensions and ecologically sensitive locations."
+    },
+    {
+      "number": 5,
+      "heading": "Bird-Safe Infrastructure",
+      "explanation": "Separating feeding sites from electrical infrastructure, insulating conductors, increasing component spacing and installing safe perches can reduce opportunities for vultures and other birds to complete electrical circuits."
+    }
+  ],
+  "quick_facts": [
+    "India’s vulture population declined by 99.5% by 2007 from around four crore in the 1980s, severely affecting several major vulture species.",
+    "Diclofenac, a veterinary painkiller that causes kidney damage in vultures feeding on treated cattle carcasses, was identified as the principal cause of the historic population crash.",
+    "India banned veterinary use of diclofenac, while additional bans introduced in 2023 targeted aceclofenac and ketoprofen to reduce pharmaceutical threats to vultures.",
+    "An official survey reported in 2025 found vultures nesting at only 50% of their historic nesting sites, highlighting the continuing fragility of their recovery."
+  ],
+  "key_takeaway": "Infrastructure development and biodiversity conservation must advance together by integrating wildlife behaviour, ecological vulnerability and preventive safeguards into power-system planning.",
+  "mains_question": "“Infrastructure development must incorporate biodiversity safeguards at the planning and design stages.” Discuss in the context of electrocution risks faced by vultures in India?",
+  "mains_answer": {
+    "paragraphs": [
+      "India’s infrastructure expansion is essential for development and universal electricity access, but poorly designed power systems can impose ecological costs. Vulture electrocution demonstrates why biodiversity safeguards must be integrated into infrastructure planning rather than introduced after wildlife losses.",
+      "Vultures are vulnerable because their large wingspans can bridge conductors or energised and grounded components, causing electrocution. Their tendency to perch on elevated structures and congregate near predictable food sources further increases exposure. This is especially concerning because Indian vulture populations remain fragile after their historic collapse caused by veterinary diclofenac. Persistent mortality can therefore undermine recovery. Biodiversity safeguards should begin with ecological risk assessments identifying nesting, feeding and congregation sites before power infrastructure is located. Carcass dumps and feeding sites should be separated from dangerous electrical installations. In high-risk areas, conductors can be insulated, spacing between electrical components increased, and safe perches installed. Wildlife mortality should be monitored. Cooperation among power utilities, conservation agencies and local authorities can institutionalise preventive measures.",
+      "Development and conservation need not be competing objectives. Incorporating species behaviour and ecological vulnerability into infrastructure location, design and operation can prevent avoidable mortality while allowing electricity networks to expand sustainably and making biodiversity protection integral to responsible infrastructure governance."
+    ],
+    "full_text": "India’s infrastructure expansion is essential for development and universal electricity access, but poorly designed power systems can impose ecological costs. Vulture electrocution demonstrates why biodiversity safeguards must be integrated into infrastructure planning rather than introduced after wildlife losses.\n\nVultures are vulnerable because their large wingspans can bridge conductors or energised and grounded components, causing electrocution. Their tendency to perch on elevated structures and congregate near predictable food sources further increases exposure. This is especially concerning because Indian vulture populations remain fragile after their historic collapse caused by veterinary diclofenac. Persistent mortality can therefore undermine recovery. Biodiversity safeguards should begin with ecological risk assessments identifying nesting, feeding and congregation sites before power infrastructure is located. Carcass dumps and feeding sites should be separated from dangerous electrical installations. In high-risk areas, conductors can be insulated, spacing between electrical components increased, and safe perches installed. Wildlife mortality should be monitored. Cooperation among power utilities, conservation agencies and local authorities can institutionalise preventive measures.\n\nDevelopment and conservation need not be competing objectives. Incorporating species behaviour and ecological vulnerability into infrastructure location, design and operation can prevent avoidable mortality while allowing electricity networks to expand sustainably and making biodiversity protection integral to responsible infrastructure governance."
+  },
+  "daily_mcqs": [
+    {
+      "number": 1,
+      "question": "With reference to vultures in India, consider the following statements:\n\nIndia’s vulture population declined by about 99.5% by 2007 from its level in the 1980s.\nVeterinary diclofenac was a major cause of the population collapse.\nVulture electrocution can occur when a bird bridges two conductors simultaneously.\n\nWhich of the statements given above are correct?",
+      "options": {
+        "A": "1 and 2 only",
+        "B": "2 and 3 only",
+        "C": "1 and 3 only",
+        "D": "1, 2 and 3"
+      },
+      "correct_answer": "D",
+      "explanation": "India experienced an extraordinary vulture decline linked primarily to diclofenac poisoning. Large wingspans also make vultures vulnerable to bridging electrical components and suffering electrocution."
+    },
+    {
+      "number": 2,
+      "question": "Which of the following measures can reduce electrocution risks to vultures?\n\nSeparating feeding sites from electrical infrastructure\nInsulating dangerous conductors\nIncreasing spacing between energised and grounded components\nInstalling safe perches\n\nSelect the correct answer using the code below:",
+      "options": {
+        "A": "1 and 2 only",
+        "B": "1, 2 and 3 only",
+        "C": "2, 3 and 4 only",
+        "D": "1, 2, 3 and 4"
+      },
+      "correct_answer": "D",
+      "explanation": "These measures reduce either vultures’ exposure to hazardous installations or their ability to bridge electrical components, integrating biodiversity safeguards into power infrastructure."
+    },
+    {
+      "number": 3,
+      "question": "The vulture-electrocution problem best illustrates which principle of environmental governance?",
+      "options": {
+        "A": "Environmental protection should begin only after measurable population decline occurs.",
+        "B": "Infrastructure planning should incorporate species-specific ecological and behavioural risks before significant damage occurs.",
+        "C": "Wildlife conservation requires stopping infrastructure development in biodiversity-rich regions.",
+        "D": "Chemical pollution is necessarily a greater biodiversity threat than physical infrastructure."
+      },
+      "correct_answer": "B",
+      "explanation": "Preventive planning can identify ecological vulnerabilities early and incorporate safeguards into infrastructure location and design before avoidable wildlife mortality becomes severe."
+    }
+  ],
+  "repository_saved_at": "2026-09-02T23:31:44",
+  "content_hash": "11785cb999c33dee6f0360b05f69e2a2d6f1398be66436ab0f1550a0ae9caa2b"
+}

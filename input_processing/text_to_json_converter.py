@@ -1,4 +1,4 @@
-from __future__ import annotations
+
 
 import json
 import re
@@ -392,9 +392,13 @@ def _parse_gs_mapping(
 
     value = _clean(value)
 
-    if "|" not in value and "•" not in value:
-        parts = _nonempty_lines(value)
-    else:
+    paper = ""
+    subject = ""
+    syllabus = ""
+
+    # Format: GS Paper II | Social Justice | Health and Education
+    # or:     GS Paper II • Social Justice • Health and Education
+    if "|" in value or "•" in value:
         parts = [
             part.strip()
             for part in re.split(
@@ -404,23 +408,81 @@ def _parse_gs_mapping(
             if part.strip()
         ]
 
+        paper = parts[0] if len(parts) > 0 else ""
+        subject = parts[1] if len(parts) > 1 else ""
+        syllabus = " • ".join(parts[2:]) if len(parts) > 2 else ""
+
+    # Format actually produced by the editorial prompt:
+    # GS Paper II — Health, Education, Government Policies and Regulatory Institutions
+    # GS Paper III — Environment, Biodiversity Conservation and Infrastructure
+    elif re.search(r"\s+[—–-]\s+", value):
+        split_parts = re.split(
+            r"\s+[—–-]\s+",
+            value,
+            maxsplit=1,
+        )
+
+        paper = split_parts[0].strip()
+
+        remainder = (
+            split_parts[1].strip()
+            if len(split_parts) > 1
+            else ""
+        )
+
+        remainder_parts = [
+            part.strip()
+            for part in remainder.split(",")
+            if part.strip()
+        ]
+
+        subject = (
+            remainder_parts[0]
+            if remainder_parts
+            else ""
+        )
+
+        syllabus = (
+            ", ".join(remainder_parts[1:])
+            if len(remainder_parts) > 1
+            else subject
+        )
+
+    # Labelled format:
+    # Paper: GS Paper II
+    # Subject: Social Justice
+    # Syllabus: Health and Education
+    else:
+        labelled: dict[str, str] = {}
+
+        for line in _nonempty_lines(value):
+            match = re.match(
+                r"(?i)^\s*(paper|subject|syllabus)\s*:\s*(.+?)\s*$",
+                line,
+            )
+
+            if match:
+                labelled[match.group(1).casefold()] = match.group(2).strip()
+
+        if labelled:
+            paper = labelled.get("paper", "")
+            subject = labelled.get("subject", "")
+            syllabus = labelled.get("syllabus", "")
+        else:
+            parts = _nonempty_lines(value)
+            paper = parts[0] if len(parts) > 0 else ""
+            subject = parts[1] if len(parts) > 1 else ""
+            syllabus = " • ".join(parts[2:]) if len(parts) > 2 else ""
+
     return {
-        "display": " | ".join(parts),
-        "paper": (
-            parts[0]
-            if len(parts) > 0
-            else ""
+        "display": " | ".join(
+            item
+            for item in (paper, subject, syllabus)
+            if item
         ),
-        "subject": (
-            parts[1]
-            if len(parts) > 1
-            else ""
-        ),
-        "syllabus": (
-            " • ".join(parts[2:])
-            if len(parts) > 2
-            else ""
-        ),
+        "paper": paper,
+        "subject": subject,
+        "syllabus": syllabus,
     }
 
 # ============================================================
@@ -621,16 +683,30 @@ def _parse_topic(
         block
     )
 
+    rating_raw = sections["RATING"].strip()
+
+    rating_map = {
+        "low": 2.0,
+        "medium": 3.0,
+        "moderate": 3.0,
+        "high": 4.5,
+        "very high": 5.0,
+    }
+
     try:
-        rating = float(
-            sections["RATING"]
-        )
+        rating = float(rating_raw)
 
     except ValueError as exc:
-        raise ConversionError(
-            f"Topic {topic_number}: "
-            "RATING must be numeric."
-        ) from exc
+        rating_key = rating_raw.casefold()
+
+        if rating_key not in rating_map:
+            raise ConversionError(
+                f"Topic {topic_number}: "
+                "RATING must be numeric or one of: "
+                "Low, Medium, Moderate, High, Very High."
+            ) from exc
+
+        rating = rating_map[rating_key]
 
     anchors = _nonempty_lines(
         sections["RECALL ANCHORS"]
@@ -722,6 +798,10 @@ def _parse_topic(
         ),
         "mains_question": (
             sections["MAINS QUESTION"]
+            .rstrip()
+            .rstrip(".")
+            .rstrip("?")
+            + "?"
         ),
         "mains_answer": {
             "paragraphs": paragraphs,

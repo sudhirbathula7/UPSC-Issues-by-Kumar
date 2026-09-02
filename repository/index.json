@@ -1,5 +1,27 @@
 [
   {
+    "issue_id": "UAK-260901-01",
+    "publication_date": "01 September 2026",
+    "edition_code": "UAK-260901",
+    "topic_number": 1,
+    "issue_title": "Private-Sector Expansion and Quality of AYUSH Medical Education",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Health",
+    "content_hash": "f4d6f8928d435668b42ccca59798afec5126df4577ff9ed4be5a32660326fc75"
+  },
+  {
+    "issue_id": "UAK-260901-02",
+    "publication_date": "01 September 2026",
+    "edition_code": "UAK-260901",
+    "topic_number": 2,
+    "issue_title": "Vulture Conservation and Bird-Safe Power Infrastructure",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Environment",
+    "content_hash": "784b400f4a5b9d37cc8c5f2269e13670fb4ac5694a2c52dd2ac89ccf76a81178"
+  },
+  {
     "issue_id": "TUI-260803-01",
     "publication_date": "03 August 2026",
     "edition_code": "TUI-260803",
