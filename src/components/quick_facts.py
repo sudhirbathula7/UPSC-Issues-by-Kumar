@@ -138,7 +138,7 @@ def _draw_bullet(
     canvas.circle(
         rect.centre_x,
         rect.centre_y,
-        0.78 * mm,
+        0.50* mm,
         stroke=0,
         fill=1,
     )

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
 from reportlab.lib.units import mm
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen.canvas import Canvas
+from reportlab.platypus import Paragraph
 
 from src.pdf.helpers import (
     draw_paragraph,
@@ -119,6 +121,157 @@ def _draw_section_title(
 
 
 # ============================================================
+# ANSWER PARAGRAPH HELPERS
+# ============================================================
+
+def _split_answer_into_three_paragraphs(
+    answer: str,
+) -> tuple[str, ...]:
+    """
+    Keep the rendered Mains Answer in a clean 3-paragraph structure:
+
+    1. Introduction
+    2. Main Body
+    3. Conclusion
+
+    If the incoming answer contains more than three blank-line
+    separated blocks, all middle blocks are merged into one body
+    paragraph. This prevents short lead-in lines from becoming a
+    separate fourth paragraph.
+    """
+    raw = str(answer).strip()
+
+    if not raw:
+        return ()
+
+    # Accept either real blank lines or HTML-style double breaks.
+    normalised = re.sub(
+        r"(?i)<br\s*/?>\s*<br\s*/?>",
+        "\n\n",
+        raw,
+    )
+
+    blocks = [
+        re.sub(
+            r"\s+",
+            " ",
+            block,
+        ).strip()
+        for block in re.split(
+            r"\n\s*\n",
+            normalised,
+        )
+        if block.strip()
+    ]
+
+    if not blocks:
+        return ()
+
+    if len(blocks) <= 3:
+        return tuple(blocks)
+
+    introduction = blocks[0]
+    body = " ".join(blocks[1:-1]).strip()
+    conclusion = blocks[-1]
+
+    return (
+        introduction,
+        body,
+        conclusion,
+    )
+
+
+def _draw_answer_paragraphs(
+    canvas: Canvas,
+    rect: Rect,
+    answer: str,
+) -> None:
+    paragraphs = _split_answer_into_three_paragraphs(
+        answer,
+    )
+
+    if not paragraphs:
+        return
+
+    answer_style = paragraph_style(
+        name="MainsAnswer",
+        font_name=FONT_REGULAR,
+        font_size=MAINS_TEXT_SIZE + 1,
+        leading=MAINS_LEADING,
+        text_color=BLACK,
+        alignment=TA_JUSTIFY,
+    )
+
+    # Visually similar to roughly 4–5 typed spaces, but implemented
+    # as a proper first-line indent so it remains consistent.
+    answer_style.firstLineIndent = 5 * mm
+    answer_style.spaceBefore = 0
+    answer_style.spaceAfter = 0
+
+    paragraph_gap = 2.2 * mm
+
+    measured: list[
+        tuple[Paragraph, float]
+    ] = []
+
+    for index, text in enumerate(
+        paragraphs,
+        start=1,
+    ):
+        paragraph = Paragraph(
+            text,
+            answer_style,
+        )
+
+        _, height = paragraph.wrap(
+            rect.width,
+            1000 * mm,
+        )
+
+        measured.append(
+            (
+                paragraph,
+                height,
+            )
+        )
+
+    total_height = (
+        sum(
+            height
+            for _, height
+            in measured
+        )
+        + paragraph_gap
+        * max(
+            0,
+            len(measured) - 1,
+        )
+    )
+
+    # Start at the top. If an unusually long answer exceeds the box,
+    # preserve all content and let the existing project word limits
+    # remain the controlling constraint.
+    current_top = rect.top
+
+    for paragraph, height in measured:
+        paragraph_bottom = (
+            current_top
+            - height
+        )
+
+        paragraph.drawOn(
+            canvas,
+            rect.x,
+            paragraph_bottom,
+        )
+
+        current_top = (
+            paragraph_bottom
+            - paragraph_gap
+        )
+
+
+# ============================================================
 # PUBLIC RENDERER
 # ============================================================
 
@@ -182,19 +335,8 @@ def draw_mains_answer(
         ),
     )
 
-    answer_style = paragraph_style(
-        name="MainsAnswer",
-        font_name=FONT_REGULAR,
-        font_size=MAINS_TEXT_SIZE+ 1,
-        leading=MAINS_LEADING,
-        text_color=BLACK,
-        alignment=TA_JUSTIFY,
-    )
-
-    draw_paragraph(
+    _draw_answer_paragraphs(
         canvas=canvas,
-        text=data.answer,
         rect=answer_rect,
-        style=answer_style,
-        vertical_align="top",
+        answer=data.answer,
     )

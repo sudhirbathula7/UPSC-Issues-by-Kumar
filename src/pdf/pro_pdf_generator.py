@@ -56,15 +56,16 @@ from src.pdf.page_setup import (
     create_canvas,
     finish_page,
 )
+from src.pdf.pro_text_formatter import (
+    bold_italic_text,
+    bold_knowledge_heading,
+    bold_recall_anchors,
+)
 from src.publication import (
     PublicationMetadata,
     build_publication_metadata,
 )
 
-
-# ============================================================
-# REPORTLAB ANSWER FORMATTER
-# ============================================================
 
 def _answer_for_reportlab(
     answer: str,
@@ -80,14 +81,28 @@ def _answer_for_reportlab(
         if paragraph.strip()
     ]
 
-    return "<br/><br/>".join(
-        paragraphs
+    return "<br/><br/>".join(paragraphs)
+
+
+def _pro_text(
+    text: str,
+    anchors,
+) -> str:
+    return bold_recall_anchors(
+        text=text,
+        anchors=anchors,
     )
 
 
-# ============================================================
-# SINGLE TOPIC PAGE
-# ============================================================
+def _pro_options(
+    options: tuple[str, str, str, str],
+    anchors,
+) -> tuple[str, str, str, str]:
+    return tuple(
+        _pro_text(option, anchors)
+        for option in options
+    )
+
 
 def _draw_topic_page(
     canvas,
@@ -96,15 +111,10 @@ def _draw_topic_page(
     total_pages: int,
     metadata: PublicationMetadata,
 ) -> None:
-    begin_page(
-        canvas,
-    )
+    begin_page(canvas)
 
     layout = get_full_page_layout()
-
-    # --------------------------------------------------------
-    # HEADER
-    # --------------------------------------------------------
+    anchors = topic.recall_anchors
 
     if SHOW_HEADER:
         draw_header(
@@ -113,17 +123,11 @@ def _draw_topic_page(
             data=HeaderData(
                 title=metadata.title,
                 subtitle=metadata.subtitle,
-                publication_date=(
-                    metadata.publication_date
-                ),
+                publication_date=metadata.publication_date,
                 edition_code=metadata.edition_code,
             ),
             compact=False,
         )
-
-    # --------------------------------------------------------
-    # SECTION BOXES
-    # --------------------------------------------------------
 
     for section_rect in (
         layout.question_panel,
@@ -145,10 +149,7 @@ def _draw_topic_page(
         y_top=layout.question_panel.top - 2,
     )
 
-    # --------------------------------------------------------
-    # QUESTION + RECALL ANCHORS
-    # --------------------------------------------------------
-
+    # Keep the top Recall Anchors strip unchanged.
     draw_curiosity_box(
         canvas=canvas,
         rect=layout.curiosity_box,
@@ -158,10 +159,6 @@ def _draw_topic_page(
         ),
         compact=False,
     )
-
-    # --------------------------------------------------------
-    # GS MAPPING
-    # --------------------------------------------------------
 
     draw_gs_mapping(
         canvas=canvas,
@@ -176,10 +173,6 @@ def _draw_topic_page(
         compact=False,
     )
 
-    # --------------------------------------------------------
-    # KNOWLEDGE POINTS
-    # --------------------------------------------------------
-
     draw_knowledge_points(
         canvas=canvas,
         rect=layout.knowledge_points,
@@ -187,59 +180,59 @@ def _draw_topic_page(
             title="KNOWLEDGE POINTS",
             points=tuple(
                 KnowledgePoint(
-                    heading=point.heading,
-                    explanation=point.explanation,
+                    heading=bold_knowledge_heading(
+                        point.heading
+                    ),
+                    explanation=_pro_text(
+                        point.explanation,
+                        anchors,
+                    ),
                 )
                 for point in topic.knowledge_points
             ),
         ),
     )
 
-    # --------------------------------------------------------
-    # QUICK FACTS
-    # --------------------------------------------------------
-
     draw_quick_facts(
         canvas=canvas,
         rect=layout.quick_facts,
         data=QuickFactsData(
             title="QUICK FACTS",
-            facts=topic.quick_facts,
+            facts=tuple(
+                _pro_text(fact, anchors)
+                for fact in topic.quick_facts
+            ),
         ),
     )
-
-    # --------------------------------------------------------
-    # KEY TAKEAWAY
-    # --------------------------------------------------------
 
     draw_key_takeaway(
         canvas=canvas,
         rect=layout.takeaway,
         data=KeyTakeawayData(
             title="KEY TAKEAWAY",
-            takeaway=topic.key_takeaway,
+            takeaway=bold_italic_text(
+                topic.key_takeaway,
+            ),
         ),
     )
-
-    # --------------------------------------------------------
-    # MAINS PERSPECTIVE
-    # --------------------------------------------------------
 
     draw_mains_answer(
         canvas=canvas,
         rect=layout.mains_answer,
         data=MainsAnswerData(
             title="MAINS PERSPECTIVE",
-            question=topic.mains_question,
-            answer=_answer_for_reportlab(
-                topic.mains_answer
+            question=_pro_text(
+                topic.mains_question,
+                anchors,
+            ),
+            answer=_pro_text(
+                _answer_for_reportlab(
+                    topic.mains_answer
+                ),
+                anchors,
             ),
         ),
     )
-
-    # --------------------------------------------------------
-    # DAILY MCQS
-    # --------------------------------------------------------
 
     draw_mcqs(
         canvas=canvas,
@@ -248,25 +241,32 @@ def _draw_topic_page(
             title="DAILY MCQs",
             questions=tuple(
                 MCQ(
-                    question=mcq.question,
-                    options=mcq.options,
-                    correct_option=(
-                        mcq.correct_answer
+                    question=_pro_text(
+                        mcq.question,
+                        anchors,
                     ),
-                    explanation=getattr(
-                        mcq,
-                        "explanation",
-                        None,
+                    options=_pro_options(
+                        mcq.options,
+                        anchors,
+                    ),
+                    correct_option=mcq.correct_answer,
+                    explanation=(
+                        _pro_text(
+                            mcq.explanation,
+                            anchors,
+                        )
+                        if getattr(
+                            mcq,
+                            "explanation",
+                            None,
+                        )
+                        else None
                     ),
                 )
                 for mcq in topic.daily_mcqs
             ),
         ),
     )
-
-    # --------------------------------------------------------
-    # FOOTER
-    # --------------------------------------------------------
 
     if SHOW_FOOTER:
         draw_footer(
@@ -280,14 +280,8 @@ def _draw_topic_page(
             ),
         )
 
-    finish_page(
-        canvas,
-    )
+    finish_page(canvas)
 
-
-# ============================================================
-# PRO PDF GENERATOR
-# ============================================================
 
 def generate_pro_pdf(
     output_path: Path,
@@ -311,10 +305,7 @@ def generate_pro_pdf(
         exist_ok=True,
     )
 
-    canvas = create_canvas(
-        str(output_path),
-    )
-
+    canvas = create_canvas(str(output_path))
     total_pages = len(topics)
 
     for page_number, topic in enumerate(
@@ -330,7 +321,6 @@ def generate_pro_pdf(
         )
 
     canvas.save()
-
     return output_path
 
 

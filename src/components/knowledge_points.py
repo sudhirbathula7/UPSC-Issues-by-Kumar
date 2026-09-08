@@ -289,7 +289,7 @@ def _draw_bullet(
     canvas.circle(
         x,
         y,
-        0.72 * mm,
+        0.50 * mm,
         stroke=0,
         fill=1,
     )
@@ -391,7 +391,7 @@ def draw_knowledge_points(
 
     current_top = (
         content_rect.top
-        + 0.2 * mm
+        - 1* mm
     )
 
     for measured in measured_points:

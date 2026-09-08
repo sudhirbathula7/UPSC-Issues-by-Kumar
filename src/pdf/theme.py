@@ -113,8 +113,8 @@ SECTION_HEADING_SIZE_HALF: Final[float] = 10
 # KNOWLEDGE POINTS
 # ============================================================
 
-KNOWLEDGE_NUMBER_SIZE: Final[float] = 14
-KNOWLEDGE_NUMBER_SIZE_FULL: Final[float] = 14
+KNOWLEDGE_NUMBER_SIZE: Final[float] = 13
+KNOWLEDGE_NUMBER_SIZE_FULL: Final[float] = 13
 KNOWLEDGE_NUMBER_SIZE_HALF: Final[float] = 13
 
 KNOWLEDGE_HEADING_SIZE: Final[float] = 10
@@ -133,13 +133,13 @@ KNOWLEDGE_LEADING_HALF: Final[float] = 10
 # QUICK FACTS
 # ============================================================
 
-QUICK_FACT_SIZE: Final[float] = 8.8
+QUICK_FACT_SIZE: Final[float] = 9
 QUICK_FACT_LEADING: Final[float] = 10
 
-QUICK_FACT_SIZE_FULL: Final[float] = 8.8
+QUICK_FACT_SIZE_FULL: Final[float] = 9
 QUICK_FACT_LEADING_FULL: Final[float] = 10
 
-QUICK_FACT_SIZE_HALF: Final[float] = 8.8
+QUICK_FACT_SIZE_HALF: Final[float] = 9
 QUICK_FACT_LEADING_HALF: Final[float] = 10
 
 
@@ -147,38 +147,38 @@ QUICK_FACT_LEADING_HALF: Final[float] = 10
 # KEY TAKEAWAY
 # ============================================================
 
-TAKEAWAY_SIZE: Final[float] = 8.8
-TAKEAWAY_LEADING: Final[float] = 10
+TAKEAWAY_SIZE: Final[float] = 9
+TAKEAWAY_LEADING: Final[float] = 11
 
-TAKEAWAY_SIZE_FULL: Final[float] = 8.8
-TAKEAWAY_LEADING_FULL: Final[float] = 10
+TAKEAWAY_SIZE_FULL: Final[float] = 9
+TAKEAWAY_LEADING_FULL: Final[float] = 11
 
-TAKEAWAY_SIZE_HALF: Final[float] = 8.8
-TAKEAWAY_LEADING_HALF: Final[float] = 10
+TAKEAWAY_SIZE_HALF: Final[float] = 9
+TAKEAWAY_LEADING_HALF: Final[float] = 11
 
 
 # ============================================================
 # MAINS ANSWER
 # ============================================================
 
-MAINS_QUESTION_SIZE: Final[float] = 8
+MAINS_QUESTION_SIZE: Final[float] = 9.5
 MAINS_TEXT_SIZE: Final[float] = 8
 
-MAINS_LEADING: Final[float] = 10
-MAINS_TEXT_LEADING: Final[float] = 10
+MAINS_LEADING: Final[float] = 9.5
+MAINS_TEXT_LEADING: Final[float] = 9.5
 
-MAINS_WORD_NOTE_SIZE: Final[float] = 7
+MAINS_WORD_NOTE_SIZE: Final[float] = 6
 
 
 # ============================================================
 # MCQS
 # ============================================================
 
-MCQ_QUESTION_SIZE: Final[float] = 8
-MCQ_OPTION_SIZE: Final[float] = 8
+MCQ_QUESTION_SIZE: Final[float] = 8.5
+MCQ_OPTION_SIZE: Final[float] = 8.5
 
 MCQ_LEADING: Final[float] = 10
-MCQ_ANSWER_SIZE: Final[float] = 8
+MCQ_ANSWER_SIZE: Final[float] = 8.5
 
 
 # ============================================================

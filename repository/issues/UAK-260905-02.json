@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "issue_id": "UAK-260905-02",
+  "publication_date": "05 September 2026",
+  "edition_code": "UAK-260905",
+  "status": "published",
+  "topic_number": 2,
+  "issue_title": "Expanding Public Healthcare to Perimenopause and Menopause",
+  "rating": 4.5,
+  "editorial_sources": [
+    "The Hindu"
+  ],
+  "gs_mapping": {
+    "display": "GS Paper II | Governance | Issues Relating to Health",
+    "paper": "GS Paper II",
+    "subject": "Governance",
+    "syllabus": "Issues Relating to Health"
+  },
+  "todays_question": "Why must public healthcare expand beyond reproductive years to support women facing menopause?",
+  "recall_anchors": [
+    "Primary health centers",
+    "Workforce participation",
+    "Ruthu Thare",
+    "geriatric care",
+    "Article 21"
+  ],
+  "knowledge_points": [
+    {
+      "number": 1,
+      "heading": "Ending Silent Suffering",
+      "explanation": "Most public healthcare programs only focus on pregnancy and childbirth. Consequently, millions of older women are forced to silently endure severe physical fatigue, emotional distress, and joint pain during menopause without any basic medical support."
+    },
+    {
+      "number": 2,
+      "heading": "Routine Healthcare Integration",
+      "explanation": "Bringing menopause care into routine government health centers ensures early diagnosis. Through regular screening, counseling, and referrals at primary health centers, women can access timely treatment for severe symptoms instead of being dismissed or ignored."
+    },
+    {
+      "number": 3,
+      "heading": "Sensitizing Medical Staff",
+      "explanation": "Doctors and families often dismiss menopausal symptoms as normal aging rather than real medical issues. Public health policies help train medical professionals to validate women's complaints, eliminate clinical bias, and provide proper treatment with dignity."
+    },
+    {
+      "number": 4,
+      "heading": "Understanding Biological Changes",
+      "explanation": "Menopause marks the permanent end of menstrual cycles due to falling estrogen and progesterone levels. The transitional perimenopause phase brings hot flashes, mood swings, and sleep disruption that significantly harm daily living."
+    },
+    {
+      "number": 5,
+      "heading": "Promoting Gender Equity",
+      "explanation": "Neglecting non-reproductive health reduces older women's workforce participation and quality of life. Expanding public care recognizes health as a lifelong fundamental right, fulfilling constitutional promises of equality and social justice for aging women."
+    }
+  ],
+  "quick_facts": [
+    "Menopause is clinically established after twelve consecutive months without menstrual cycles, triggered by ovaries reducing the natural synthesis of essential hormones namely oestrogen and progesterone.",
+    "Karnataka launched Ruthu Thare on August 4, establishing the country’s first dedicated public health framework addressing mid-life medical challenges like perimenopause and menopause.",
+    "Tamil Nadu announced its comprehensive perimenopausal health policy on August 17 to facilitate early symptom detection, professional counselling, and institutional treatment through primary health centres.",
+    "Both southern state policies institute structured tiered care, connecting grassroots community screening and dedicated well-women clinics to specialized treatments at district hospitals and government medical colleges."
+  ],
+  "key_takeaway": "Integrating perimenopause care into routine public healthcare transforms mid-life women's well-being by providing community-level diagnosis, clinical validation, and targeted medical therapy for disruptive physical and psychological transitions.",
+  "mains_question": "Examine how shifting from reproductive-centric healthcare to life-course healthcare strengthens female workforce participation and social equity?",
+  "mains_answer": {
+    "paragraphs": [
+      "India’s public health architecture has historically prioritized maternal and child interventions, effectively reducing women’s health to their reproductive utility. Transitioning toward a comprehensive life-course healthcare paradigm is vital to ensuring fundamental social equity, preserving economic dignity, and protecting female labor productivity across all life stages.",
+      "Unaddressed mid-life health conditions, including severe perimenopausal distress, chronic hormonal imbalances, and non-communicable diseases, disproportionately push experienced female workers into premature retirement or informal low-wage labor. When public health centers lack screening and medical interventions for mid-life issues, older women absorb severe physical debility and mental fatigue while bearing disproportionate domestic care burdens. Institutionalizing healthcare beyond childbirth—via subsidized diagnostics, workplace wellness policies, and tailored geriatric interventions—mitigates avoidable absenteeism and sustains economic security. Moreover, a life-course approach aligns with constitutional guarantees under Article 21, rectifying institutional gender biases that treat women's well-being as secondary once their reproductive phase concludes. Ensuring universal access to mid-life and geriatric care structurally empowers women to participate freely and equitably across productive economic spheres.",
+      "Evolving from reproductive-focused interventions to holistic, lifelong universal healthcare dismantles systemic vulnerabilities, elevates female agency, and ensures that women age with economic independence, personal dignity, and complete social equality."
+    ],
+    "full_text": "India’s public health architecture has historically prioritized maternal and child interventions, effectively reducing women’s health to their reproductive utility. Transitioning toward a comprehensive life-course healthcare paradigm is vital to ensuring fundamental social equity, preserving economic dignity, and protecting female labor productivity across all life stages.\n\nUnaddressed mid-life health conditions, including severe perimenopausal distress, chronic hormonal imbalances, and non-communicable diseases, disproportionately push experienced female workers into premature retirement or informal low-wage labor. When public health centers lack screening and medical interventions for mid-life issues, older women absorb severe physical debility and mental fatigue while bearing disproportionate domestic care burdens. Institutionalizing healthcare beyond childbirth—via subsidized diagnostics, workplace wellness policies, and tailored geriatric interventions—mitigates avoidable absenteeism and sustains economic security. Moreover, a life-course approach aligns with constitutional guarantees under Article 21, rectifying institutional gender biases that treat women's well-being as secondary once their reproductive phase concludes. Ensuring universal access to mid-life and geriatric care structurally empowers women to participate freely and equitably across productive economic spheres.\n\nEvolving from reproductive-focused interventions to holistic, lifelong universal healthcare dismantles systemic vulnerabilities, elevates female agency, and ensures that women age with economic independence, personal dignity, and complete social equality."
+  },
+  "daily_mcqs": [
+    {
+      "number": 1,
+      "question": "With reference to menopause and perimenopause, consider the following statements:\n\nMenopause is clinically diagnosed after six consecutive months of amenorrhea.\n\nIt occurs primarily due to the decreased ovarian production of estrogen and progesterone.\nWhich of the statements given above is/are correct?",
+      "options": {
+        "A": "1 only",
+        "B": "2 only",
+        "C": "Both 1 and 2",
+        "D": "Neither 1 nor 2"
+      },
+      "correct_answer": "B",
+      "explanation": "Statement 1 is incorrect because menopause is clinically confirmed after 12 consecutive months without a menstrual cycle, not six months. Statement 2 is correct because the biological transition is caused by the natural decline in estrogen and progesterone synthesis by the ovaries."
+    },
+    {
+      "number": 2,
+      "question": "Consider the following statements regarding mid-life health initiatives in Indian states:\n\nKarnataka launched 'Ruthu Thare', a dedicated women's health policy addressing perimenopause and menopause.\n\nTamil Nadu's perimenopause policy integrates screening and counseling services directly through Primary Health Centres (PHCs).\nWhich of the statements given above is/are correct?",
+      "options": {
+        "A": "1 only",
+        "B": "2 only",
+        "C": "Both 1 and 2",
+        "D": "Neither 1 nor 2"
+      },
+      "correct_answer": "C",
+      "explanation": "Both statements are correct. Karnataka launched 'Ruthu Thare' as a focused policy on perimenopause and menopause, and Tamil Nadu introduced a policy providing screening, counseling, and referrals starting at the PHC level."
+    },
+    {
+      "number": 3,
+      "question": "Which of the following hormones experience a natural decline during perimenopause leading to the cessation of menstrual cycles?",
+      "options": {
+        "A": "Prolactin and Oxytocin",
+        "B": "Estrogen and Progesterone",
+        "C": "Luteinizing Hormone and Cortisol",
+        "D": "Thyroxine and Calcitonin"
+      },
+      "correct_answer": "B",
+      "explanation": "Menopause occurs when the ovaries gradually slow down and decrease the synthesis of the female sex hormones estrogen and progesterone, which triggers physical symptoms and the eventual permanent cessation of menstruation."
+    }
+  ],
+  "repository_saved_at": "2026-09-05T21:48:56",
+  "content_hash": "1871ab7fe1c8e8960d707b0cf9f43ec921f2e5431886ee36c9d7db624b1671df"
+}

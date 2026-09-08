@@ -1,4 +1,4 @@
-from __future__ import annotations
+
 
 from dataclasses import dataclass
 
@@ -166,37 +166,67 @@ def draw_curiosity_box(
     compact: bool = False,
 ) -> None:
     """
-    Top area:
-    - small lightbulb icon
-    - centred curiosity question
+    If Recall Anchors are present:
+        - question uses the original upper area
+        - anchors use the original lower area
 
-    Bottom area:
-    - recall anchors across the full curiosity width
+    If Recall Anchors are absent:
+        - the question uses the full curiosity-box height
+        - the lightbulb and question are vertically centred
+        - no empty anchor space is reserved
     """
 
-    top_height = (
-        rect.height * 0.65
+    anchor_text = _format_anchors(
+        data.anchors,
     )
 
-    anchor_height = (
-        rect.height * 0.35
+    has_anchors = bool(
+        anchor_text.strip()
     )
 
-    top_rect = Rect(
-        x=rect.x,
-        y=rect.top - top_height,
-        width=rect.width,
-        height=top_height,
-    )
+    # --------------------------------------------------------
+    # VERTICAL LAYOUT
+    # --------------------------------------------------------
 
-    anchor_rect = Rect(
-        x=rect.x + 3 * mm,
-        y=rect.y + 1 * mm,
-        width=rect.width - 6 * mm,
-        height=anchor_height - 2 * mm,
-    )
+    if has_anchors:
+        top_height = (
+            rect.height * 0.65
+        )
 
-    # Smaller icon in both layouts.
+        anchor_height = (
+            rect.height * 0.35
+        )
+
+        top_rect = Rect(
+            x=rect.x,
+            y=rect.top - top_height,
+            width=rect.width,
+            height=top_height,
+        )
+
+        anchor_rect = Rect(
+            x=rect.x + 3 * mm,
+            y=rect.y + 1 * mm,
+            width=rect.width - 6 * mm,
+            height=anchor_height - 2 * mm,
+        )
+
+    else:
+        # No anchors: reclaim the entire curiosity box for
+        # Today's Question so there is no empty lower strip.
+        top_rect = Rect(
+            x=rect.x,
+            y=rect.y,
+            width=rect.width,
+            height=rect.height,
+        )
+
+        anchor_rect = None
+
+    # --------------------------------------------------------
+    # LIGHTBULB ICON
+    # --------------------------------------------------------
+
     icon_width = (
         11.5 * mm
         if compact
@@ -207,11 +237,21 @@ def draw_curiosity_box(
         2.5 * mm
     )
 
+    if has_anchors:
+        icon_vertical_gap = 2 * mm
+    else:
+        # Slightly more breathing room when the full box is used.
+        icon_vertical_gap = 3 * mm
+
     icon_rect = Rect(
         x=top_rect.x + icon_left_gap,
-        y=top_rect.y + 2 * mm,
+        y=top_rect.y + icon_vertical_gap,
         width=icon_width,
-        height=top_rect.height - 4 * mm,
+        height=max(
+            0,
+            top_rect.height
+            - 2 * icon_vertical_gap,
+        ),
     )
 
     draw_lightbulb_icon(
@@ -219,8 +259,10 @@ def draw_curiosity_box(
         rect=icon_rect,
     )
 
-    # Question occupies everything between
-    # the icon and the right edge of the curiosity box.
+    # --------------------------------------------------------
+    # TODAY'S QUESTION
+    # --------------------------------------------------------
+
     question_left_gap = (
         2 * mm
     )
@@ -229,12 +271,21 @@ def draw_curiosity_box(
         2.5 * mm
     )
 
+    if has_anchors:
+        question_vertical_gap = 1.5 * mm
+    else:
+        # Use the full height but retain a clean internal margin.
+        question_vertical_gap = 4 * mm
+
     question_rect = Rect(
         x=(
             icon_rect.right
             + question_left_gap
         ),
-        y=top_rect.y + 1.5 * mm,
+        y=(
+            top_rect.y
+            + question_vertical_gap
+        ),
         width=max(
             0,
             top_rect.right
@@ -242,9 +293,10 @@ def draw_curiosity_box(
             - question_left_gap
             - question_right_gap,
         ),
-        height=(
+        height=max(
+            0,
             top_rect.height
-            - 3 * mm
+            - 2 * question_vertical_gap,
         ),
     )
 
@@ -277,33 +329,35 @@ def draw_curiosity_box(
         vertical_align="middle",
     )
 
-    anchor_text = (
-        _format_anchors(
-            data.anchors,
+    # --------------------------------------------------------
+    # RECALL ANCHORS
+    # --------------------------------------------------------
+
+    if (
+        has_anchors
+        and anchor_rect is not None
+    ):
+        anchor_style = paragraph_style(
+            name="RecallAnchors",
+            font_name=FONT_REGULAR,
+            font_size=(
+                ANCHOR_TEXT_SIZE - 0.5
+                if compact
+                else ANCHOR_TEXT_SIZE
+            ),
+            leading=(
+                ANCHOR_LEADING - 0.5
+                if compact
+                else ANCHOR_LEADING
+            ),
+            text_color=BLACK,
+            alignment=TA_CENTER,
         )
-    )
 
-    anchor_style = paragraph_style(
-        name="RecallAnchors",
-        font_name=FONT_REGULAR,
-        font_size=(
-            ANCHOR_TEXT_SIZE - 0.5
-            if compact
-            else ANCHOR_TEXT_SIZE
-        ),
-        leading=(
-            ANCHOR_LEADING - 0.5
-            if compact
-            else ANCHOR_LEADING
-        ),
-        text_color=BLACK,
-        alignment=TA_CENTER,
-    )
-
-    draw_paragraph(
-        canvas=canvas,
-        text=anchor_text,
-        rect=anchor_rect,
-        style=anchor_style,
-        vertical_align="middle",
-    )
+        draw_paragraph(
+            canvas=canvas,
+            text=anchor_text,
+            rect=anchor_rect,
+            style=anchor_style,
+            vertical_align="middle",
+        )

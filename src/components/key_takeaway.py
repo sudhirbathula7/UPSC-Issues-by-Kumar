@@ -16,6 +16,7 @@ from src.pdf.page_setup import Rect
 from src.pdf.theme import (
     BLACK,
     FONT_BOLD,
+    FONT_REGULAR,
     HEADING_BLUE,
     SECTION_TITLE_SIZE,
     TAKEAWAY_LEADING,
@@ -143,7 +144,7 @@ def draw_key_takeaway(
 
     style = paragraph_style(
         name="KeyTakeaway",
-        font_name=FONT_BOLD,
+        font_name=FONT_REGULAR,
         font_size=TAKEAWAY_SIZE,
         leading=TAKEAWAY_LEADING,
         text_color=BLACK,

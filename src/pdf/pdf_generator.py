@@ -55,6 +55,15 @@ from src.publication import (
 
 
 # ============================================================
+# NORMAL PDF OPTIONS
+# ============================================================
+
+# False = hide Recall Anchors in the Normal PDF.
+# True  = show Recall Anchors again in the Normal PDF.
+SHOW_RECALL_ANCHORS = False
+
+
+# ============================================================
 # SINGLE ISSUE RENDERER
 # ============================================================
 
@@ -96,15 +105,21 @@ def _draw_compact_issue(
     )
 
     # --------------------------------------------------------
-    # TODAY'S QUESTION + RECALL ANCHORS
+    # TODAY'S QUESTION + OPTIONAL RECALL ANCHORS
     # --------------------------------------------------------
+
+    recall_anchors = (
+        topic.recall_anchors
+        if SHOW_RECALL_ANCHORS
+        else ()
+    )
 
     draw_curiosity_box(
         canvas=canvas,
         rect=layout.curiosity_box,
         data=CuriosityData(
             question=topic.todays_question,
-            anchors=topic.recall_anchors,
+            anchors=recall_anchors,
         ),
         compact=True,
     )

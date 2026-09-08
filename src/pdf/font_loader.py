@@ -30,3 +30,22 @@ def register_fonts() -> None:
             r"C:\Windows\Fonts\calibriz.ttf",
         )
     )
+
+    # --------------------------------------------------------
+    # REGISTER CALIBRI AS A FONT FAMILY
+    # --------------------------------------------------------
+    # This allows ReportLab Paragraph markup such as:
+    #
+    # <b>text</b>
+    # <i>text</i>
+    # <b><i>text</i></b>
+    #
+    # to switch automatically to the correct Calibri font face.
+
+    pdfmetrics.registerFontFamily(
+        "Calibri",
+        normal="Calibri",
+        bold="Calibri-Bold",
+        italic="Calibri-Italic",
+        boldItalic="Calibri-BoldItalic",
+    )

@@ -110,6 +110,83 @@
     "content_hash": "8b4d716b904e59fcea98738c70740c2ba63fb0074b1c709129a625525fc12c93"
   },
   {
+    "issue_id": "UAK-260903-01",
+    "publication_date": "03 September 2026",
+    "edition_code": "UAK-260903",
+    "topic_number": 1,
+    "issue_title": "Religious Freedom and Women’s Public Participation",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Indian Constitution",
+    "content_hash": "a30eb4819d749d19e24d7abdab6c70b6693a91ceda4b42e941da578c43edb544"
+  },
+  {
+    "issue_id": "UAK-260903-02",
+    "publication_date": "03 September 2026",
+    "edition_code": "UAK-260903",
+    "topic_number": 2,
+    "issue_title": "Agricultural Price Volatility",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Agriculture",
+    "content_hash": "e758394610cf24c9796d6141302e00fa97ad9e45abe6a878bab921801dff2059"
+  },
+  {
+    "issue_id": "UAK-260904-01",
+    "publication_date": "04 September 2026",
+    "edition_code": "UAK-260904",
+    "topic_number": 1,
+    "issue_title": "Foreign Currency Inflows and RBI’s Monetary Policy Challenge",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Indian Economy",
+    "content_hash": "0d78a1d7e47d09be0ef547d9cb1ab473a4371671ea5c333b38a897d587b60f4c"
+  },
+  {
+    "issue_id": "UAK-260905-01",
+    "publication_date": "05 September 2026",
+    "edition_code": "UAK-260905",
+    "topic_number": 1,
+    "issue_title": "Climate Overshoot and Developing Economies",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Environment",
+    "content_hash": "756a4730d664392d9c33303a7698997ba21bcebede2dddb56dab9e0b7bcc69ac"
+  },
+  {
+    "issue_id": "UAK-260905-02",
+    "publication_date": "05 September 2026",
+    "edition_code": "UAK-260905",
+    "topic_number": 2,
+    "issue_title": "Expanding Public Healthcare to Perimenopause and Menopause",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Governance",
+    "content_hash": "e613c32bee898b3aa920dac78dd63e5b42f10c9e1d4ba8f5b90a46202cad79b6"
+  },
+  {
+    "issue_id": "UAK-260906-01",
+    "publication_date": "06 September 2026",
+    "edition_code": "UAK-260906",
+    "topic_number": 1,
+    "issue_title": "Geosynchronous Earth Observation and Space Data Governance",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Science and Technology",
+    "content_hash": "df82c460fe11736020e453a0d76742132a705e3277dbbd01a67b5316b293fce8"
+  },
+  {
+    "issue_id": "UAK-260906-02",
+    "publication_date": "06 September 2026",
+    "edition_code": "UAK-260906",
+    "topic_number": 2,
+    "issue_title": "Strait of Hormuz Conflict and Global Energy Security",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Effect of Policies of Developed and Developing Countries",
+    "content_hash": "088a3e2b2e74a45c82ba2dfccd5e31106a91d66b6409dd2a0fe784fec346889f"
+  },
+  {
     "issue_id": "UAK-260807-01",
     "publication_date": "07 August 2026",
     "edition_code": "UAK-260807",

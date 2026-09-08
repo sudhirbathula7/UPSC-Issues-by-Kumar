@@ -130,24 +130,60 @@ def _draw_section_title(
 # MCQ TEXT
 # ============================================================
 
+def _split_numberable_items(
+    body: str,
+) -> list[str]:
+    """
+    Split the statement/pair block into separate items.
+
+    Prefer real line breaks. If the converter has collapsed a
+    statement-based question into one line, fall back to sentence
+    boundaries.
+    """
+    lines = [
+        line.strip()
+        for line in body.split("\n")
+        if line.strip()
+    ]
+
+    if len(lines) >= 2:
+        items = lines
+    else:
+        items = [
+            part.strip()
+            for part in re.split(
+                r"(?<=[.!?])\s+",
+                body.strip(),
+            )
+            if part.strip()
+        ]
+
+    cleaned: list[str] = []
+
+    for item in items:
+        item = re.sub(
+            r"^\s*\d+\s*[.)]\s*",
+            "",
+            item,
+        ).strip()
+
+        if item:
+            cleaned.append(item)
+
+    return cleaned
+
+
 def _format_mcq_question(
     question: str,
 ) -> str:
     """
-    Format MCQ questions for the PDF.
+    Format UPSC-style statement/pair MCQs so that the internal
+    statements are visibly numbered.
 
-    UPSC statement-based questions are normalised into:
-
-    Consider the following statements:
-
-    1. Statement one
-    2. Statement two
-    3. Statement three
-
-    Which of the statements given above are correct?
-
-    This works whether the source question contains real line breaks
-    or whether the converter has collapsed the statements into one line.
+    Handles forms such as:
+      - Consider the following statements:
+      - With reference to ..., consider the following statements:
+      - Consider the following pairs:
     """
     raw = (
         question
@@ -159,79 +195,82 @@ def _format_mcq_question(
     if not raw:
         return ""
 
-    # --------------------------------------------------------
-    # STATEMENT-BASED UPSC MCQ
-    # --------------------------------------------------------
-    statement_match = re.search(
-        r"(?is)^\s*Consider\s+the\s+following\s+statements\s*:?\s*(.*?)"
-        r"\s*(Which\s+of\s+the\s+statements\s+given\s+above\s+are\s+correct\s*\??)\s*$",
+    # Find "consider the following statements/pairs" anywhere in
+    # the opening sentence, not only at the very start.
+    intro_match = re.search(
+        r"(?is)\bconsider\s+the\s+following\s+"
+        r"(?:statements|pairs)\s*:?\s*",
         raw,
     )
 
-    if statement_match:
-        statement_text = statement_match.group(1).strip()
-        tail = statement_match.group(2).strip()
+    if intro_match:
+        intro = raw[:intro_match.end()].strip()
 
-        # Prefer existing line-separated statements.
-        statement_lines = [
-            line.strip()
-            for line in statement_text.split("\n")
-            if line.strip()
-        ]
+        remainder = raw[
+            intro_match.end():
+        ].strip()
 
-        # If the converter has collapsed everything into one line,
-        # split the statement block at sentence boundaries.
-        if len(statement_lines) < 2:
-            statement_lines = [
-                part.strip()
-                for part in re.split(
-                    r"(?<=[.!?])\s+",
-                    statement_text,
-                )
-                if part.strip()
-            ]
+        # Common UPSC closing prompts.
+        tail_match = re.search(
+            r"(?is)\b("
+            r"Which\s+of\s+the\s+(?:statements|pairs)\s+given\s+above.*"
+            r"|Which\s+of\s+the\s+above.*"
+            r"|How\s+many\s+of\s+the\s+above.*"
+            r"|How\s+many\s+of\s+these.*"
+            r")$",
+            remainder,
+        )
 
-        # Remove any numbering already supplied by the model.
-        cleaned_statements = []
-        for statement in statement_lines:
-            statement = re.sub(
-                r"^\s*\d+\s*[.)]\s*",
-                "",
-                statement,
-            ).strip()
+        if tail_match:
+            body = remainder[
+                :tail_match.start()
+            ].strip()
 
-            if statement:
-                cleaned_statements.append(statement)
+            tail = tail_match.group(1).strip()
 
-        if cleaned_statements:
-            parts = [
-                "Consider the following statements:",
-                "<br/><br/>",
-            ]
-
-            for index, statement in enumerate(
-                cleaned_statements,
-                start=1,
-            ):
-                parts.append(
-                    f"{index}. {statement}"
-                )
-
-                if index < len(cleaned_statements):
-                    parts.append("<br/>")
-
-            parts.extend(
-                [
-                    "<br/><br/>",
-                    tail,
-                ]
+            items = _split_numberable_items(
+                body
             )
 
-            return "".join(parts)
+            if items:
+                parts = [
+                    intro,
+                    "<br/>",
+                ]
+
+                for item_index, item in enumerate(
+                    items,
+                    start=1,
+                ):
+                    parts.append(
+                        f"{item_index}. {item}"
+                    )
+
+                    if item_index < len(items):
+                        parts.append("<br/>")
+
+                parts.extend(
+                    [
+                        "<br/>",
+                        tail,
+                    ]
+                )
+
+                return "".join(parts)
 
     # --------------------------------------------------------
-    # NORMAL MCQ
+    # LINE-BASED LIST MCQ
     # --------------------------------------------------------
+    # Handles questions such as:
+    #
+    #   In the context of ..., which of the following ...?
+    #   Encouraging ...
+    #   Improving ...
+    #   Promoting ...
+    #   Increasing ...
+    #   Select the correct answer using the code below:
+    #
+    # The middle lines are rendered as 1., 2., 3., 4.
     lines = [
         line.strip()
         for line in raw.split("\n")
@@ -241,7 +280,62 @@ def _format_mcq_question(
     if not lines:
         return ""
 
+    if len(lines) >= 4:
+        tail_start = None
+
+        for line_index, line in enumerate(lines):
+            if re.match(
+                r"(?i)^select\s+the\s+correct\s+answer\b",
+                line,
+            ):
+                tail_start = line_index
+                break
+
+        if (
+            tail_start is not None
+            and tail_start >= 3
+        ):
+            intro = lines[0]
+            items = lines[1:tail_start]
+            tail_lines = lines[tail_start:]
+
+            # Number only genuinely list-like middle content.
+            # Avoid double-numbering source text that already begins
+            # with a number or option label.
+            if (
+                len(items) >= 2
+                and all(
+                    not re.match(
+                        r"(?i)^(?:\d+[.)]|[A-D][.)])\s*",
+                        item,
+                    )
+                    for item in items
+                )
+            ):
+                parts = [
+                    intro,
+                    "<br/>",
+                ]
+
+                for item_index, item in enumerate(
+                    items,
+                    start=1,
+                ):
+                    parts.append(
+                        f"{item_index}. {item}"
+                    )
+
+                    if item_index < len(items):
+                        parts.append("<br/>")
+
+                parts.append("<br/>")
+                parts.append("<br/>".join(tail_lines))
+
+                return "".join(parts)
+
+    # Normal MCQ: preserve any source line breaks.
     return "<br/>".join(lines)
+
 
 def _build_mcq_text(
     mcq: MCQ,
@@ -252,18 +346,18 @@ def _build_mcq_text(
     )
 
     return (
-    f"<font name='{FONT_BOLD}' "
-    f"size='{question_size}'>"
-    f"{formatted_question}"
-    f"</font>"
-    f"<br/>"
-    f"A. {mcq.options[0]}"
-    f"<br/>"
-    f"B. {mcq.options[1]}"
-    f"<br/>"
-    f"C. {mcq.options[2]}"
-    f"<br/>"
-    f"D. {mcq.options[3]}"
+        f"<font name='{FONT_REGULAR}' "
+        f"size='{question_size}'>"
+        f"{formatted_question}"
+        f"</font>"
+        f"<br/>"
+        f"A. {mcq.options[0]}"
+        f"<br/>"
+        f"B. {mcq.options[1]}"
+        f"<br/>"
+        f"C. {mcq.options[2]}"
+        f"<br/>"
+        f"D. {mcq.options[3]}"
     )
 
 
@@ -287,12 +381,23 @@ def _build_mcq_paragraph(
     style.spaceBefore = 0
     style.spaceAfter = 0
 
+    # Numbered hanging-indent layout:
+    # the MCQ number stays in a narrow left column while the
+    # question, wrapped lines, and options all align to the right.
+    style.leftIndent = 5.0 * mm
+    style.firstLineIndent = 0
+    style.bulletIndent = 0
+    style.bulletFontName = FONT_BOLD
+    style.bulletFontSize = question_size
+    style.bulletOffsetY = 0
+
     return Paragraph(
         _build_mcq_text(
             mcq=mcq,
             question_size=question_size,
         ),
         style,
+        bulletText=f"{index}.",
     )
 
 
@@ -446,7 +551,7 @@ def _draw_bullet(
     canvas.circle(
         x,
         y,
-        0.75 * mm,
+        0.50 * mm,
         stroke=0,
         fill=1,
     )
@@ -570,20 +675,8 @@ def draw_mcqs(
         ),
     )
 
-    bullet_column_width = 4.5 * mm
-    bullet_text_gap = 1.2 * mm
-
-    text_x = (
-        content_rect.x
-        + bullet_column_width
-        + bullet_text_gap
-    )
-
-    text_width = (
-        content_rect.width
-        - bullet_column_width
-        - bullet_text_gap
-    )
+    text_x = content_rect.x
+    text_width = content_rect.width
 
     minimum_mcq_gap = 2 * mm
 
@@ -640,17 +733,6 @@ def draw_mcqs(
             canvas,
             text_x,
             paragraph_bottom,
-        )
-
-        bullet_y = (
-            current_top
-            - measured.leading * 0.55
-        )
-
-        _draw_bullet(
-            canvas=canvas,
-            x=content_rect.x + 1.3 * mm,
-            y=bullet_y,
         )
 
         current_top = (

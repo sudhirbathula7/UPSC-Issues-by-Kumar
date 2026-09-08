@@ -10,7 +10,6 @@ from typing import Any
 
 INPUT_JSON = Path(__file__).resolve().parent / "INPUT.json"
 
-
 # ============================================================
 # MAXIMUM CONTENT LIMITS
 # ============================================================
@@ -23,13 +22,20 @@ RECALL_ANCHOR_MAX_WORDS = 3
 
 KNOWLEDGE_POINT_COUNT = 5
 KNOWLEDGE_HEADING_MAX_WORDS = 4
-KNOWLEDGE_EXPLANATION_MAX_WORDS = 35
+KNOWLEDGE_EXPLANATION_MAX_WORDS = 40
 
 QUICK_FACT_COUNT = 4
-QUICK_FACT_MAX_WORDS = 30
+QUICK_FACT_MAX_WORDS = 35
 
-KEY_TAKEAWAY_MAX_WORDS = 25
+KEY_TAKEAWAY_MAX_WORDS = 35
 
+# Mains Answer structure:
+# 1. Introduction
+# 2. Main Body
+# 3. Conclusion
+#
+# The Main Body may contain bullet points or numbered points.
+# Those bullets must NOT be counted as separate paragraphs.
 MAINS_PARAGRAPH_COUNT = 3
 MAINS_INTRO_MAX_WORDS = 45
 MAINS_CONCLUSION_MAX_WORDS = 80
