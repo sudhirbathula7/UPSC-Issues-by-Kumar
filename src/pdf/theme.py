@@ -119,13 +119,13 @@ KNOWLEDGE_NUMBER_SIZE_HALF: Final[float] = 13
 
 KNOWLEDGE_HEADING_SIZE: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE: Final[float] = 8.8
+KNOWLEDGE_TEXT_SIZE: Final[float] = 9.3
 KNOWLEDGE_LEADING: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE_FULL: Final[float] = 8.8
+KNOWLEDGE_TEXT_SIZE_FULL: Final[float] = 9.3
 KNOWLEDGE_LEADING_FULL: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE_HALF: Final[float] = 8.8
+KNOWLEDGE_TEXT_SIZE_HALF: Final[float] = 9.3
 KNOWLEDGE_LEADING_HALF: Final[float] = 10
 
 
@@ -133,13 +133,13 @@ KNOWLEDGE_LEADING_HALF: Final[float] = 10
 # QUICK FACTS
 # ============================================================
 
-QUICK_FACT_SIZE: Final[float] = 9
+QUICK_FACT_SIZE: Final[float] = 9.3
 QUICK_FACT_LEADING: Final[float] = 10
 
-QUICK_FACT_SIZE_FULL: Final[float] = 9
+QUICK_FACT_SIZE_FULL: Final[float] = 9.3
 QUICK_FACT_LEADING_FULL: Final[float] = 10
 
-QUICK_FACT_SIZE_HALF: Final[float] = 9
+QUICK_FACT_SIZE_HALF: Final[float] = 9.3
 QUICK_FACT_LEADING_HALF: Final[float] = 10
 
 
@@ -147,14 +147,14 @@ QUICK_FACT_LEADING_HALF: Final[float] = 10
 # KEY TAKEAWAY
 # ============================================================
 
-TAKEAWAY_SIZE: Final[float] = 9
-TAKEAWAY_LEADING: Final[float] = 11
+TAKEAWAY_SIZE: Final[float] = 9.5
+TAKEAWAY_LEADING: Final[float] = 10.5
 
-TAKEAWAY_SIZE_FULL: Final[float] = 9
-TAKEAWAY_LEADING_FULL: Final[float] = 11
+TAKEAWAY_SIZE_FULL: Final[float] = 9.5
+TAKEAWAY_LEADING_FULL: Final[float] = 10.5
 
-TAKEAWAY_SIZE_HALF: Final[float] = 9
-TAKEAWAY_LEADING_HALF: Final[float] = 11
+TAKEAWAY_SIZE_HALF: Final[float] = 9.5
+TAKEAWAY_LEADING_HALF: Final[float] = 10.5
 
 
 # ============================================================

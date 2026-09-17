@@ -52,7 +52,7 @@ PAGE_SECTION_GAP = 1.2 * mm
 ISSUE_GAP = 1.2 * mm
 COLUMN_GAP = 1.2 * mm
 
-QUESTION_PANEL_HEIGHT = 21 * mm
+QUESTION_PANEL_HEIGHT = 17 * mm
 
 # 86% curiosity area and 14% GS Mapping.
 GS_MAPPING_RATIO = 0.15
@@ -63,6 +63,10 @@ KNOWLEDGE_COLUMN_RATIO = 0.50
 # Within the right column:
 # 75% Quick Facts and 25% Key Takeaway.
 QUICK_FACTS_RATIO = 0.75
+
+# After reducing the question/GS Mapping panel by 3 mm,
+# split that recovered height equally between Quick Facts and Key Takeaway.
+QUICK_FACTS_HEIGHT_ADJUSTMENT = 0.75 * mm
 
 
 # ============================================================
@@ -188,6 +192,7 @@ def build_compact_issue_layout(
     quick_facts_height = (
         available_right_height
         * QUICK_FACTS_RATIO
+        - QUICK_FACTS_HEIGHT_ADJUSTMENT
     )
 
     takeaway_height = (

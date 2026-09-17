@@ -53,7 +53,7 @@ FOOTER_HEIGHT = 6 * mm
 SECTION_GAP = 1.2 * mm
 COLUMN_GAP = 1.2* mm
 
-QUESTION_PANEL_HEIGHT = 21 * mm
+QUESTION_PANEL_HEIGHT = 18* mm
 
 # Top question-panel split:
 # 86% Curiosity Question

@@ -155,7 +155,7 @@ def _draw_topic_page(
         rect=layout.curiosity_box,
         data=CuriosityData(
             question=topic.todays_question,
-            anchors=topic.recall_anchors,
+            anchors=(),
         ),
         compact=False,
     )

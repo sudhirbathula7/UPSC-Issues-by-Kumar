@@ -209,6 +209,39 @@
     "content_hash": "bc3c3c22bd7d5b126524865177ee1563e41798665be14b432b2007e5e23168f4"
   },
   {
+    "issue_id": "UAK-260909-01",
+    "publication_date": "09 September 2026",
+    "edition_code": "UAK-260909",
+    "topic_number": 1,
+    "issue_title": "Tribal Land Rights and Dilution of Gram Sabha Consent",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Governance",
+    "content_hash": "5f9b42c14e5502a81e43c5813f4679ebf9a3aae44edf992f27ada32147fa7de5"
+  },
+  {
+    "issue_id": "UAK-260909-02",
+    "publication_date": "09 September 2026",
+    "edition_code": "UAK-260909",
+    "topic_number": 2,
+    "issue_title": "Judicial Appointments and Executive Consultation",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Indian Judiciary",
+    "content_hash": "b8753ad6554f8fa535772b553dce3bc7cabee0971cfb0e9ddd8496f2725b0c2d"
+  },
+  {
+    "issue_id": "UAK-260909-03",
+    "publication_date": "09 September 2026",
+    "edition_code": "UAK-260909",
+    "topic_number": 3,
+    "issue_title": "Private Sector Participation in Space and ISRO's Future",
+    "rating": 4.5,
+    "gs_paper": "GS Paper III",
+    "gs_subject": "Science and Tech",
+    "content_hash": "8dec9ed75fd8db221dc42dd42a4e0d7b03c3e9e43e2dc4cc521fd5cf5d08d4a8"
+  },
+  {
     "issue_id": "UAK-260824-01",
     "publication_date": "24 August 2026",
     "edition_code": "UAK-260824",
