@@ -395,9 +395,9 @@ def build_issue_record(
             "knowledge_points",
             [],
         ),
-        "quick_facts": topic.get(
-            "quick_facts",
-            [],
+        "concept_unfold": topic.get(
+            "concept_unfold",
+            {},
         ),
         "key_takeaway": topic.get(
             "key_takeaway",

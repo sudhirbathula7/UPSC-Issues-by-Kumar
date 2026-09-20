@@ -20,7 +20,10 @@ from src.pdf.theme import (
     MCQ_LEADING,
     MCQ_OPTION_SIZE,
     MCQ_QUESTION_SIZE,
+    SECTION_CONTENT_GAP,
+    SECTION_HEADING_HEIGHT,
     SECTION_TITLE_SIZE,
+    SECTION_TOP_GAP,
 )
 
 
@@ -58,13 +61,15 @@ def _draw_section_title(
     rect: Rect,
     title: str,
 ) -> Rect:
-    heading_height = 7 * mm
-
     heading_rect = Rect(
         x=rect.x + 3 * mm,
-        y=rect.top - heading_height,
+        y=(
+            rect.top
+            - SECTION_TOP_GAP
+            - SECTION_HEADING_HEIGHT
+        ),
         width=rect.width - 6 * mm,
-        height=heading_height,
+        height=SECTION_HEADING_HEIGHT,
     )
 
     icon_size = 4.2 * mm
@@ -114,13 +119,22 @@ def _draw_section_title(
     )
 
     canvas.saveState()
-    canvas.setFillColor(HEADING_BLUE)
-    canvas.setFont(FONT_BOLD, SECTION_TITLE_SIZE)
+
+    canvas.setFillColor(
+        HEADING_BLUE,
+    )
+
+    canvas.setFont(
+        FONT_BOLD,
+        SECTION_TITLE_SIZE,
+    )
+
     canvas.drawString(
         icon_rect.right + icon_gap,
         heading_baseline,
         title,
     )
+
     canvas.restoreState()
 
     return heading_rect
@@ -647,11 +661,19 @@ def draw_mcqs(
     if not questions:
         return
 
+    # --------------------------------------------------------
+    # SECTION HEADING
+    # --------------------------------------------------------
+
     heading_rect = _draw_section_title(
         canvas=canvas,
         rect=rect,
         title=data.title,
     )
+
+    # --------------------------------------------------------
+    # ANSWER KEY FOOTER
+    # --------------------------------------------------------
 
     footer_height = 6 * mm
     footer_bottom_margin = 1.5 * mm
@@ -663,7 +685,22 @@ def draw_mcqs(
         height=footer_height,
     )
 
-    content_bottom = footer_rect.top + 1.2 * mm
+    # --------------------------------------------------------
+    # MCQ CONTENT AREA
+    #
+    # Global B:
+    # Heading -> MCQ 1 = 2.0 mm
+    # --------------------------------------------------------
+
+    content_top = (
+        heading_rect.y
+        - SECTION_CONTENT_GAP
+    )
+
+    content_bottom = (
+        footer_rect.top
+        + 1.2 * mm
+    )
 
     content_rect = Rect(
         x=rect.x + 2.5 * mm,
@@ -671,14 +708,22 @@ def draw_mcqs(
         width=rect.width - 5 * mm,
         height=max(
             0,
-            heading_rect.y - content_bottom,
+            content_top
+            - content_bottom,
         ),
     )
+
+    if content_rect.height <= 0:
+        return
 
     text_x = content_rect.x
     text_width = content_rect.width
 
-    minimum_mcq_gap = 2 * mm
+    # --------------------------------------------------------
+    # GAP BETWEEN MCQs
+    # --------------------------------------------------------
+
+    minimum_mcq_gap = 2.5 * mm
 
     (
         _question_size,
@@ -692,6 +737,10 @@ def draw_mcqs(
         minimum_gap=minimum_mcq_gap,
     )
 
+    # --------------------------------------------------------
+    # MEASURE AVAILABLE SPACE
+    # --------------------------------------------------------
+
     total_text_height = sum(
         item.height
         for item in measured_questions
@@ -703,11 +752,17 @@ def draw_mcqs(
         - total_text_height,
     )
 
+    # --------------------------------------------------------
+    # DISTRIBUTE VERTICAL SPACE
+    # --------------------------------------------------------
+
     if len(measured_questions) > 1:
         distributed_gap = max(
             minimum_mcq_gap,
             available_gap_space
-            / (len(measured_questions) - 1),
+            / (
+                len(measured_questions) - 1
+            ),
         )
     else:
         distributed_gap = 0
@@ -715,13 +770,20 @@ def draw_mcqs(
     required_height = (
         total_text_height
         + distributed_gap
-        * max(0, len(measured_questions) - 1)
+        * max(
+            0,
+            len(measured_questions) - 1,
+        )
     )
 
     if required_height > content_rect.height:
         distributed_gap = minimum_mcq_gap
 
-    current_top = content_rect.top + 0.2 * mm
+    # --------------------------------------------------------
+    # DRAW MCQs
+    # --------------------------------------------------------
+
+    current_top = content_rect.top
 
     for measured in measured_questions:
         paragraph_bottom = (
@@ -739,6 +801,10 @@ def draw_mcqs(
             paragraph_bottom
             - distributed_gap
         )
+
+    # --------------------------------------------------------
+    # DRAW ANSWER KEY
+    # --------------------------------------------------------
 
     _draw_answer_key_footer(
         canvas=canvas,

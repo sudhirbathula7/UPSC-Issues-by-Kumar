@@ -8,13 +8,9 @@ export default function Home() {
   return (
     <>
       <Header />
-
       <Hero />
-
-      <Download />
-
       <TodaysIssues />
-
+      <Download />
       <Footer />
     </>
   );

@@ -51,12 +51,23 @@
       "explanation": "Farmers sometimes burn crop stubble at odd hours to evade low-orbit satellites that pass only at fixed times. Constant observation ensures continuous monitoring, making it impossible for polluters to hide smoke emissions."
     }
   ],
-  "quick_facts": [
-    "The EOS-05 spacecraft will orbit Earth at approximately 36,000 kilometres in geosynchronous orbit, matching the planet's rotation to provide uninterrupted observations over the Indian subcontinent.",
-    "Recent flash floods from the Bhote Koshi deluge in Nepal caused over 1,344 deaths, highlighting the urgent need for persistent space-based monitoring of fragile Himalayan landscapes.",
-    "Unlike dedicated land-imaging satellites that historically operated only in low orbits, India previously maintained only weather monitoring satellites within geostationary orbit under the INSAT-3D series.",
-    "Conventional low-earth imaging satellites fly just a few hundred kilometres high, capturing razor-sharp details but requiring several days to complete successive orbital passes over identical terrain."
-  ],
+  "concept_unfold": {
+    "concept": "Continuous observation of the same area improves monitoring",
+    "consequences": [
+      {
+        "title": "Changes can be detected quickly",
+        "explanation": "When a satellite keeps watching the same region, sudden events such as floods, fires or cyclones can be noticed without waiting for another satellite pass."
+      },
+      {
+        "title": "Faster detection supports faster response",
+        "explanation": "When authorities receive information quickly, they get more time to issue warnings, plan evacuations and send help before a disaster becomes more dangerous."
+      },
+      {
+        "title": "Repeated observations improve situation tracking",
+        "explanation": "Continuous images allow authorities to compare conditions over time, helping them track how a cyclone, flood or wildfire is developing and adjust their response accordingly."
+      }
+    ]
+  },
   "key_takeaway": "By operating continuously from geosynchronous orbit, EOS-05 replaces intermittent satellite passes with uninterrupted spectral monitoring, giving disaster responders and environmental managers instant views of rapid ground changes across India.",
   "mains_question": "Examine the operational and institutional challenges in translating real-time satellite data into grassroots disaster risk reduction?",
   "mains_answer": {
@@ -70,7 +81,7 @@
   "daily_mcqs": [
     {
       "number": 1,
-      "question": "Consider the following statements regarding satellite orbits:\n\nLow-earth orbit satellites move rapidly across the sky, taking several days to revisit the same location.\n\nA satellite in geosynchronous orbit remains synchronized with Earth's rotation, enabling continuous observation of a specific region.\nWhich of the statements given above is/are correct?",
+      "question": "Consider the following statements regarding satellite orbits:\nLow-earth orbit satellites move rapidly across the sky, taking several days to revisit the same location.\nA satellite in geosynchronous orbit remains synchronized with Earth's rotation, enabling continuous observation of a specific region.\nWhich of the statements given above is/are correct?",
       "options": {
         "A": "1 only",
         "B": "2 only",
@@ -105,6 +116,6 @@
       "explanation": "India long operated the INSAT-3D series in geostationary orbit for continuous meteorological and weather tracking, while its dedicated land-imaging satellites were restricted to polar or low-earth orbits."
     }
   ],
-  "repository_saved_at": "2026-09-07T21:04:43",
-  "content_hash": "3eb9b13e90dafc753ec11ce809c753fb9b612269ab60201d19ce79d9a06600cd"
+  "repository_saved_at": "2026-09-21T01:35:01",
+  "content_hash": "d91e1edb415ad24dafcdbaa954c5043d44fb3aad706b600588ccc75c0329296b"
 }

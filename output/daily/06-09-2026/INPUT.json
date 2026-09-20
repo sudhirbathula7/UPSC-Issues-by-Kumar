@@ -52,12 +52,23 @@
           "explanation": "Farmers sometimes burn crop stubble at odd hours to evade low-orbit satellites that pass only at fixed times. Constant observation ensures continuous monitoring, making it impossible for polluters to hide smoke emissions."
         }
       ],
-      "quick_facts": [
-        "The EOS-05 spacecraft will orbit Earth at approximately 36,000 kilometres in geosynchronous orbit, matching the planet's rotation to provide uninterrupted observations over the Indian subcontinent.",
-        "Recent flash floods from the Bhote Koshi deluge in Nepal caused over 1,344 deaths, highlighting the urgent need for persistent space-based monitoring of fragile Himalayan landscapes.",
-        "Unlike dedicated land-imaging satellites that historically operated only in low orbits, India previously maintained only weather monitoring satellites within geostationary orbit under the INSAT-3D series.",
-        "Conventional low-earth imaging satellites fly just a few hundred kilometres high, capturing razor-sharp details but requiring several days to complete successive orbital passes over identical terrain."
-      ],
+      "concept_unfold": {
+        "concept": "Continuous observation of the same area improves monitoring",
+        "consequences": [
+          {
+            "title": "Changes can be detected quickly",
+            "explanation": "When a satellite keeps watching the same region, sudden events such as floods, fires or cyclones can be noticed without waiting for another satellite pass."
+          },
+          {
+            "title": "Faster detection supports faster response",
+            "explanation": "When authorities receive information quickly, they get more time to issue warnings, plan evacuations and send help before a disaster becomes more dangerous."
+          },
+          {
+            "title": "Repeated observations improve situation tracking",
+            "explanation": "Continuous images allow authorities to compare conditions over time, helping them track how a cyclone, flood or wildfire is developing and adjust their response accordingly."
+          }
+        ]
+      },
       "key_takeaway": "By operating continuously from geosynchronous orbit, EOS-05 replaces intermittent satellite passes with uninterrupted spectral monitoring, giving disaster responders and environmental managers instant views of rapid ground changes across India.",
       "mains_question": "Examine the operational and institutional challenges in translating real-time satellite data into grassroots disaster risk reduction?",
       "mains_answer": {
@@ -71,7 +82,7 @@
       "daily_mcqs": [
         {
           "number": 1,
-          "question": "Consider the following statements regarding satellite orbits:\n\nLow-earth orbit satellites move rapidly across the sky, taking several days to revisit the same location.\n\nA satellite in geosynchronous orbit remains synchronized with Earth's rotation, enabling continuous observation of a specific region.\nWhich of the statements given above is/are correct?",
+          "question": "Consider the following statements regarding satellite orbits:\nLow-earth orbit satellites move rapidly across the sky, taking several days to revisit the same location.\nA satellite in geosynchronous orbit remains synchronized with Earth's rotation, enabling continuous observation of a specific region.\nWhich of the statements given above is/are correct?",
           "options": {
             "A": "1 only",
             "B": "2 only",
@@ -115,14 +126,14 @@
         "The Hindu"
       ],
       "gs_mapping": {
-        "display": "GS Paper II | Effect of Policies | Developed and Developing Countries",
+        "display": "GS Paper II | Policies | Developed and Developing Countries",
         "paper": "GS Paper II",
-        "subject": "Effect of Policies",
+        "subject": "Policies",
         "syllabus": "Developed and Developing Countries"
       },
       "todays_question": "How has the Strait of Hormuz trapped the United States in an unwinnable regional conflict?",
       "recall_anchors": [
-        "Revolutionary Guard Corps",
+        "balance-of-payments",
         "Islamabad agreement",
         "Petroleum reserves",
         "Foreign remittances",
@@ -155,12 +166,23 @@
           "explanation": "The collapse of the June 17 Islamabad agreement removed formal diplomatic guardrails. Without open communication channels or agreed ceasefire terms, minor tactical clashes at sea quickly escalate into wider regional conflict."
         }
       ],
-      "quick_facts": [
-        "The current conflict began on February 28, initially launched by the United States and Israel with the declared goals of neutralizing Iran’s nuclear capabilities and seeking regime change.",
-        "Following the breakdown of the June 17 Islamabad Memorandum of Understanding, bilateral diplomacy collapsed, returning both nations to direct naval warfare and port blockades across Gulf waterways.",
-        "Retaliating against American strikes on Iranian oil tankers, the Islamic Revolutionary Guard Corps launched strikes against six maritime vessels, directly targeting three commercial tankers and three U.S.-linked ships.",
-        "The Strait of Hormuz forms the primary maritime chokepoint linking the Persian Gulf with the Sea of Oman, normally handling approximately one-fifth of total global petroleum consumption."
-      ],
+      "concept_unfold": {
+        "concept": "Heavy dependence on a maritime chokepoint increases vulnerability",
+        "consequences": [
+          {
+            "title": "A local disruption can affect many countries",
+            "explanation": "When large amounts of oil and gas pass through one narrow route, war or blockage there can interrupt energy supplies far beyond the conflict area."
+          },
+          {
+            "title": "Energy costs can rise across the economy",
+            "explanation": "Reduced supply can make oil and gas more expensive. Higher fuel costs then increase transport and production expenses, making many everyday goods costlier."
+          },
+          {
+            "title": "Countries may seek alternative supply routes",
+            "explanation": "Repeated disruption risks can encourage governments and companies to diversify energy suppliers, transport routes and strategic reserves to reduce dependence on a single chokepoint."
+          }
+        ]
+      },
       "key_takeaway": "By turning the Strait of Hormuz into an asymmetric battleground, Iran deflected Washington's primary war objectives and trapped American forces in an escalating, open-ended attritional conflict without any clear exit strategy.",
       "mains_question": "Examine the strategic and economic vulnerabilities for net energy-importing nations arising from militarisation of the Strait of Hormuz?",
       "mains_answer": {

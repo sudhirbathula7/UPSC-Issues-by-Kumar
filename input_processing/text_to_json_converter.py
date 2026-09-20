@@ -1,5 +1,3 @@
-
-
 import json
 import re
 import sys
@@ -205,6 +203,8 @@ def _extract_publication_date(
         display_date,
         iso_date,
     )
+
+
 # ============================================================
 # TOPIC SPLITTING
 # ============================================================
@@ -291,7 +291,7 @@ SECTION_HEADINGS = [
     "KNOWLEDGE POINT 3",
     "KNOWLEDGE POINT 4",
     "KNOWLEDGE POINT 5",
-    "QUICK FACTS",
+    "CONCEPT UNFOLD",
     "KEY TAKEAWAY",
     "MAINS QUESTION",
     "MAINS ANSWER",
@@ -299,7 +299,6 @@ SECTION_HEADINGS = [
     "DAILY MCQ 2",
     "DAILY MCQ 3",
 ]
-
 
 # ============================================================
 # SECTION EXTRACTION
@@ -396,8 +395,11 @@ def _parse_gs_mapping(
     subject = ""
     syllabus = ""
 
-    # Format: GS Paper II | Social Justice | Health and Education
-    # or:     GS Paper II • Social Justice • Health and Education
+    # Format:
+    # GS Paper II | Social Justice | Health and Education
+    #
+    # or:
+    # GS Paper II • Social Justice • Health and Education
     if "|" in value or "•" in value:
         parts = [
             part.strip()
@@ -408,14 +410,30 @@ def _parse_gs_mapping(
             if part.strip()
         ]
 
-        paper = parts[0] if len(parts) > 0 else ""
-        subject = parts[1] if len(parts) > 1 else ""
-        syllabus = " • ".join(parts[2:]) if len(parts) > 2 else ""
+        paper = (
+            parts[0]
+            if len(parts) > 0
+            else ""
+        )
 
-    # Format actually produced by the editorial prompt:
-    # GS Paper II — Health, Education, Government Policies and Regulatory Institutions
-    # GS Paper III — Environment, Biodiversity Conservation and Infrastructure
-    elif re.search(r"\s+[—–-]\s+", value):
+        subject = (
+            parts[1]
+            if len(parts) > 1
+            else ""
+        )
+
+        syllabus = (
+            " • ".join(parts[2:])
+            if len(parts) > 2
+            else ""
+        )
+
+    # Format:
+    # GS Paper II — Health, Education, Government Policies
+    elif re.search(
+        r"\s+[—–-]\s+",
+        value,
+    ):
         split_parts = re.split(
             r"\s+[—–-]\s+",
             value,
@@ -443,12 +461,15 @@ def _parse_gs_mapping(
         )
 
         syllabus = (
-            ", ".join(remainder_parts[1:])
+            ", ".join(
+                remainder_parts[1:]
+            )
             if len(remainder_parts) > 1
             else subject
         )
 
     # Labelled format:
+    #
     # Paper: GS Paper II
     # Subject: Social Justice
     # Syllabus: Health and Education
@@ -457,33 +478,71 @@ def _parse_gs_mapping(
 
         for line in _nonempty_lines(value):
             match = re.match(
-                r"(?i)^\s*(paper|subject|syllabus)\s*:\s*(.+?)\s*$",
+                r"(?i)^\s*"
+                r"(paper|subject|syllabus)"
+                r"\s*:\s*(.+?)\s*$",
                 line,
             )
 
             if match:
-                labelled[match.group(1).casefold()] = match.group(2).strip()
+                labelled[
+                    match.group(1).casefold()
+                ] = match.group(2).strip()
 
         if labelled:
-            paper = labelled.get("paper", "")
-            subject = labelled.get("subject", "")
-            syllabus = labelled.get("syllabus", "")
+            paper = labelled.get(
+                "paper",
+                "",
+            )
+
+            subject = labelled.get(
+                "subject",
+                "",
+            )
+
+            syllabus = labelled.get(
+                "syllabus",
+                "",
+            )
+
         else:
-            parts = _nonempty_lines(value)
-            paper = parts[0] if len(parts) > 0 else ""
-            subject = parts[1] if len(parts) > 1 else ""
-            syllabus = " • ".join(parts[2:]) if len(parts) > 2 else ""
+            parts = _nonempty_lines(
+                value
+            )
+
+            paper = (
+                parts[0]
+                if len(parts) > 0
+                else ""
+            )
+
+            subject = (
+                parts[1]
+                if len(parts) > 1
+                else ""
+            )
+
+            syllabus = (
+                " • ".join(parts[2:])
+                if len(parts) > 2
+                else ""
+            )
 
     return {
         "display": " | ".join(
             item
-            for item in (paper, subject, syllabus)
+            for item in (
+                paper,
+                subject,
+                syllabus,
+            )
             if item
         ),
         "paper": paper,
         "subject": subject,
         "syllabus": syllabus,
     }
+
 
 # ============================================================
 # KNOWLEDGE POINT
@@ -515,159 +574,295 @@ def _parse_knowledge_point(
 
 
 # ============================================================
-# QUICK FACTS
+# CONCEPT UNFOLD
 # ============================================================
 
-def _parse_quick_facts(
+def _parse_concept_unfold(
     value: str,
-) -> list[str]:
+) -> dict[str, Any]:
+    """
+    Parse the selected Concept Unfold for one editorial.
+
+    Expected input format:
+
+        [Basic UPSC concept / condition] →
+
+        [Consequence 1 heading]
+        [Consequence 1 explanation]
+
+        [Consequence 2 heading]
+        [Consequence 2 explanation]
+
+        [Consequence 3 heading]
+        [Consequence 3 explanation]
+
+    Example:
+
+        Heavy dependence on a maritime chokepoint increases vulnerability →
+
+        A local disruption can affect many countries
+        When large amounts of oil and gas pass through one narrow route,
+        war or blockage there can interrupt energy supplies far beyond
+        the conflict area.
+
+        Energy costs can rise across the economy
+        Reduced supply can make oil and gas more expensive. Higher fuel
+        costs then increase transport and production expenses, making
+        many everyday goods costlier.
+
+        Countries may seek alternative supply routes
+        Repeated disruption risks can encourage governments and companies
+        to diversify energy suppliers, transport routes and strategic
+        reserves to reduce dependence on a single chokepoint.
+
+    Stored JSON structure:
+
+        {
+            "concept": "...",
+            "consequences": [
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                }
+            ]
+        }
+
+    Important:
+    - Only ONE selected concept is stored.
+    - Exactly THREE consequences are required.
+    - The three candidate options used during content generation
+      are not part of the production input format.
+    """
 
     lines = _nonempty_lines(value)
 
-    # Case 1: Four plain lines (no bullets)
-    if (
-        len(lines) == 4
-        and all(
-            not re.match(
-                r"^[•*\-]\s+",
-                line,
-            )
-            for line in lines
-        )
-    ):
-        return lines
+    # --------------------------------------------------------
+    # STRUCTURE VALIDATION
+    # --------------------------------------------------------
 
-    facts: list[str] = []
+    # 1 concept
+    # + 3 consequence headings
+    # + 3 consequence explanations
+    # = 7 non-empty lines
+    expected_lines = 7
 
-    current = ""
-
-    for line in lines:
-
-        if re.match(
-            r"^[•*\-]\s+",
-            line,
-        ):
-            if current:
-                facts.append(
-                    current.strip()
-                )
-
-            current = re.sub(
-                r"^[•*\-]\s+",
-                "",
-                line,
-            ).strip()
-
-        else:
-            current = (
-                f"{current} {line}"
-            ).strip()
-
-    if current:
-        facts.append(
-            current.strip()
+    if len(lines) != expected_lines:
+        raise ConversionError(
+            "CONCEPT UNFOLD must contain exactly "
+            "7 non-empty lines:\n"
+            "1. Basic concept / condition\n"
+            "2. Consequence 1 heading\n"
+            "3. Consequence 1 explanation\n"
+            "4. Consequence 2 heading\n"
+            "5. Consequence 2 explanation\n"
+            "6. Consequence 3 heading\n"
+            "7. Consequence 3 explanation\n\n"
+            f"Found {len(lines)} non-empty line(s)."
         )
 
-    if len(facts) <= 1:
+    # --------------------------------------------------------
+    # CONCEPT
+    # --------------------------------------------------------
 
-        chunks = [
-            chunk.strip()
-            for chunk in re.split(
-                r"\n\s*\n",
-                value,
+    concept = lines[0].strip()
+
+    if not concept:
+        raise ConversionError(
+            "CONCEPT UNFOLD concept cannot be empty."
+        )
+
+    # The arrow belongs to presentation.
+    # Accept common arrow styles in INPUT_DATA.txt,
+    # but remove them before storing the concept.
+
+    concept = re.sub(
+        r"\s*(?:→|->|=>)\s*$",
+        "",
+        concept,
+    ).strip()
+
+    if not concept:
+        raise ConversionError(
+            "CONCEPT UNFOLD concept cannot contain only an arrow."
+        )
+
+    # --------------------------------------------------------
+    # CONSEQUENCES
+    # --------------------------------------------------------
+
+    consequences: list[dict[str, str]] = []
+
+    line_index = 1
+
+    for consequence_number in range(1, 4):
+
+        title = lines[line_index].strip()
+        explanation = lines[line_index + 1].strip()
+
+        line_index += 2
+
+        if not title:
+            raise ConversionError(
+                "CONCEPT UNFOLD "
+                f"Consequence {consequence_number} "
+                "heading cannot be empty."
             )
-            if chunk.strip()
-        ]
 
-        if len(chunks) > 1:
-            facts = [
-                re.sub(
-                    r"^[•*\-]\s*",
-                    "",
-                    _clean(chunk),
-                )
-                for chunk in chunks
-            ]
+        if not explanation:
+            raise ConversionError(
+                "CONCEPT UNFOLD "
+                f"Consequence {consequence_number} "
+                "explanation cannot be empty."
+            )
 
-    return facts
+        consequences.append(
+            {
+                "title": title,
+                "explanation": explanation,
+            }
+        )
+
+    # --------------------------------------------------------
+    # DUPLICATE CHECK
+    # --------------------------------------------------------
+
+    consequence_titles = [
+        consequence["title"].casefold()
+        for consequence in consequences
+    ]
+
+    if len(set(consequence_titles)) != len(consequence_titles):
+        raise ConversionError(
+            "CONCEPT UNFOLD consequence headings "
+            "must all be different."
+        )
+
+    # --------------------------------------------------------
+    # FINAL STRUCTURE
+    # --------------------------------------------------------
+
+    return {
+        "concept": concept,
+        "consequences": consequences,
+    }
+
 # ============================================================
-# MCQ
+# DAILY MCQ
 # ============================================================
 
 def _parse_mcq(
     value: str,
     number: int,
 ) -> dict[str, Any]:
-    answer_match = re.search(
-        r"(?im)^\s*(?:Correct\s+)?"
-        r"Answer\s*:\s*([A-D])\s*$",
-        value,
+    """Parse one DAILY MCQ section."""
+
+    lines = _nonempty_lines(value)
+
+    if not lines:
+        raise ConversionError(
+            f"DAILY MCQ {number} cannot be empty."
+        )
+
+    option_pattern = re.compile(
+        r"^([A-D])\.\s*(.+)$",
+        re.IGNORECASE,
+    )
+    correct_pattern = re.compile(
+        r"^Correct\s+Answer\s*:\s*([A-D])\s*$",
+        re.IGNORECASE,
+    )
+    explanation_pattern = re.compile(
+        r"^Explanation\s*:\s*(.*)$",
+        re.IGNORECASE,
     )
 
-    explanation_match = re.search(
-        r"(?im)^\s*Explanation\s*:\s*(.+)$",
-        value,
-        re.S,
-    )
+    question_lines: list[str] = []
+    options: dict[str, str] = {}
+    correct_answer = ""
+    explanation_lines: list[str] = []
+    reading_explanation = False
 
-    if not answer_match:
+    for line in lines:
+        if reading_explanation:
+            explanation_lines.append(line)
+            continue
+
+        option_match = option_pattern.match(line)
+        if option_match:
+            letter = option_match.group(1).upper()
+            option_text = option_match.group(2).strip()
+            if letter in options:
+                raise ConversionError(
+                    f"DAILY MCQ {number}: duplicate option {letter}."
+                )
+            options[letter] = option_text
+            continue
+
+        correct_match = correct_pattern.match(line)
+        if correct_match:
+            correct_answer = correct_match.group(1).upper()
+            continue
+
+        explanation_match = explanation_pattern.match(line)
+        if explanation_match:
+            first_part = explanation_match.group(1).strip()
+            if first_part:
+                explanation_lines.append(first_part)
+            reading_explanation = True
+            continue
+
+        question_lines.append(line)
+
+    question = "\n".join(question_lines).strip()
+    if not question:
         raise ConversionError(
-            f"Daily MCQ {number} has no valid "
-            "Answer: A-D line."
+            f"DAILY MCQ {number}: question cannot be empty."
         )
 
-    if not explanation_match:
+    expected_options = {"A", "B", "C", "D"}
+    if set(options) != expected_options:
+        missing_options = sorted(expected_options - set(options))
         raise ConversionError(
-            f"Daily MCQ {number} has no Explanation line."
+            f"DAILY MCQ {number}: must contain options A, B, C and D. "
+            f"Missing: {', '.join(missing_options)}"
         )
 
-    before_answer = value[
-        :answer_match.start()
-    ].strip()
-
-    option_matches = list(
-        re.finditer(
-            r"(?m)^\s*([A-D])\.\s+(.+?)\s*$",
-            before_answer,
-        )
-    )
-
-    if len(option_matches) != 4:
+    if not correct_answer:
         raise ConversionError(
-            f"Daily MCQ {number} must contain "
-            "exactly four options A-D."
+            f"DAILY MCQ {number}: missing 'Correct Answer: X'."
         )
 
-    question = before_answer[
-        :option_matches[0].start()
-    ].strip()
-
-    question = re.sub(
-        r"^\s*Q\.\s*",
-        "",
-        question,
-        flags=re.I,
-    ).strip()
-
-    options = {
-        match.group(1): (
-            match.group(2).strip()
+    if correct_answer not in options:
+        raise ConversionError(
+            f"DAILY MCQ {number}: correct answer {correct_answer} "
+            "does not match an option."
         )
-        for match in option_matches
-    }
+
+    explanation = " ".join(explanation_lines).strip()
+    if not explanation:
+        raise ConversionError(
+            f"DAILY MCQ {number}: explanation cannot be empty."
+        )
 
     return {
         "number": number,
         "question": question,
-        "options": options,
-        "correct_answer": (
-            answer_match
-            .group(1)
-            .upper()
-        ),
-        "explanation": _clean(
-            explanation_match.group(1)
-        ),
+        "options": {
+            "A": options["A"],
+            "B": options["B"],
+            "C": options["C"],
+            "D": options["D"],
+        },
+        "correct_answer": correct_answer,
+        "explanation": explanation,
     }
 
 
@@ -679,11 +874,14 @@ def _parse_topic(
     topic_number: int,
     block: str,
 ) -> dict[str, Any]:
+
     sections = _extract_sections(
         block
     )
 
-    rating_raw = sections["RATING"].strip()
+    rating_raw = sections[
+        "RATING"
+    ].strip()
 
     rating_map = {
         "low": 2.0,
@@ -694,7 +892,9 @@ def _parse_topic(
     }
 
     try:
-        rating = float(rating_raw)
+        rating = float(
+            rating_raw
+        )
 
     except ValueError as exc:
         rating_key = rating_raw.casefold()
@@ -706,10 +906,14 @@ def _parse_topic(
                 "Low, Medium, Moderate, High, Very High."
             ) from exc
 
-        rating = rating_map[rating_key]
+        rating = rating_map[
+            rating_key
+        ]
 
     anchors = _nonempty_lines(
-        sections["RECALL ANCHORS"]
+        sections[
+            "RECALL ANCHORS"
+        ]
     )
 
     anchors = [
@@ -735,10 +939,14 @@ def _parse_topic(
     ]
 
     paragraphs = [
-        _clean(paragraph)
+        _clean(
+            paragraph
+        )
         for paragraph in re.split(
             r"\n\s*\n",
-            sections["MAINS ANSWER"],
+            sections[
+                "MAINS ANSWER"
+            ],
         )
         if paragraph.strip()
     ]
@@ -756,6 +964,14 @@ def _parse_topic(
         )
     ]
 
+    concept_unfold = (
+        _parse_concept_unfold(
+            sections[
+                "CONCEPT UNFOLD"
+            ]
+        )
+    )
+
     daily_mcqs = [
         _parse_mcq(
             sections[
@@ -772,32 +988,40 @@ def _parse_topic(
     return {
         "topic_number": topic_number,
         "issue_title": (
-            sections["ISSUE TITLE"]
+            sections[
+                "ISSUE TITLE"
+            ]
         ),
         "rating": rating,
         "editorial_sources": sources,
         "gs_mapping": (
             _parse_gs_mapping(
-                sections["GS MAPPING"]
+                sections[
+                    "GS MAPPING"
+                ]
             )
         ),
         "todays_question": (
-            sections["TODAY'S QUESTION"]
+            sections[
+                "TODAY'S QUESTION"
+            ]
         ),
         "recall_anchors": anchors,
         "knowledge_points": (
             knowledge_points
         ),
-        "quick_facts": (
-            _parse_quick_facts(
-                sections["QUICK FACTS"]
-            )
+        "concept_unfold": (
+            concept_unfold
         ),
         "key_takeaway": (
-            sections["KEY TAKEAWAY"]
+            sections[
+                "KEY TAKEAWAY"
+            ]
         ),
         "mains_question": (
-            sections["MAINS QUESTION"]
+            sections[
+                "MAINS QUESTION"
+            ]
             .rstrip()
             .rstrip(".")
             .rstrip("?")
@@ -811,6 +1035,8 @@ def _parse_topic(
         },
         "daily_mcqs": daily_mcqs,
     }
+
+
 # ============================================================
 # COMPLETE CONVERSION
 # ============================================================
@@ -818,6 +1044,7 @@ def _parse_topic(
 def convert_text(
     text: str,
 ) -> dict[str, Any]:
+
     (
         publication_date,
         publication_date_iso,
@@ -851,6 +1078,7 @@ def convert_file(
     input_path: Path,
     output_path: Path = OUTPUT_PATH,
 ) -> Path:
+
     text = input_path.read_text(
         encoding="utf-8-sig"
     )

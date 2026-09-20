@@ -1,5 +1,3 @@
-
-
 from dataclasses import dataclass
 
 from reportlab.lib.enums import TA_CENTER
@@ -12,11 +10,8 @@ from src.pdf.helpers import (
 )
 from src.pdf.page_setup import Rect
 from src.pdf.theme import (
-    ANCHOR_LEADING,
-    ANCHOR_TEXT_SIZE,
     BLACK,
     FONT_BOLD,
-    FONT_REGULAR,
     QUESTION_LEADING_FULL,
     QUESTION_LEADING_HALF,
     QUESTION_SIZE_FULL,
@@ -24,10 +19,19 @@ from src.pdf.theme import (
 )
 
 
+# ============================================================
+# DATA MODEL
+# ============================================================
+
 @dataclass(frozen=True)
 class CuriosityData:
     question: str
-    anchors: tuple[str, ...]
+
+    # Recall Anchors are retained in the data interface for now
+    # so existing callers remain compatible.
+    #
+    # They are intentionally NOT rendered in the Curiosity box.
+    anchors: tuple[str, ...] = ()
 
 
 # ============================================================
@@ -45,6 +49,7 @@ def draw_lightbulb_icon(
     canvas.setLineWidth(0.95)
 
     centre_x = rect.centre_x
+
     bulb_centre_y = (
         rect.y
         + rect.height * 0.63
@@ -137,25 +142,6 @@ def draw_lightbulb_icon(
 
 
 # ============================================================
-# ANCHOR FORMATTER
-# ============================================================
-
-def _format_anchors(
-    anchors: tuple[str, ...],
-) -> str:
-    cleaned = [
-        anchor.strip()
-        for anchor in anchors
-        if anchor.strip()
-    ]
-
-    return (
-        " &nbsp;&nbsp;•&nbsp;&nbsp; "
-        .join(cleaned)
-    )
-
-
-# ============================================================
 # CURIOSITY BOX
 # ============================================================
 
@@ -166,62 +152,24 @@ def draw_curiosity_box(
     compact: bool = False,
 ) -> None:
     """
-    If Recall Anchors are present:
-        - question uses the original upper area
-        - anchors use the original lower area
+    Render Today's Question.
 
-    If Recall Anchors are absent:
-        - the question uses the full curiosity-box height
-        - the lightbulb and question are vertically centred
-        - no empty anchor space is reserved
+    Recall Anchors are intentionally not displayed here.
+
+    They remain available elsewhere in the data pipeline for
+    internal keyword highlighting in the Pro PDF.
     """
 
-    anchor_text = _format_anchors(
-        data.anchors,
-    )
-
-    has_anchors = bool(
-        anchor_text.strip()
-    )
-
     # --------------------------------------------------------
-    # VERTICAL LAYOUT
+    # FULL QUESTION AREA
     # --------------------------------------------------------
 
-    if has_anchors:
-        top_height = (
-            rect.height * 0.65
-        )
-
-        anchor_height = (
-            rect.height * 0.35
-        )
-
-        top_rect = Rect(
-            x=rect.x,
-            y=rect.top - top_height,
-            width=rect.width,
-            height=top_height,
-        )
-
-        anchor_rect = Rect(
-            x=rect.x + 3 * mm,
-            y=rect.y + 1 * mm,
-            width=rect.width - 6 * mm,
-            height=anchor_height - 2 * mm,
-        )
-
-    else:
-        # No anchors: reclaim the entire curiosity box for
-        # Today's Question so there is no empty lower strip.
-        top_rect = Rect(
-            x=rect.x,
-            y=rect.y,
-            width=rect.width,
-            height=rect.height,
-        )
-
-        anchor_rect = None
+    content_rect = Rect(
+        x=rect.x,
+        y=rect.y,
+        width=rect.width,
+        height=rect.height,
+    )
 
     # --------------------------------------------------------
     # LIGHTBULB ICON
@@ -233,23 +181,21 @@ def draw_curiosity_box(
         else 13 * mm
     )
 
-    icon_left_gap = (
+    icon_left_gap = 2.5 * mm
+
+    icon_vertical_gap = (
         2.5 * mm
+        if compact
+        else 3 * mm
     )
 
-    if has_anchors:
-        icon_vertical_gap = 2 * mm
-    else:
-        # Slightly more breathing room when the full box is used.
-        icon_vertical_gap = 3 * mm
-
     icon_rect = Rect(
-        x=top_rect.x + icon_left_gap,
-        y=top_rect.y + icon_vertical_gap,
+        x=content_rect.x + icon_left_gap,
+        y=content_rect.y + icon_vertical_gap,
         width=icon_width,
         height=max(
             0,
-            top_rect.height
+            content_rect.height
             - 2 * icon_vertical_gap,
         ),
     )
@@ -263,19 +209,14 @@ def draw_curiosity_box(
     # TODAY'S QUESTION
     # --------------------------------------------------------
 
-    question_left_gap = (
-        2 * mm
-    )
+    question_left_gap = 2 * mm
+    question_right_gap = 2.5 * mm
 
-    question_right_gap = (
-        2.5 * mm
+    question_vertical_gap = (
+        3 * mm
+        if compact
+        else 4 * mm
     )
-
-    if has_anchors:
-        question_vertical_gap = 1.5 * mm
-    else:
-        # Use the full height but retain a clean internal margin.
-        question_vertical_gap = 4 * mm
 
     question_rect = Rect(
         x=(
@@ -283,19 +224,19 @@ def draw_curiosity_box(
             + question_left_gap
         ),
         y=(
-            top_rect.y
+            content_rect.y
             + question_vertical_gap
         ),
         width=max(
             0,
-            top_rect.right
+            content_rect.right
             - icon_rect.right
             - question_left_gap
             - question_right_gap,
         ),
         height=max(
             0,
-            top_rect.height
+            content_rect.height
             - 2 * question_vertical_gap,
         ),
     )
@@ -328,36 +269,3 @@ def draw_curiosity_box(
         style=question_style,
         vertical_align="middle",
     )
-
-    # --------------------------------------------------------
-    # RECALL ANCHORS
-    # --------------------------------------------------------
-
-    if (
-        has_anchors
-        and anchor_rect is not None
-    ):
-        anchor_style = paragraph_style(
-            name="RecallAnchors",
-            font_name=FONT_REGULAR,
-            font_size=(
-                ANCHOR_TEXT_SIZE - 0.5
-                if compact
-                else ANCHOR_TEXT_SIZE
-            ),
-            leading=(
-                ANCHOR_LEADING - 0.5
-                if compact
-                else ANCHOR_LEADING
-            ),
-            text_color=BLACK,
-            alignment=TA_CENTER,
-        )
-
-        draw_paragraph(
-            canvas=canvas,
-            text=anchor_text,
-            rect=anchor_rect,
-            style=anchor_style,
-            vertical_align="middle",
-        )

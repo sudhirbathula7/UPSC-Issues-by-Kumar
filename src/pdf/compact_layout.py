@@ -52,21 +52,23 @@ PAGE_SECTION_GAP = 1.2 * mm
 ISSUE_GAP = 1.2 * mm
 COLUMN_GAP = 1.2 * mm
 
-QUESTION_PANEL_HEIGHT = 17 * mm
+QUESTION_PANEL_HEIGHT = 18 * mm
+CONCEPT_UNFOLD_RATIO = 0.73
 
-# 86% curiosity area and 14% GS Mapping.
-GS_MAPPING_RATIO = 0.15
 
-# Equal-width Knowledge Points and right-side columns.
+# ============================================================
+# COLUMN RATIOS
+# ============================================================
+
+# Question panel:
+# 83% Curiosity Question
+# 17% GS Mapping
+GS_MAPPING_RATIO = 0.17
+
+# Main content:
+# 50% Knowledge Points
+# 50% Concept Unfold
 KNOWLEDGE_COLUMN_RATIO = 0.50
-
-# Within the right column:
-# 75% Quick Facts and 25% Key Takeaway.
-QUICK_FACTS_RATIO = 0.75
-
-# After reducing the question/GS Mapping panel by 3 mm,
-# split that recovered height equally between Quick Facts and Key Takeaway.
-QUICK_FACTS_HEIGHT_ADJUSTMENT = 0.75 * mm
 
 
 # ============================================================
@@ -98,8 +100,9 @@ class CompactIssueLayout:
 
     content: Rect
     knowledge_points: Rect
+    concept_unfold: Rect
+
     right_column: Rect
-    quick_facts: Rect
     takeaway: Rect
 
 
@@ -127,14 +130,20 @@ def build_compact_issue_layout(
     panel: Rect,
 ) -> CompactIssueLayout:
 
-    # The issue begins directly with the question panel.
-    # No separate Issue Title is displayed.
+    # --------------------------------------------------------
+    # QUESTION PANEL
+    # --------------------------------------------------------
+
     question_panel = Rect(
         x=panel.x,
         y=panel.top - QUESTION_PANEL_HEIGHT,
         width=panel.width,
         height=QUESTION_PANEL_HEIGHT,
     )
+
+    # --------------------------------------------------------
+    # CURIOSITY QUESTION / GS MAPPING
+    # --------------------------------------------------------
 
     gs_mapping_width = (
         question_panel.width
@@ -161,6 +170,10 @@ def build_compact_issue_layout(
         height=question_panel.height,
     )
 
+    # --------------------------------------------------------
+    # MAIN CONTENT
+    # --------------------------------------------------------
+
     content_top = (
         question_panel.y
         - PAGE_SECTION_GAP
@@ -176,6 +189,9 @@ def build_compact_issue_layout(
         ),
     )
 
+    # Left  = Knowledge Points
+    # Right = Concept Unfold
+
     knowledge_points, right_column = (
         content.split_vertical(
             left_ratio=KNOWLEDGE_COLUMN_RATIO,
@@ -183,29 +199,39 @@ def build_compact_issue_layout(
         )
     )
 
-    available_right_height = max(
-        0,
+    # --------------------------------------------------------
+    # CONCEPT UNFOLD / TAKEAWAY
+    # --------------------------------------------------------
+    #
+    # Concept Unfold occupies the main part of the right
+    # column.
+    #
+    # A small strip at the bottom of the right column remains
+    # reserved for the Key Takeaway.
+    # --------------------------------------------------------
+
+    available_right_height = (
         right_column.height
-        - PAGE_SECTION_GAP,
+        - PAGE_SECTION_GAP
     )
 
-    quick_facts_height = (
+    concept_unfold_height = (
         available_right_height
-        * QUICK_FACTS_RATIO
-        - QUICK_FACTS_HEIGHT_ADJUSTMENT
+        * CONCEPT_UNFOLD_RATIO
     )
 
     takeaway_height = (
         available_right_height
-        - quick_facts_height
+        - concept_unfold_height
     )
 
-    quick_facts = Rect(
+    concept_unfold = Rect(
         x=right_column.x,
-        y=right_column.top
-        - quick_facts_height,
+        y=right_column.y
+        + takeaway_height
+        + PAGE_SECTION_GAP,
         width=right_column.width,
-        height=quick_facts_height,
+        height=concept_unfold_height,
     )
 
     takeaway = Rect(
@@ -215,6 +241,10 @@ def build_compact_issue_layout(
         height=takeaway_height,
     )
 
+    # --------------------------------------------------------
+    # FINAL ISSUE LAYOUT
+    # --------------------------------------------------------
+
     return CompactIssueLayout(
         panel=panel,
         question_panel=question_panel,
@@ -222,23 +252,27 @@ def build_compact_issue_layout(
         gs_mapping=gs_mapping,
         content=content,
         knowledge_points=knowledge_points,
+        concept_unfold=concept_unfold,
         right_column=right_column,
-        quick_facts=quick_facts,
         takeaway=takeaway,
     )
-
 
 # ============================================================
 # FULL PAGE GEOMETRY
 # ============================================================
 
 def build_compact_page_layout() -> CompactPageLayout:
+
     page = Rect(
         x=PAGE_X,
         y=PAGE_Y,
         width=PAGE_WIDTH,
         height=PAGE_HEIGHT,
     )
+
+    # --------------------------------------------------------
+    # HEADER
+    # --------------------------------------------------------
 
     header = Rect(
         x=page.x,
@@ -247,12 +281,20 @@ def build_compact_page_layout() -> CompactPageLayout:
         height=HEADER_HEIGHT,
     )
 
+    # --------------------------------------------------------
+    # FOOTER
+    # --------------------------------------------------------
+
     footer = Rect(
         x=page.x,
         y=page.y,
         width=page.width,
         height=FOOTER_HEIGHT,
     )
+
+    # --------------------------------------------------------
+    # BODY
+    # --------------------------------------------------------
 
     body_top = (
         header.y
@@ -273,6 +315,10 @@ def build_compact_page_layout() -> CompactPageLayout:
             body_top - body_bottom,
         ),
     )
+
+    # --------------------------------------------------------
+    # TWO ISSUES PER PAGE
+    # --------------------------------------------------------
 
     issue_height = (
         body.height
@@ -321,6 +367,7 @@ def draw_compact_box(
     stroke_color=SECTION_BOX_BORDER_COLOR,
     fill_color=SECTION_BOX_FILL_COLOR,
 ) -> None:
+
     should_draw = (
         SHOW_BOXES
         if enabled is None
@@ -335,9 +382,11 @@ def draw_compact_box(
     canvas.setStrokeColor(
         stroke_color,
     )
+
     canvas.setFillColor(
         fill_color,
     )
+
     canvas.setLineWidth(
         border_width,
     )
@@ -345,8 +394,10 @@ def draw_compact_box(
     canvas.roundRect(
         rect.x + BOX_EDGE_INSET,
         rect.y + BOX_EDGE_INSET,
-        rect.width - 2 * BOX_EDGE_INSET,
-        rect.height - 2 * BOX_EDGE_INSET,
+        rect.width
+        - 2 * BOX_EDGE_INSET,
+        rect.height
+        - 2 * BOX_EDGE_INSET,
         radius,
         stroke=1,
         fill=1,
@@ -355,6 +406,10 @@ def draw_compact_box(
     canvas.restoreState()
 
 
+# ============================================================
+# VERTICAL DIVIDER
+# ============================================================
+
 def draw_compact_vertical_divider(
     canvas: Canvas,
     *,
@@ -362,6 +417,7 @@ def draw_compact_vertical_divider(
     y_bottom: float,
     y_top: float,
 ) -> None:
+
     if not SHOW_DIVIDERS:
         return
 
@@ -370,6 +426,7 @@ def draw_compact_vertical_divider(
     canvas.setStrokeColor(
         INTERNAL_DIVIDER_COLOR,
     )
+
     canvas.setLineWidth(
         INTERNAL_DIVIDER_WIDTH,
     )
@@ -388,8 +445,12 @@ def draw_compact_vertical_divider(
 # ACCESSOR
 # ============================================================
 
-_COMPACT_PAGE_LAYOUT = build_compact_page_layout()
+_COMPACT_PAGE_LAYOUT = (
+    build_compact_page_layout()
+)
 
 
-def get_compact_page_layout() -> CompactPageLayout:
+def get_compact_page_layout(
+) -> CompactPageLayout:
+
     return _COMPACT_PAGE_LAYOUT

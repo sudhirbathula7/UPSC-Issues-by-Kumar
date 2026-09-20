@@ -11,14 +11,14 @@
     "The Hindu"
   ],
   "gs_mapping": {
-    "display": "GS Paper II | Effect of Policies | Developed and Developing Countries",
+    "display": "GS Paper II | Policies | Developed and Developing Countries",
     "paper": "GS Paper II",
-    "subject": "Effect of Policies",
+    "subject": "Policies",
     "syllabus": "Developed and Developing Countries"
   },
   "todays_question": "How has the Strait of Hormuz trapped the United States in an unwinnable regional conflict?",
   "recall_anchors": [
-    "Revolutionary Guard Corps",
+    "balance-of-payments",
     "Islamabad agreement",
     "Petroleum reserves",
     "Foreign remittances",
@@ -51,12 +51,23 @@
       "explanation": "The collapse of the June 17 Islamabad agreement removed formal diplomatic guardrails. Without open communication channels or agreed ceasefire terms, minor tactical clashes at sea quickly escalate into wider regional conflict."
     }
   ],
-  "quick_facts": [
-    "The current conflict began on February 28, initially launched by the United States and Israel with the declared goals of neutralizing Iran’s nuclear capabilities and seeking regime change.",
-    "Following the breakdown of the June 17 Islamabad Memorandum of Understanding, bilateral diplomacy collapsed, returning both nations to direct naval warfare and port blockades across Gulf waterways.",
-    "Retaliating against American strikes on Iranian oil tankers, the Islamic Revolutionary Guard Corps launched strikes against six maritime vessels, directly targeting three commercial tankers and three U.S.-linked ships.",
-    "The Strait of Hormuz forms the primary maritime chokepoint linking the Persian Gulf with the Sea of Oman, normally handling approximately one-fifth of total global petroleum consumption."
-  ],
+  "concept_unfold": {
+    "concept": "Heavy dependence on a maritime chokepoint increases vulnerability",
+    "consequences": [
+      {
+        "title": "A local disruption can affect many countries",
+        "explanation": "When large amounts of oil and gas pass through one narrow route, war or blockage there can interrupt energy supplies far beyond the conflict area."
+      },
+      {
+        "title": "Energy costs can rise across the economy",
+        "explanation": "Reduced supply can make oil and gas more expensive. Higher fuel costs then increase transport and production expenses, making many everyday goods costlier."
+      },
+      {
+        "title": "Countries may seek alternative supply routes",
+        "explanation": "Repeated disruption risks can encourage governments and companies to diversify energy suppliers, transport routes and strategic reserves to reduce dependence on a single chokepoint."
+      }
+    ]
+  },
   "key_takeaway": "By turning the Strait of Hormuz into an asymmetric battleground, Iran deflected Washington's primary war objectives and trapped American forces in an escalating, open-ended attritional conflict without any clear exit strategy.",
   "mains_question": "Examine the strategic and economic vulnerabilities for net energy-importing nations arising from militarisation of the Strait of Hormuz?",
   "mains_answer": {
@@ -105,6 +116,6 @@
       "explanation": "Disruptions in key energy corridors cause crude oil prices and maritime freight insurance to surge, which widens current account deficits and stokes inflation in import-dependent countries."
     }
   ],
-  "repository_saved_at": "2026-09-07T21:04:43",
-  "content_hash": "cfc1ff892537ab9600c2a97b122441a26ec8e3f13f15a514cf74cd5b58a1f20d"
+  "repository_saved_at": "2026-09-21T01:35:01",
+  "content_hash": "6f40afaf6b6fcd63257ba5a5c158d15b6b9cb4260672426cc9683a8f4ab39a62"
 }

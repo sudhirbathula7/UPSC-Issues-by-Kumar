@@ -18,7 +18,10 @@ from src.pdf.theme import (
     FONT_BOLD,
     FONT_REGULAR,
     HEADING_BLUE,
+    SECTION_CONTENT_GAP,
+    SECTION_HEADING_HEIGHT,
     SECTION_TITLE_SIZE,
+    SECTION_TOP_GAP,
     TAKEAWAY_LEADING,
     TAKEAWAY_SIZE,
 )
@@ -39,13 +42,15 @@ def _draw_section_title(
     rect: Rect,
     title: str,
 ) -> Rect:
-    heading_height = 7 * mm
-
     heading_rect = Rect(
         x=rect.x + 3 * mm,
-        y=rect.top - heading_height,
+        y=(
+            rect.top
+            - SECTION_TOP_GAP
+            - SECTION_HEADING_HEIGHT
+        ),
         width=rect.width - 6 * mm,
-        height=heading_height,
+        height=SECTION_HEADING_HEIGHT,
     )
 
     icon_size = 4.2 * mm
@@ -131,16 +136,35 @@ def draw_key_takeaway(
         title=data.title,
     )
 
+    # --------------------------------------------------------
+    # CONTENT AREA
+    # --------------------------------------------------------
+
+    bottom_padding = 1.8 * mm
+
+    content_top = (
+        heading_rect.y
+        - SECTION_CONTENT_GAP
+    )
+
     content_rect = Rect(
         x=rect.x + 3 * mm,
-        y=rect.y + 1.8 * mm,
+        y=rect.y + bottom_padding,
         width=rect.width - 6 * mm,
-        height=(
-            heading_rect.y
+        height=max(
+            0,
+            content_top
             - rect.y
-            - 2.2 * mm
+            - bottom_padding,
         ),
     )
+
+    if content_rect.height <= 0:
+        return
+
+    # --------------------------------------------------------
+    # TAKEAWAY TEXT
+    # --------------------------------------------------------
 
     style = paragraph_style(
         name="KeyTakeaway",
@@ -156,5 +180,5 @@ def draw_key_takeaway(
         text=data.takeaway,
         rect=content_rect,
         style=style,
-        vertical_align="middle",
+        vertical_align="top",
     )

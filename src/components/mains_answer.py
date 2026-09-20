@@ -23,7 +23,10 @@ from src.pdf.theme import (
     MAINS_LEADING,
     MAINS_QUESTION_SIZE,
     MAINS_TEXT_SIZE,
+    SECTION_CONTENT_GAP,
+    SECTION_HEADING_HEIGHT,
     SECTION_TITLE_SIZE,
+    SECTION_TOP_GAP,
 )
 
 
@@ -43,13 +46,15 @@ def _draw_section_title(
     rect: Rect,
     title: str,
 ) -> Rect:
-    heading_height = 7 * mm
-
     heading_rect = Rect(
         x=rect.x + 3 * mm,
-        y=rect.top - heading_height,
+        y=(
+            rect.top
+            - SECTION_TOP_GAP
+            - SECTION_HEADING_HEIGHT
+        ),
         width=rect.width - 6 * mm,
-        height=heading_height,
+        height=SECTION_HEADING_HEIGHT,
     )
 
     icon_size = 4.2 * mm
@@ -136,9 +141,9 @@ def _split_answer_into_three_paragraphs(
 
     If the incoming answer contains more than three blank-line
     separated blocks, all middle blocks are merged into one body
-    paragraph. This prevents short lead-in lines from becoming a
-    separate fourth paragraph.
+    paragraph.
     """
+
     raw = str(answer).strip()
 
     if not raw:
@@ -171,7 +176,9 @@ def _split_answer_into_three_paragraphs(
         return tuple(blocks)
 
     introduction = blocks[0]
-    body = " ".join(blocks[1:-1]).strip()
+    body = " ".join(
+        blocks[1:-1]
+    ).strip()
     conclusion = blocks[-1]
 
     return (
@@ -199,16 +206,15 @@ def _draw_answer_paragraphs(
         font_size=MAINS_TEXT_SIZE + 1,
         leading=MAINS_LEADING,
         text_color=BLACK,
-        alignment=TA_JUSTIFY,
+        alignment=TA_LEFT,
     )
 
-    # Visually similar to roughly 4–5 typed spaces, but implemented
-    # as a proper first-line indent so it remains consistent.
+    # Proper first-line paragraph indentation.
     answer_style.firstLineIndent = 5 * mm
     answer_style.spaceBefore = 0
     answer_style.spaceAfter = 0
 
-    paragraph_gap = 2.2 * mm
+    paragraph_gap = 2.4 * mm
 
     measured: list[
         tuple[Paragraph, float]
@@ -248,9 +254,7 @@ def _draw_answer_paragraphs(
         )
     )
 
-    # Start at the top. If an unusually long answer exceeds the box,
-    # preserve all content and let the existing project word limits
-    # remain the controlling constraint.
+    # Start from the top of the answer area.
     current_top = rect.top
 
     for paragraph, height in measured:
@@ -286,19 +290,31 @@ def draw_mains_answer(
         title=data.title,
     )
 
-    # Slightly reduced question area.
+    # --------------------------------------------------------
+    # HEADING -> QUESTION SPACING
+    # Global B = 2.0 mm
+    # --------------------------------------------------------
+
     question_height = 16 * mm
+
+    question_top = (
+        heading_rect.y
+        - SECTION_CONTENT_GAP
+    )
 
     question_rect = Rect(
         x=rect.x + 3 * mm,
-        y=(
-            heading_rect.y
-            - question_height
-            + 0.8 * mm
-        ),
+        y=question_top - question_height,
         width=rect.width - 6 * mm,
-        height=question_height - 0.8 * mm,
+        height=question_height,
     )
+
+    if question_rect.height <= 0:
+        return
+
+    # --------------------------------------------------------
+    # QUESTION
+    # --------------------------------------------------------
 
     question_style = paragraph_style(
         name="MainsQuestion",
@@ -314,13 +330,18 @@ def draw_mains_answer(
         text=data.question,
         rect=question_rect,
         style=question_style,
-        vertical_align="middle",
+        vertical_align="top",
     )
 
-    # Smaller gap between question and answer.
+    # --------------------------------------------------------
+    # QUESTION -> ANSWER SPACING
+    # --------------------------------------------------------
+
+    question_answer_gap = 1.5 * mm
+
     answer_top = (
         question_rect.y
-        - 0.4 * mm
+        - question_answer_gap
     )
 
     answer_rect = Rect(
@@ -331,9 +352,16 @@ def draw_mains_answer(
             0,
             answer_top
             - rect.y
-            - 2.4 * mm,
+            - 2 * mm,
         ),
     )
+
+    if answer_rect.height <= 0:
+        return
+
+    # --------------------------------------------------------
+    # ANSWER
+    # --------------------------------------------------------
 
     _draw_answer_paragraphs(
         canvas=canvas,

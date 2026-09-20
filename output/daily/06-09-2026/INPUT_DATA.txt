@@ -57,12 +57,18 @@ KNOWLEDGE POINT 5
 Preventing monitoring gaps
 Farmers sometimes burn crop stubble at odd hours to evade low-orbit satellites that pass only at fixed times. Constant observation ensures continuous monitoring, making it impossible for polluters to hide smoke emissions.
 
-QUICK FACTS
+CONCEPT UNFOLD
 
-The EOS-05 spacecraft will orbit Earth at approximately 36,000 kilometres in geosynchronous orbit, matching the planet's rotation to provide uninterrupted observations over the Indian subcontinent.
-Recent flash floods from the Bhote Koshi deluge in Nepal caused over 1,344 deaths, highlighting the urgent need for persistent space-based monitoring of fragile Himalayan landscapes.
-Unlike dedicated land-imaging satellites that historically operated only in low orbits, India previously maintained only weather monitoring satellites within geostationary orbit under the INSAT-3D series.
-Conventional low-earth imaging satellites fly just a few hundred kilometres high, capturing razor-sharp details but requiring several days to complete successive orbital passes over identical terrain.
+Continuous observation of the same area improves monitoring →
+
+Changes can be detected quickly
+When a satellite keeps watching the same region, sudden events such as floods, fires or cyclones can be noticed without waiting for another satellite pass.
+
+Faster detection supports faster response
+When authorities receive information quickly, they get more time to issue warnings, plan evacuations and send help before a disaster becomes more dangerous.
+
+Repeated observations improve situation tracking
+Continuous images allow authorities to compare conditions over time, helping them track how a cyclone, flood or wildfire is developing and adjust their response accordingly.
 
 KEY TAKEAWAY
 
@@ -131,7 +137,7 @@ The Hindu
 
 GS MAPPING
 
-GS Paper II — Effect of Policies, Developed and Developing Countries
+GS Paper II — policies, Developed & Developing Countries
 
 TODAY'S QUESTION
 
@@ -139,7 +145,7 @@ How has the Strait of Hormuz trapped the United States in an unwinnable regional
 
 RECALL ANCHORS
 
-Revolutionary Guard Corps
+balance-of-payments
 Islamabad agreement
 Petroleum reserves
 Foreign remittances
@@ -169,13 +175,18 @@ KNOWLEDGE POINT 5
 
 Failed peace diplomacy
 The collapse of the June 17 Islamabad agreement removed formal diplomatic guardrails. Without open communication channels or agreed ceasefire terms, minor tactical clashes at sea quickly escalate into wider regional conflict.
+CONCEPT UNFOLD
 
-QUICK FACTS
+Heavy dependence on a maritime chokepoint increases vulnerability →
 
-The current conflict began on February 28, initially launched by the United States and Israel with the declared goals of neutralizing Iran’s nuclear capabilities and seeking regime change.
-Following the breakdown of the June 17 Islamabad Memorandum of Understanding, bilateral diplomacy collapsed, returning both nations to direct naval warfare and port blockades across Gulf waterways.
-Retaliating against American strikes on Iranian oil tankers, the Islamic Revolutionary Guard Corps launched strikes against six maritime vessels, directly targeting three commercial tankers and three U.S.-linked ships.
-The Strait of Hormuz forms the primary maritime chokepoint linking the Persian Gulf with the Sea of Oman, normally handling approximately one-fifth of total global petroleum consumption.
+A local disruption can affect many countries
+When large amounts of oil and gas pass through one narrow route, war or blockage there can interrupt energy supplies far beyond the conflict area.
+
+Energy costs can rise across the economy
+Reduced supply can make oil and gas more expensive. Higher fuel costs then increase transport and production expenses, making many everyday goods costlier.
+
+Countries may seek alternative supply routes
+Repeated disruption risks can encourage governments and companies to diversify energy suppliers, transport routes and strategic reserves to reduce dependence on a single chokepoint.
 
 KEY TAKEAWAY
 

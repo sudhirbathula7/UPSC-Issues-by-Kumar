@@ -18,7 +18,10 @@ from src.pdf.theme import (
     HEADING_BLUE,
     KNOWLEDGE_LEADING,
     KNOWLEDGE_TEXT_SIZE,
+    SECTION_CONTENT_GAP,
+    SECTION_HEADING_HEIGHT,
     SECTION_TITLE_SIZE,
+    SECTION_TOP_GAP,
 )
 
 
@@ -49,13 +52,15 @@ def _draw_section_title(
     rect: Rect,
     title: str,
 ) -> Rect:
-    heading_height = 7 * mm
-
     heading_rect = Rect(
         x=rect.x + 3 * mm,
-        y=rect.top - heading_height,
+        y=(
+            rect.top
+            - SECTION_TOP_GAP
+            - SECTION_HEADING_HEIGHT
+        ),
         width=rect.width - 6 * mm,
-        height=heading_height,
+        height=SECTION_HEADING_HEIGHT,
     )
 
     icon_size = 4.2 * mm
@@ -317,16 +322,32 @@ def draw_knowledge_points(
         title=data.title,
     )
 
+    # --------------------------------------------------------
+    # HEADING -> CONTENT SPACING
+    # --------------------------------------------------------
+
+    bottom_padding = 2.2 * mm
+
+    content_top = (
+        heading_rect.y
+        - SECTION_CONTENT_GAP
+    )
+
     content_rect = Rect(
         x=rect.x + 2.5 * mm,
-        y=rect.y + 2.2 * mm,
+        y=rect.y + bottom_padding,
         width=rect.width - 5 * mm,
-        height=(
-            heading_rect.y
+        height=max(
+            0,
+            content_top
             - rect.y
-            - 2.2 * mm
+            - bottom_padding,
         ),
     )
+
+    # --------------------------------------------------------
+    # KNOWLEDGE POINT LAYOUT
+    # --------------------------------------------------------
 
     bullet_column_width = 4.5 * mm
     bullet_text_gap = 1.2 * mm
@@ -354,6 +375,10 @@ def draw_knowledge_points(
         available_height=content_rect.height,
         point_gap=point_gap,
     )
+
+    # --------------------------------------------------------
+    # DISTRIBUTE REMAINING SPACE BETWEEN KNOWLEDGE POINTS
+    # --------------------------------------------------------
 
     total_content_height = (
         sum(
@@ -389,10 +414,11 @@ def draw_knowledge_points(
         + extra_gap
     )
 
-    current_top = (
-        content_rect.top
-        - 1* mm
-    )
+    # --------------------------------------------------------
+    # DRAW KNOWLEDGE POINTS
+    # --------------------------------------------------------
+
+    current_top = content_rect.top
 
     for measured in measured_points:
         paragraph_bottom = (

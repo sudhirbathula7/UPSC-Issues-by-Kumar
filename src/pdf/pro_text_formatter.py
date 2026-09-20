@@ -7,7 +7,15 @@ from collections.abc import Iterable
 def _normalise_anchors(
     anchors: Iterable[str] | str | None,
 ) -> tuple[str, ...]:
-    """Convert Recall Anchors into a clean tuple."""
+    """
+    Convert internal highlight terms into a clean tuple.
+
+    These terms originate from the Recall Anchors input field,
+    but they are no longer displayed as a visible section in
+    the PDF. They are retained only for contextual highlighting
+    throughout Pro PDF content.
+    """
+
     if anchors is None:
         return ()
 
@@ -39,13 +47,14 @@ def _normalise_anchors(
         seen.add(key)
         cleaned.append(anchor)
 
+    # Longer phrases are matched first so a shorter term
+    # cannot consume part of a longer highlight phrase.
     cleaned.sort(
         key=len,
         reverse=True,
     )
 
     return tuple(cleaned)
-
 
 def bold_recall_anchors(
     text: str,

@@ -36,9 +36,10 @@ from src.components.mcq_section import (
     MCQData,
     draw_mcqs,
 )
-from src.components.quick_facts import (
-    QuickFactsData,
-    draw_quick_facts,
+from src.components.concept_unfold import (
+    ConceptUnfoldConsequence,
+    ConceptUnfoldData,
+    draw_concept_unfold,
 )
 from src.knowledge_engine.knowledge_loader import (
     TopicRecord,
@@ -132,7 +133,7 @@ def _draw_topic_page(
     for section_rect in (
         layout.question_panel,
         layout.knowledge_points,
-        layout.quick_facts,
+        layout.concept_unfold,
         layout.takeaway,
         layout.mains_answer,
         layout.mcqs,
@@ -149,7 +150,16 @@ def _draw_topic_page(
         y_top=layout.question_panel.top - 2,
     )
 
-    # Keep the top Recall Anchors strip unchanged.
+    # --------------------------------------------------------
+    # TODAY'S QUESTION
+    # --------------------------------------------------------
+    #
+    # Recall Anchors are intentionally hidden here.
+    # They remain available internally through `anchors`
+    # and are still used for text highlighting throughout
+    # the Pro PDF.
+    # --------------------------------------------------------
+
     draw_curiosity_box(
         canvas=canvas,
         rect=layout.curiosity_box,
@@ -193,14 +203,32 @@ def _draw_topic_page(
         ),
     )
 
-    draw_quick_facts(
+    # --------------------------------------------------------
+    # CONCEPT UNFOLD
+    # --------------------------------------------------------
+
+    draw_concept_unfold(
         canvas=canvas,
-        rect=layout.quick_facts,
-        data=QuickFactsData(
-            title="QUICK FACTS",
-            facts=tuple(
-                _pro_text(fact, anchors)
-                for fact in topic.quick_facts
+        rect=layout.concept_unfold,
+        data=ConceptUnfoldData(
+            title="CONCEPT UNFOLD",
+            concept=_pro_text(
+                topic.concept_unfold.concept,
+                anchors,
+            ),
+            consequences=tuple(
+                ConceptUnfoldConsequence(
+                    title=_pro_text(
+                        consequence.title,
+                        anchors,
+                    ),
+                    explanation=_pro_text(
+                        consequence.explanation,
+                        anchors,
+                    ),
+                )
+                for consequence
+                in topic.concept_unfold.consequences
             ),
         ),
     )

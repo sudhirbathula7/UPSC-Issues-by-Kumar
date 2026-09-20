@@ -27,9 +27,10 @@ from src.components.knowledge_points import (
     KnowledgePointsData,
     draw_knowledge_points,
 )
-from src.components.quick_facts import (
-    QuickFactsData,
-    draw_quick_facts,
+from src.components.concept_unfold import (
+    ConceptUnfoldConsequence,
+    ConceptUnfoldData,
+    draw_concept_unfold,
 )
 from src.knowledge_engine.knowledge_loader import (
     TopicRecord,
@@ -88,7 +89,7 @@ def _draw_compact_issue(
 
     draw_compact_box(
         canvas=canvas,
-        rect=layout.quick_facts,
+        rect=layout.concept_unfold,
     )
 
     draw_compact_box(
@@ -160,16 +161,24 @@ def _draw_compact_issue(
         ),
     )
 
-    # --------------------------------------------------------
-    # QUICK FACTS
+        # --------------------------------------------------------
+    # CONCEPT UNFOLD
     # --------------------------------------------------------
 
-    draw_quick_facts(
+    draw_concept_unfold(
         canvas=canvas,
-        rect=layout.quick_facts,
-        data=QuickFactsData(
-            title="QUICK FACTS",
-            facts=topic.quick_facts,
+        rect=layout.concept_unfold,
+        data=ConceptUnfoldData(
+            title="CONCEPT UNFOLD",
+            concept=topic.concept_unfold.concept,
+            consequences=tuple(
+                ConceptUnfoldConsequence(
+                    title=consequence.title,
+                    explanation=consequence.explanation,
+                )
+                for consequence
+                in topic.concept_unfold.consequences
+            ),
         ),
     )
 

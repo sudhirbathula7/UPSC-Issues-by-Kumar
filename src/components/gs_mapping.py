@@ -40,80 +40,94 @@ def _draw_mapping_item(
     compact: bool,
 ) -> None:
     """
-    Draw one GS Mapping item in three centred lines:
+    Render GS Mapping as a compact three-line block.
 
-    GS II
-    International Relations
-    West Asia
+    Target:
+
+        GS II - Policies
+        Developed and
+        Developing Countries
     """
 
-    paper_size = (
-        GS_SUBJECT_SIZE - 0.1
-        if compact
-        else GS_SUBJECT_SIZE
+    # --------------------------------------------------------
+    # SHORT PAPER NAME
+    # --------------------------------------------------------
+
+    paper_short = (
+        item.paper
+        .replace("GS Paper ", "GS ")
+        .strip()
     )
 
-    subject_size = (
-        GS_TOPIC_SIZE - 0.1
-        if compact
-        else GS_TOPIC_SIZE
+    first_line = (
+        f"{paper_short} - {item.subject}"
     )
 
-    topic_size = (
+    # --------------------------------------------------------
+    # INNER AREA
+    # --------------------------------------------------------
+
+    inner = rect.inset(
+        horizontal=0.7 * mm,
+        vertical=0.5 * mm,
+    )
+
+    if (
+        inner.width <= 0
+        or inner.height <= 0
+    ):
+        return
+
+    # --------------------------------------------------------
+    # FONT SIZES
+    # --------------------------------------------------------
+
+    first_line_size = (
         GS_TOPIC_SIZE - 0.2
         if compact
         else GS_TOPIC_SIZE
     )
 
-    paper_leading = (
-        paper_size + 1.2
+    topic_size = (
+        GS_TOPIC_SIZE - 0.4
+        if compact
+        else GS_TOPIC_SIZE - 0.2
     )
 
-    subject_leading = (
-        subject_size + 1.1
+    first_line_leading = (
+        first_line_size + 0.8
     )
 
     topic_leading = (
-        GS_TOPIC_LEADING - 0.3
-        if compact
-        else GS_TOPIC_LEADING
+        topic_size + 1.0
     )
 
-    inner = rect.inset(
-        horizontal=1.5 * mm,
-        vertical=1.5 * mm,
+    # --------------------------------------------------------
+    # THREE-LINE LAYOUT
+    # --------------------------------------------------------
+    #
+    # Line 1:
+    #     GS II - Policies
+    #
+    # Lines 2-3:
+    #     Developed and
+    #     Developing Countries
+    # --------------------------------------------------------
+
+    first_line_height = (
+        inner.height * 0.32
     )
 
-    paper_height = min(
-        5 * mm,
-        inner.height * 0.24,
-    )
-
-    subject_height = min(
-        7 * mm,
-        inner.height * 0.34,
-    )
-
-    topic_height = max(
-        0,
+    topic_height = (
         inner.height
-        - paper_height
-        - subject_height
-        - 1.5 * mm,
+        - first_line_height
     )
 
-    paper_rect = Rect(
+    first_line_rect = Rect(
         x=inner.x,
-        y=inner.top - paper_height,
+        y=inner.top - first_line_height,
         width=inner.width,
-        height=paper_height,
-    )
-
-    subject_rect = Rect(
-        x=inner.x,
-        y=paper_rect.y - subject_height,
-        width=inner.width,
-        height=subject_height,
+        height=first_line_height,
     )
 
     topic_rect = Rect(
@@ -123,20 +137,15 @@ def _draw_mapping_item(
         height=topic_height,
     )
 
-    paper_style = paragraph_style(
-        name=f"GSPaper{index}",
-        font_name=FONT_BOLD,
-        font_size=paper_size,
-        leading=paper_leading,
-        text_color=BLACK,
-        alignment=TA_CENTER,
-    )
+    # --------------------------------------------------------
+    # STYLES
+    # --------------------------------------------------------
 
-    subject_style = paragraph_style(
-        name=f"GSSubject{index}",
-        font_name=FONT_REGULAR,
-        font_size=subject_size,
-        leading=subject_leading,
+    first_line_style = paragraph_style(
+        name=f"GSFirstLine{index}",
+        font_name=FONT_BOLD,
+        font_size=first_line_size,
+        leading=first_line_leading,
         text_color=BLACK,
         alignment=TA_CENTER,
     )
@@ -150,19 +159,21 @@ def _draw_mapping_item(
         alignment=TA_CENTER,
     )
 
-    draw_paragraph(
-        canvas=canvas,
-        text=item.paper,
-        rect=paper_rect,
-        style=paper_style,
-        vertical_align="middle",
-    )
+    first_line_style.spaceBefore = 0
+    first_line_style.spaceAfter = 0
+
+    topic_style.spaceBefore = 0
+    topic_style.spaceAfter = 0
+
+    # --------------------------------------------------------
+    # DRAW
+    # --------------------------------------------------------
 
     draw_paragraph(
         canvas=canvas,
-        text=item.subject,
-        rect=subject_rect,
-        style=subject_style,
+        text=first_line,
+        rect=first_line_rect,
+        style=first_line_style,
         vertical_align="middle",
     )
 
@@ -173,7 +184,6 @@ def _draw_mapping_item(
         style=topic_style,
         vertical_align="middle",
     )
-
 
 # ============================================================
 # GS MAPPING SIDEBAR

@@ -87,12 +87,15 @@ CONTENT_HEIGHT: Final[float] = (
 
 KNOWLEDGE_POINT_COUNT: Final[int] = 5
 
+# Recall Anchors remain internal highlighting terms.
+# They are no longer displayed in the Curiosity box.
 RECALL_ANCHOR_COUNT: Final[int] = 5
 
-QUICK_FACT_COUNT: Final[int] = 4
+# Concept Unfold contains one underlying concept
+# followed by exactly three consequences.
+CONCEPT_UNFOLD_CONSEQUENCE_COUNT: Final[int] = 3
 
 MCQ_COUNT: Final[int] = 3
-
 
 # ============================================================
 # PAGE OBJECT

@@ -58,8 +58,8 @@ FONT_BOLD_OBLIQUE: Final[str] = FONT_BOLD_ITALIC
 # HEADER
 # ============================================================
 
-HEADER_TITLE_SIZE: Final[float] = 20
-HEADER_TITLE_SIZE_FULL: Final[float] = 20
+HEADER_TITLE_SIZE: Final[float] = 19
+HEADER_TITLE_SIZE_FULL: Final[float] = 19
 HEADER_TITLE_SIZE_HALF: Final[float] = 19
 
 HEADER_SUBTITLE_SIZE: Final[float] = 9
@@ -74,11 +74,11 @@ HEADER_RADIUS: Final[float] = 2 * mm
 # QUESTION
 # ============================================================
 
-QUESTION_SIZE: Final[float] = 15
-QUESTION_LEADING: Final[float] = 18
+QUESTION_SIZE: Final[float] = 14
+QUESTION_LEADING: Final[float] = 17
 
-QUESTION_SIZE_FULL: Final[float] = 15
-QUESTION_LEADING_FULL: Final[float] = 18
+QUESTION_SIZE_FULL: Final[float] = 14
+QUESTION_LEADING_FULL: Final[float] = 17
 
 QUESTION_SIZE_HALF: Final[float] = 14
 QUESTION_LEADING_HALF: Final[float] = 17
@@ -88,6 +88,28 @@ ANCHOR_SIZE: Final[float] = 9
 ANCHOR_TEXT_SIZE: Final[float] = 9
 ANCHOR_LEADING: Final[float] = 11
 
+
+# ============================================================
+# SECTION TITLES
+# ============================================================
+
+SECTION_TITLE_SIZE: Final[float] = 10
+
+SECTION_HEADING_SIZE_FULL: Final[float] = 10
+SECTION_HEADING_SIZE_HALF: Final[float] = 10
+
+# ============================================================
+# SECTION SPACING
+# ============================================================
+
+# A: Top border -> section heading/icon
+SECTION_TOP_GAP: Final[float] = 1.6 * mm
+
+# B: Section heading -> first content
+SECTION_CONTENT_GAP: Final[float] = 2.0 * mm
+
+# Physical height of heading/icon area
+SECTION_HEADING_HEIGHT: Final[float] = 4.2 * mm
 
 # ============================================================
 # GS MAPPING
@@ -100,16 +122,6 @@ GS_TOPIC_LEADING: Final[float] = 10
 
 
 # ============================================================
-# SECTION TITLES
-# ============================================================
-
-SECTION_TITLE_SIZE: Final[float] = 11
-
-SECTION_HEADING_SIZE_FULL: Final[float] = 11
-SECTION_HEADING_SIZE_HALF: Final[float] = 10
-
-
-# ============================================================
 # KNOWLEDGE POINTS
 # ============================================================
 
@@ -119,42 +131,41 @@ KNOWLEDGE_NUMBER_SIZE_HALF: Final[float] = 13
 
 KNOWLEDGE_HEADING_SIZE: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE: Final[float] = 9.3
+KNOWLEDGE_TEXT_SIZE: Final[float] = 9
 KNOWLEDGE_LEADING: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE_FULL: Final[float] = 9.3
+KNOWLEDGE_TEXT_SIZE_FULL: Final[float] = 9
 KNOWLEDGE_LEADING_FULL: Final[float] = 10
 
-KNOWLEDGE_TEXT_SIZE_HALF: Final[float] = 9.3
+KNOWLEDGE_TEXT_SIZE_HALF: Final[float] = 9
 KNOWLEDGE_LEADING_HALF: Final[float] = 10
 
 
 # ============================================================
-# QUICK FACTS
+# CONCEPT UNFOLD
 # ============================================================
 
-QUICK_FACT_SIZE: Final[float] = 9.3
-QUICK_FACT_LEADING: Final[float] = 10
+CONCEPT_UNFOLD_SIZE: Final[float] = 9
+CONCEPT_UNFOLD_LEADING: Final[float] = 10
 
-QUICK_FACT_SIZE_FULL: Final[float] = 9.3
-QUICK_FACT_LEADING_FULL: Final[float] = 10
+CONCEPT_UNFOLD_SIZE_FULL: Final[float] = 9
+CONCEPT_UNFOLD_LEADING_FULL: Final[float] = 10
 
-QUICK_FACT_SIZE_HALF: Final[float] = 9.3
-QUICK_FACT_LEADING_HALF: Final[float] = 10
-
+CONCEPT_UNFOLD_SIZE_HALF: Final[float] = 9
+CONCEPT_UNFOLD_LEADING_HALF: Final[float] = 10
 
 # ============================================================
 # KEY TAKEAWAY
 # ============================================================
 
-TAKEAWAY_SIZE: Final[float] = 9.5
-TAKEAWAY_LEADING: Final[float] = 10.5
+TAKEAWAY_SIZE: Final[float] = 9
+TAKEAWAY_LEADING: Final[float] = 11
 
-TAKEAWAY_SIZE_FULL: Final[float] = 9.5
-TAKEAWAY_LEADING_FULL: Final[float] = 10.5
+TAKEAWAY_SIZE_FULL: Final[float] = 9
+TAKEAWAY_LEADING_FULL: Final[float] = 11
 
-TAKEAWAY_SIZE_HALF: Final[float] = 9.5
-TAKEAWAY_LEADING_HALF: Final[float] = 10.5
+TAKEAWAY_SIZE_HALF: Final[float] = 9
+TAKEAWAY_LEADING_HALF: Final[float] = 11
 
 
 # ============================================================
@@ -174,12 +185,11 @@ MAINS_WORD_NOTE_SIZE: Final[float] = 6
 # MCQS
 # ============================================================
 
-MCQ_QUESTION_SIZE: Final[float] = 8.5
-MCQ_OPTION_SIZE: Final[float] = 8.5
+MCQ_QUESTION_SIZE: Final[float] = 9
+MCQ_OPTION_SIZE: Final[float] = 9
 
-MCQ_LEADING: Final[float] = 10
-MCQ_ANSWER_SIZE: Final[float] = 8.5
-
+MCQ_LEADING: Final[float] = 10.5
+MCQ_ANSWER_SIZE: Final[float] = 9
 
 # ============================================================
 # FOOTER

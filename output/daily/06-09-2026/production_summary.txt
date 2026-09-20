@@ -15,6 +15,6 @@ Standard PDF    : uak_260906_pdf.pdf
 Pro PDF         : uak_260906_pro_pdf.pdf
 Repository       : Updated
 Daily Archive    : Created
-Duration         : 1.2 seconds
+Duration         : 1.1 seconds
 
 ========================================================================

@@ -1,10 +1,14 @@
 import Image from "next/image";
 
 import { BRAND } from "@/lib/branding";
+import { getLatestEdition } from "@/lib/issues";
 
 import styles from "./Hero.module.css";
 
 export default function Hero() {
+  const edition = getLatestEdition();
+  const issueCount = edition?.issues.length ?? 0;
+
   return (
     <section className={styles.hero}>
       <div className={`${styles.container} siteContainer`}>
@@ -26,25 +30,19 @@ export default function Hero() {
           </p>
 
           <div className={styles.buttons}>
-            <button
-              type="button"
-              className={styles.primary}
-            >
+            <button type="button" className={styles.primary}>
               Download Today's PDF
             </button>
 
-            <button
-              type="button"
-              className={styles.secondary}
-            >
+            <button type="button" className={styles.secondary}>
               Download Pro PDF
             </button>
           </div>
 
           <div className={styles.stats}>
             <div>
-              <strong>4</strong>
-              <span>Issues Daily</span>
+              <strong>{issueCount || "–"}</strong>
+              <span>{issueCount === 1 ? "Issue Today" : "Issues Today"}</span>
             </div>
 
             <div>

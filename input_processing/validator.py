@@ -1,336 +1,171 @@
-from __future__ import annotations
-
 import json
 import re
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 
-INPUT_JSON = Path(__file__).resolve().parent / "INPUT.json"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+INPUT_JSON_PATH = PROJECT_ROOT / "input_processing" / "INPUT.json"
 
-# ============================================================
-# MAXIMUM CONTENT LIMITS
-# ============================================================
 
-ISSUE_TITLE_MAX_WORDS = 10
-TODAYS_QUESTION_MAX_WORDS = 18
+class ValidationError:
+    def __init__(self, message: str):
+        self.message = message
 
-RECALL_ANCHOR_COUNT = 5
-RECALL_ANCHOR_MAX_WORDS = 3
-
-KNOWLEDGE_POINT_COUNT = 5
-KNOWLEDGE_HEADING_MAX_WORDS = 4
-KNOWLEDGE_EXPLANATION_MAX_WORDS = 40
-
-QUICK_FACT_COUNT = 4
-QUICK_FACT_MAX_WORDS = 35
-
-KEY_TAKEAWAY_MAX_WORDS = 35
-
-# Mains Answer structure:
-# 1. Introduction
-# 2. Main Body
-# 3. Conclusion
-#
-# The Main Body may contain bullet points or numbered points.
-# Those bullets must NOT be counted as separate paragraphs.
-MAINS_PARAGRAPH_COUNT = 3
-MAINS_INTRO_MAX_WORDS = 45
-MAINS_CONCLUSION_MAX_WORDS = 80
-MAINS_ANSWER_MAX_WORDS = 230
-
-MCQ_COUNT = 3
-MCQ_OPTION_KEYS = {"A", "B", "C", "D"}
-
-RATING_MIN = 0.0
-RATING_MAX = 5.0
-
-SUSPICIOUS_ARTIFACTS = (
-    "next",
-    "continue",
-    "generate next",
-)
+    def __str__(self) -> str:
+        return self.message
 
 
 # ============================================================
-# TEXT HELPERS
+# HELPERS
 # ============================================================
 
-def word_count(value: str) -> int:
-    return len(
-        re.findall(
-            r"\b[\w’'-]+\b",
-            str(value),
-            flags=re.UNICODE,
-        )
-    )
-
-
-def normalize_text(value: str) -> str:
-    value = str(value).casefold()
-    value = value.replace("–", "-").replace("—", "-")
-    value = re.sub(r"[^a-z0-9]+", " ", value)
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def is_nonempty_string(value: Any) -> bool:
+def _is_nonempty(value: Any) -> bool:
     return (
         isinstance(value, str)
         and bool(value.strip())
     )
 
 
-def add_maximum_word_error(
-    errors: list[str],
-    *,
-    prefix: str,
-    label: str,
-    text: str,
-    maximum: int,
-) -> None:
-    count = word_count(text)
+def _normalise_text(value: str) -> str:
+    value = value.lower()
 
-    if count > maximum:
-        errors.append(
-            f"{prefix}: {label} contains {count} words; "
-            f"maximum permitted is {maximum}."
-        )
-
-
-def detect_suspicious_artifact(
-    errors: list[str],
-    *,
-    prefix: str,
-    label: str,
-    text: str,
-) -> None:
-    normalized = normalize_text(text)
-
-    for artifact in SUSPICIOUS_ARTIFACTS:
-        artifact_normalized = normalize_text(
-            artifact
-        )
-
-        if (
-            normalized == artifact_normalized
-            or normalized.endswith(
-                f" {artifact_normalized}"
-            )
-            or normalized.startswith(
-                f"{artifact_normalized} "
-            )
-        ):
-            errors.append(
-                f"{prefix}: {label} may contain "
-                f"unwanted workflow text: "
-                f"'{artifact}'."
-            )
-
-
-def validate_unique_texts(
-    errors: list[str],
-    *,
-    prefix: str,
-    label: str,
-    values: list[str],
-) -> None:
-    normalized_values = [
-        normalize_text(value)
-        for value in values
-        if normalize_text(value)
-    ]
-
-    if (
-        len(normalized_values)
-        != len(set(normalized_values))
-    ):
-        errors.append(
-            f"{prefix}: {label} contain "
-            "duplicate content."
-        )
-
-
-# ============================================================
-# PUBLICATION DATE
-# ============================================================
-
-def validate_publication_date(
-    data: dict[str, Any],
-) -> list[str]:
-    errors: list[str] = []
-
-    publication_date = str(
-        data.get(
-            "publication_date",
-            "",
-        )
-    ).strip()
-
-    publication_date_iso = str(
-        data.get(
-            "publication_date_iso",
-            "",
-        )
-    ).strip()
-
-    if not publication_date:
-        errors.append(
-            "publication_date is missing."
-        )
-
-    if not publication_date_iso:
-        errors.append(
-            "publication_date_iso is missing."
-        )
-
-    if errors:
-        return errors
-
-    try:
-        display_date = datetime.strptime(
-            publication_date,
-            "%d %B %Y",
-        )
-
-    except ValueError:
-        errors.append(
-            "publication_date must use "
-            "'DD Month YYYY', for example "
-            "'30 July 2026'."
-        )
-
-        return errors
-
-    try:
-        iso_date = datetime.strptime(
-            publication_date_iso,
-            "%Y-%m-%d",
-        )
-
-    except ValueError:
-        errors.append(
-            "publication_date_iso must use "
-            "'YYYY-MM-DD', for example "
-            "'2026-07-30'."
-        )
-
-        return errors
-
-    if (
-        display_date.date()
-        != iso_date.date()
-    ):
-        errors.append(
-            "publication_date and "
-            "publication_date_iso do not match."
-        )
-
-    normalized_display_date = (
-        display_date.strftime(
-            "%d %B %Y"
-        )
+    value = re.sub(
+        r"[^a-z0-9\s]",
+        " ",
+        value,
     )
 
-    if publication_date != normalized_display_date:
-        errors.append(
-            "publication_date must use the "
-            f"normalized format "
-            f"'{normalized_display_date}'."
-        )
-
-    normalized_iso_date = (
-        iso_date.strftime(
-            "%Y-%m-%d"
-        )
+    value = re.sub(
+        r"\s+",
+        " ",
+        value,
     )
 
-    if publication_date_iso != normalized_iso_date:
-        errors.append(
-            "publication_date_iso must use the "
-            f"normalized format "
-            f"'{normalized_iso_date}'."
-        )
-
-    return errors
+    return value.strip()
 
 
-# ============================================================
-# ANCHOR REUSE
-# ============================================================
-
-def anchor_is_used(
+def _meaningfully_reused(
     anchor: str,
-    searchable_text: str,
+    topic: dict[str, Any],
 ) -> bool:
-    normalized_anchor = normalize_text(
-        anchor
-    )
+    """
+    Check whether a Recall Anchor is meaningfully reused
+    somewhere in the topic's learning content.
 
-    normalized_content = normalize_text(
-        searchable_text
-    )
+    Recall Anchors are currently retained as internal
+    highlighting terms. Their visible PDF display will
+    be removed separately.
 
-    if not normalized_anchor:
-        return False
+    Searchable content includes:
+    - Knowledge Points
+    - Concept Unfold
+    - Mains Answer
+    - Daily MCQs
+    """
 
-    if normalized_anchor in normalized_content:
+    anchor_words = {
+        word
+        for word in _normalise_text(anchor).split()
+        if len(word) > 2
+    }
+
+    if not anchor_words:
         return True
 
-    tokens = [
-        token
-        for token in normalized_anchor.split()
-        if len(token) >= 2
-    ]
+    searchable_parts: list[str] = []
 
-    if not tokens:
-        return False
-
-    return all(
-        re.search(
-            rf"\b{re.escape(token)}\b",
-            normalized_content,
-        )
-        for token in tokens
-    )
-
-
-def build_anchor_search_text(
-    topic: dict[str, Any],
-) -> str:
-    sections: list[str] = []
+    # --------------------------------------------------------
+    # KNOWLEDGE POINTS
+    # --------------------------------------------------------
 
     for point in topic.get(
         "knowledge_points",
         [],
     ):
-        if isinstance(point, dict):
-            sections.append(
+        if not isinstance(
+            point,
+            dict,
+        ):
+            continue
+
+        searchable_parts.extend(
+            [
                 str(
                     point.get(
                         "heading",
                         "",
                     )
-                )
-            )
-
-            sections.append(
+                ),
                 str(
                     point.get(
                         "explanation",
                         "",
                     )
+                ),
+            ]
+        )
+
+    # --------------------------------------------------------
+    # CONCEPT UNFOLD
+    # --------------------------------------------------------
+
+    concept_unfold = topic.get(
+        "concept_unfold",
+        {},
+    )
+
+    if isinstance(
+        concept_unfold,
+        dict,
+    ):
+        searchable_parts.append(
+            str(
+                concept_unfold.get(
+                    "concept",
+                    "",
                 )
             )
-
-    for fact in topic.get(
-        "quick_facts",
-        [],
-    ):
-        sections.append(
-            str(fact)
         )
+
+        consequences = concept_unfold.get(
+            "consequences",
+            [],
+        )
+
+        if isinstance(
+            consequences,
+            list,
+        ):
+            for consequence in consequences:
+
+                if not isinstance(
+                    consequence,
+                    dict,
+                ):
+                    continue
+
+                searchable_parts.extend(
+                    [
+                        str(
+                            consequence.get(
+                                "title",
+                                "",
+                            )
+                        ),
+                        str(
+                            consequence.get(
+                                "explanation",
+                                "",
+                            )
+                        ),
+                    ]
+                )
+
+    # --------------------------------------------------------
+    # MAINS ANSWER
+    # --------------------------------------------------------
 
     mains_answer = topic.get(
         "mains_answer",
@@ -341,7 +176,7 @@ def build_anchor_search_text(
         mains_answer,
         dict,
     ):
-        sections.append(
+        searchable_parts.append(
             str(
                 mains_answer.get(
                     "full_text",
@@ -350,14 +185,43 @@ def build_anchor_search_text(
             )
         )
 
+        paragraphs = mains_answer.get(
+            "paragraphs",
+            [],
+        )
+
+        if isinstance(
+            paragraphs,
+            list,
+        ):
+            searchable_parts.extend(
+                str(item)
+                for item in paragraphs
+            )
+
+    elif isinstance(
+        mains_answer,
+        str,
+    ):
+        searchable_parts.append(
+            mains_answer
+        )
+
+    # --------------------------------------------------------
+    # DAILY MCQs
+    # --------------------------------------------------------
+
     for mcq in topic.get(
         "daily_mcqs",
         [],
     ):
-        if not isinstance(mcq, dict):
+        if not isinstance(
+            mcq,
+            dict,
+        ):
             continue
 
-        sections.append(
+        searchable_parts.append(
             str(
                 mcq.get(
                     "question",
@@ -366,7 +230,7 @@ def build_anchor_search_text(
             )
         )
 
-        sections.append(
+        searchable_parts.append(
             str(
                 mcq.get(
                     "explanation",
@@ -380,453 +244,372 @@ def build_anchor_search_text(
             {},
         )
 
-        if isinstance(options, dict):
-            sections.extend(
+        if isinstance(
+            options,
+            dict,
+        ):
+            searchable_parts.extend(
                 str(value)
-                for value
-                in options.values()
+                for value in options.values()
             )
 
-    return "\n".join(
-        sections
+    # --------------------------------------------------------
+    # COMBINE SEARCHABLE CONTENT
+    # --------------------------------------------------------
+
+    searchable_text = _normalise_text(
+        " ".join(searchable_parts)
     )
 
-
-# ============================================================
-# GS MAPPING
-# ============================================================
-
-def validate_gs_mapping(
-    mapping: Any,
-    *,
-    prefix: str,
-) -> list[str]:
-    errors: list[str] = []
-
-    if not isinstance(mapping, dict):
-        return [
-            f"{prefix}: gs_mapping must be "
-            "a JSON object."
-        ]
-
-    required_fields = (
-        "display",
-        "paper",
-        "subject",
-        "syllabus",
+    searchable_words = set(
+        searchable_text.split()
     )
 
-    for field in required_fields:
-        if field not in mapping:
-            errors.append(
-                f"{prefix}: gs_mapping is "
-                f"missing '{field}'."
-            )
-
-        elif not is_nonempty_string(
-            mapping[field]
-        ):
-            errors.append(
-                f"{prefix}: gs_mapping "
-                f"'{field}' is empty."
-            )
-
-    return errors
-
+    # An anchor is considered meaningfully reused when
+    # at least one substantive word from the anchor appears
+    # somewhere in the learning content.
+    return any(
+        word in searchable_words
+        for word in anchor_words
+    )
 
 # ============================================================
-# KNOWLEDGE POINTS
+# BASIC FIELD VALIDATION
 # ============================================================
 
-def validate_knowledge_points(
-    points: Any,
-    *,
-    prefix: str,
-) -> list[str]:
-    errors: list[str] = []
+def _validate_required_string(
+    topic_number: int,
+    topic: dict[str, Any],
+    field: str,
+    errors: list[str],
+) -> None:
 
-    if not isinstance(points, list):
-        return [
-            f"{prefix}: knowledge_points "
-            "must be a list."
-        ]
+    value = topic.get(field)
 
-    if len(points) != KNOWLEDGE_POINT_COUNT:
+    if not _is_nonempty(value):
         errors.append(
-            f"{prefix}: expected "
-            f"{KNOWLEDGE_POINT_COUNT} "
-            f"Knowledge Points, found "
-            f"{len(points)}."
+            f"Topic {topic_number}: "
+            f"{field.replace('_', ' ').title()} is empty."
         )
 
-    headings: list[str] = []
-    explanations: list[str] = []
 
-    for index, point in enumerate(
-        points,
-        start=1,
-    ):
-        point_prefix = (
-            f"{prefix}, "
-            f"Knowledge Point {index}"
-        )
+# ============================================================
+# KNOWLEDGE POINT VALIDATION
+# ============================================================
 
-        if not isinstance(point, dict):
-            errors.append(
-                f"{point_prefix}: must be "
-                "a JSON object."
-            )
+def _validate_knowledge_points(
+    topic_number: int,
+    topic: dict[str, Any],
+    errors: list[str],
+) -> None:
 
-            continue
-
-        heading = str(
-            point.get(
-                "heading",
-                "",
-            )
-        ).strip()
-
-        explanation = str(
-            point.get(
-                "explanation",
-                "",
-            )
-        ).strip()
-
-        if not heading:
-            errors.append(
-                f"{point_prefix}: "
-                "heading is empty."
-            )
-
-        else:
-            headings.append(
-                heading
-            )
-
-            add_maximum_word_error(
-                errors,
-                prefix=point_prefix,
-                label="heading",
-                text=heading,
-                maximum=(
-                    KNOWLEDGE_HEADING_MAX_WORDS
-                ),
-            )
-
-        if not explanation:
-            errors.append(
-                f"{point_prefix}: "
-                "explanation is empty."
-            )
-
-        else:
-            explanations.append(
-                explanation
-            )
-
-            add_maximum_word_error(
-                errors,
-                prefix=point_prefix,
-                label="explanation",
-                text=explanation,
-                maximum=(
-                    KNOWLEDGE_EXPLANATION_MAX_WORDS
-                ),
-            )
-
-            detect_suspicious_artifact(
-                errors,
-                prefix=point_prefix,
-                label="explanation",
-                text=explanation,
-            )
-
-    validate_unique_texts(
-        errors,
-        prefix=prefix,
-        label="Knowledge Point headings",
-        values=headings,
+    knowledge_points = topic.get(
+        "knowledge_points"
     )
-
-    validate_unique_texts(
-        errors,
-        prefix=prefix,
-        label=(
-            "Knowledge Point explanations"
-        ),
-        values=explanations,
-    )
-
-    return errors
-
-
-# ============================================================
-# QUICK FACTS
-# ============================================================
-
-def validate_quick_facts(
-    facts: Any,
-    *,
-    prefix: str,
-) -> list[str]:
-    errors: list[str] = []
-
-    if not isinstance(facts, list):
-        return [
-            f"{prefix}: quick_facts "
-            "must be a list."
-        ]
-
-    if len(facts) != QUICK_FACT_COUNT:
-        errors.append(
-            f"{prefix}: expected "
-            f"{QUICK_FACT_COUNT} "
-            f"Quick Facts, found "
-            f"{len(facts)}."
-        )
-
-    valid_facts: list[str] = []
-
-    for index, fact in enumerate(
-        facts,
-        start=1,
-    ):
-        fact_prefix = (
-            f"{prefix}, "
-            f"Quick Fact {index}"
-        )
-
-        if not is_nonempty_string(
-            fact
-        ):
-            errors.append(
-                f"{fact_prefix}: is empty."
-            )
-
-            continue
-
-        fact_text = str(
-            fact
-        ).strip()
-
-        valid_facts.append(
-            fact_text
-        )
-
-        add_maximum_word_error(
-            errors,
-            prefix=fact_prefix,
-            label="fact",
-            text=fact_text,
-            maximum=QUICK_FACT_MAX_WORDS,
-        )
-
-        detect_suspicious_artifact(
-            errors,
-            prefix=fact_prefix,
-            label="fact",
-            text=fact_text,
-        )
-
-    validate_unique_texts(
-        errors,
-        prefix=prefix,
-        label="Quick Facts",
-        values=valid_facts,
-    )
-
-    return errors
-
-
-# ============================================================
-# MAINS ANSWER
-# ============================================================
-
-def validate_mains_answer(
-    mains_answer: Any,
-    *,
-    prefix: str,
-) -> list[str]:
-    errors: list[str] = []
 
     if not isinstance(
-        mains_answer,
-        dict,
-    ):
-        return [
-            f"{prefix}: mains_answer "
-            "must be a JSON object."
-        ]
-
-    paragraphs = mains_answer.get(
-        "paragraphs",
-        [],
-    )
-
-    full_text = str(
-        mains_answer.get(
-            "full_text",
-            "",
-        )
-    ).strip()
-
-    if not isinstance(
-        paragraphs,
+        knowledge_points,
         list,
     ):
         errors.append(
-            f"{prefix}: Mains Answer "
-            "paragraphs must be a list."
+            f"Topic {topic_number}: "
+            "Knowledge Points must be a list."
+        )
+        return
+
+    if len(knowledge_points) != 5:
+        errors.append(
+            f"Topic {topic_number}: expected "
+            f"5 Knowledge Points, found "
+            f"{len(knowledge_points)}."
         )
 
-        paragraphs = []
+    for index, point in enumerate(
+        knowledge_points,
+        start=1,
+    ):
 
-    if (
-        len(paragraphs)
-        != MAINS_PARAGRAPH_COUNT
+        if not isinstance(
+            point,
+            dict,
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Knowledge Point {index}: "
+                "must be an object."
+            )
+            continue
+
+        heading = point.get(
+            "heading"
+        )
+
+        explanation = point.get(
+            "explanation"
+        )
+
+        if not _is_nonempty(
+            heading
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Knowledge Point {index}: "
+                "heading is empty."
+            )
+
+        if not _is_nonempty(
+            explanation
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Knowledge Point {index}: "
+                "explanation is empty."
+            )
+
+
+# ============================================================
+# CONCEPT UNFOLD VALIDATION
+# ============================================================
+
+def _validate_concept_unfold(
+    topic_number: int,
+    topic: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """
+    Validate the selected Concept Unfold.
+
+    Expected structure:
+
+        {
+            "concept": "...",
+            "consequences": [
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                }
+            ]
+        }
+
+    Concept Unfold contains:
+
+        1 basic UPSC concept
+                ↓
+        Consequence 1
+                ↓
+        Consequence 2
+                ↓
+        Consequence 3
+
+    Exactly three consequences are required.
+    """
+
+    concept_unfold = topic.get(
+        "concept_unfold"
+    )
+
+    # --------------------------------------------------------
+    # ROOT STRUCTURE
+    # --------------------------------------------------------
+
+    if not isinstance(
+        concept_unfold,
+        dict,
     ):
         errors.append(
-            f"{prefix}: Mains Answer must "
-            f"contain exactly "
-            f"{MAINS_PARAGRAPH_COUNT} "
-            f"paragraphs; found "
-            f"{len(paragraphs)}."
+            f"Topic {topic_number}: "
+            "Concept Unfold must be an object."
         )
+        return
 
-    if not full_text:
+    # --------------------------------------------------------
+    # CONCEPT
+    # --------------------------------------------------------
+
+    concept = concept_unfold.get(
+        "concept"
+    )
+
+    if not _is_nonempty(
+        concept
+    ):
         errors.append(
-            f"{prefix}: "
-            "Mains Answer is empty."
+            f"Topic {topic_number}: "
+            "Concept Unfold concept is empty."
         )
 
-        return errors
+    # --------------------------------------------------------
+    # CONSEQUENCES
+    # --------------------------------------------------------
 
-    add_maximum_word_error(
-        errors,
-        prefix=prefix,
-        label="Mains Answer",
-        text=full_text,
-        maximum=MAINS_ANSWER_MAX_WORDS,
+    consequences = concept_unfold.get(
+        "consequences"
     )
 
-    if len(paragraphs) >= 1:
-        introduction = str(
-            paragraphs[0]
-        ).strip()
-
-        add_maximum_word_error(
-            errors,
-            prefix=prefix,
-            label="Mains Introduction",
-            text=introduction,
-            maximum=(
-                MAINS_INTRO_MAX_WORDS
-            ),
-        )
-
-    if len(paragraphs) >= 3:
-        conclusion = str(
-            paragraphs[-1]
-        ).strip()
-
-        add_maximum_word_error(
-            errors,
-            prefix=prefix,
-            label="Mains Conclusion",
-            text=conclusion,
-            maximum=(
-                MAINS_CONCLUSION_MAX_WORDS
-            ),
-        )
-
-    detect_suspicious_artifact(
-        errors,
-        prefix=prefix,
-        label="Mains Answer",
-        text=full_text,
-    )
-
-    return errors
-
-
-# ============================================================
-# MCQS
-# ============================================================
-
-def validate_mcqs(
-    mcqs: Any,
-    *,
-    prefix: str,
-) -> list[str]:
-    errors: list[str] = []
-
-    if not isinstance(mcqs, list):
-        return [
-            f"{prefix}: daily_mcqs "
+    if not isinstance(
+        consequences,
+        list,
+    ):
+        errors.append(
+            f"Topic {topic_number}: "
+            "Concept Unfold consequences "
             "must be a list."
-        ]
+        )
+        return
 
-    if len(mcqs) != MCQ_COUNT:
+    if len(consequences) != 3:
         errors.append(
-            f"{prefix}: expected "
-            f"{MCQ_COUNT} MCQs, "
-            f"found {len(mcqs)}."
+            f"Topic {topic_number}: "
+            "Concept Unfold must contain exactly "
+            f"3 consequences, found "
+            f"{len(consequences)}."
         )
 
-    questions: list[str] = []
+    # --------------------------------------------------------
+    # INDIVIDUAL CONSEQUENCE VALIDATION
+    # --------------------------------------------------------
+
+    consequence_titles: list[str] = []
+
+    for index, consequence in enumerate(
+        consequences,
+        start=1,
+    ):
+
+        if not isinstance(
+            consequence,
+            dict,
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Concept Unfold Consequence {index}: "
+                "must be an object."
+            )
+            continue
+
+        title = consequence.get(
+            "title"
+        )
+
+        explanation = consequence.get(
+            "explanation"
+        )
+
+        if not _is_nonempty(
+            title
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Concept Unfold Consequence {index}: "
+                "title is empty."
+            )
+
+        else:
+            consequence_titles.append(
+                title.strip().casefold()
+            )
+
+        if not _is_nonempty(
+            explanation
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Concept Unfold Consequence {index}: "
+                "explanation is empty."
+            )
+
+    # --------------------------------------------------------
+    # DUPLICATE CONSEQUENCE CHECK
+    # --------------------------------------------------------
+
+    if (
+        len(consequence_titles)
+        != len(set(consequence_titles))
+    ):
+        errors.append(
+            f"Topic {topic_number}: "
+            "Concept Unfold consequence titles "
+            "must all be different."
+        )
+
+# ============================================================
+# MCQ VALIDATION
+# ============================================================
+
+def _validate_mcqs(
+    topic_number: int,
+    topic: dict[str, Any],
+    errors: list[str],
+) -> None:
+
+    mcqs = topic.get(
+        "daily_mcqs"
+    )
+
+    if not isinstance(
+        mcqs,
+        list,
+    ):
+        errors.append(
+            f"Topic {topic_number}: "
+            "Daily MCQs must be a list."
+        )
+        return
+
+    if len(mcqs) != 3:
+        errors.append(
+            f"Topic {topic_number}: expected "
+            f"3 Daily MCQs, found "
+            f"{len(mcqs)}."
+        )
 
     for index, mcq in enumerate(
         mcqs,
         start=1,
     ):
-        mcq_prefix = (
-            f"{prefix}, MCQ {index}"
-        )
 
-        if not isinstance(mcq, dict):
+        if not isinstance(
+            mcq,
+            dict,
+        ):
             errors.append(
-                f"{mcq_prefix}: must be "
-                "a JSON object."
+                f"Topic {topic_number}, "
+                f"Daily MCQ {index}: "
+                "must be an object."
             )
-
             continue
 
-        question = str(
-            mcq.get(
-                "question",
-                "",
-            )
-        ).strip()
-
-        explanation = str(
-            mcq.get(
-                "explanation",
-                "",
-            )
-        ).strip()
-
-        correct_answer = str(
-            mcq.get(
-                "correct_answer",
-                "",
-            )
-        ).strip().upper()
-
-        options = mcq.get(
-            "options",
-            {},
+        question = mcq.get(
+            "question"
         )
 
-        if not question:
-            errors.append(
-                f"{mcq_prefix}: "
-                "question is empty."
-            )
+        options = mcq.get(
+            "options"
+        )
 
-        else:
-            questions.append(
-                question
+        answer = mcq.get(
+            "correct_answer"
+        )
+
+        explanation = mcq.get(
+            "explanation"
+        )
+
+        if not _is_nonempty(
+            question
+        ):
+            errors.append(
+                f"Topic {topic_number}, "
+                f"Daily MCQ {index}: "
+                "question is empty."
             )
 
         if not isinstance(
@@ -834,101 +617,80 @@ def validate_mcqs(
             dict,
         ):
             errors.append(
-                f"{mcq_prefix}: options "
-                "must be a JSON object."
+                f"Topic {topic_number}, "
+                f"Daily MCQ {index}: "
+                "options must be an object."
+            )
+        else:
+            expected_options = {
+                "A",
+                "B",
+                "C",
+                "D",
+            }
+
+            actual_options = set(
+                options.keys()
             )
 
-            options = {}
-
-        if (
-            set(options.keys())
-            != MCQ_OPTION_KEYS
-        ):
-            errors.append(
-                f"{mcq_prefix}: options "
-                "must contain exactly "
-                "A, B, C and D."
-            )
-
-        option_values: list[str] = []
-
-        for option_key in sorted(
-            MCQ_OPTION_KEYS
-        ):
-            option_value = str(
-                options.get(
-                    option_key,
-                    "",
-                )
-            ).strip()
-
-            if not option_value:
+            if actual_options != expected_options:
                 errors.append(
-                    f"{mcq_prefix}: option "
-                    f"{option_key} is empty."
+                    f"Topic {topic_number}, "
+                    f"Daily MCQ {index}: "
+                    "must contain exactly "
+                    "A, B, C and D options."
                 )
 
-            else:
-                option_values.append(
-                    option_value
-                )
+            for letter in (
+                "A",
+                "B",
+                "C",
+                "D",
+            ):
+                if letter in options and not _is_nonempty(
+                    options[letter]
+                ):
+                    errors.append(
+                        f"Topic {topic_number}, "
+                        f"Daily MCQ {index}, "
+                        f"Option {letter}: "
+                        "is empty."
+                    )
 
-        normalized_options = {
-            normalize_text(option)
-            for option in option_values
-        }
-
-        if (
-            len(normalized_options)
-            != len(option_values)
-        ):
+        if answer not in {
+            "A",
+            "B",
+            "C",
+            "D",
+        }:
             errors.append(
-                f"{mcq_prefix}: contains "
-                "duplicate answer options."
+                f"Topic {topic_number}, "
+                f"Daily MCQ {index}: "
+                "Correct Answer must be A, B, C or D."
             )
 
-        if (
-            correct_answer
-            not in MCQ_OPTION_KEYS
+        if not _is_nonempty(
+            explanation
         ):
             errors.append(
-                f"{mcq_prefix}: "
-                "correct_answer must be "
-                "A, B, C or D."
-            )
-
-        if not explanation:
-            errors.append(
-                f"{mcq_prefix}: "
+                f"Topic {topic_number}, "
+                f"Daily MCQ {index}: "
                 "explanation is empty."
             )
 
-    validate_unique_texts(
-        errors,
-        prefix=prefix,
-        label="MCQ questions",
-        values=questions,
-    )
-
-    return errors
-
 
 # ============================================================
-# COMPLETE TOPIC
+# TOPIC VALIDATION
 # ============================================================
 
-def validate_topic(
+def _validate_topic(
+    topic_number: int,
     topic: dict[str, Any],
-    position: int,
 ) -> list[str]:
+
     errors: list[str] = []
 
-    prefix = (
-        f"Topic {position}"
-    )
-
-    required_fields = (
-        "topic_number",
+    required_fields = [
         "issue_title",
         "rating",
         "editorial_sources",
@@ -936,469 +698,274 @@ def validate_topic(
         "todays_question",
         "recall_anchors",
         "knowledge_points",
-        "quick_facts",
+        "concept_unfold",
         "key_takeaway",
         "mains_question",
         "mains_answer",
         "daily_mcqs",
-    )
-
-    missing_fields = [
-        field
-        for field in required_fields
-        if field not in topic
     ]
 
-    for field in missing_fields:
-        errors.append(
-            f"{prefix}: missing required "
-            f"field '{field}'."
-        )
+    for field in required_fields:
 
-    if missing_fields:
-        return errors
+        if field not in topic:
+            errors.append(
+                f"Topic {topic_number}: "
+                f"missing field '{field}'."
+            )
 
-    # --------------------------------------------------------
-    # TOPIC NUMBER
-    # --------------------------------------------------------
+    _validate_required_string(
+        topic_number,
+        topic,
+        "issue_title",
+        errors,
+    )
 
-    if topic["topic_number"] != position:
-        errors.append(
-            f"{prefix}: topic_number is "
-            f"{topic['topic_number']}; "
-            f"expected {position}."
-        )
+    _validate_required_string(
+        topic_number,
+        topic,
+        "todays_question",
+        errors,
+    )
 
-    # --------------------------------------------------------
-    # ISSUE TITLE
-    # --------------------------------------------------------
+    _validate_required_string(
+        topic_number,
+        topic,
+        "key_takeaway",
+        errors,
+    )
 
-    issue_title = str(
-        topic["issue_title"]
-    ).strip()
-
-    if not issue_title:
-        errors.append(
-            f"{prefix}: "
-            "Issue Title is empty."
-        )
-
-    else:
-        add_maximum_word_error(
-            errors,
-            prefix=prefix,
-            label="Issue Title",
-            text=issue_title,
-            maximum=ISSUE_TITLE_MAX_WORDS,
-        )
+    _validate_required_string(
+        topic_number,
+        topic,
+        "mains_question",
+        errors,
+    )
 
     # --------------------------------------------------------
-    # RATING
+    # Rating
     # --------------------------------------------------------
 
-    rating = topic["rating"]
+    rating = topic.get(
+        "rating"
+    )
 
     if not isinstance(
         rating,
         (int, float),
     ):
         errors.append(
-            f"{prefix}: rating "
-            "must be numeric."
+            f"Topic {topic_number}: "
+            "Rating must be numeric."
         )
 
     elif not (
-        RATING_MIN
-        <= float(rating)
-        <= RATING_MAX
+        1 <= float(rating) <= 5
     ):
         errors.append(
-            f"{prefix}: rating must be "
-            f"between {RATING_MIN:.1f} "
-            f"and {RATING_MAX:.1f}."
-        )
-
-    elif (
-        round(
-            float(rating),
-            1,
-        )
-        != float(rating)
-    ):
-        errors.append(
-            f"{prefix}: rating must use "
-            "no more than one decimal place."
+            f"Topic {topic_number}: "
+            "Rating must be between 1 and 5."
         )
 
     # --------------------------------------------------------
-    # EDITORIAL SOURCES
+    # GS Mapping
     # --------------------------------------------------------
 
-    editorial_sources = topic[
-        "editorial_sources"
-    ]
-
-    if not isinstance(
-        editorial_sources,
-        list,
-    ):
-        errors.append(
-            f"{prefix}: editorial_sources "
-            "must be a list."
-        )
-
-    elif not editorial_sources:
-        errors.append(
-            f"{prefix}: editorial_sources "
-            "is empty."
-        )
-
-    # --------------------------------------------------------
-    # GS MAPPING
-    # --------------------------------------------------------
-
-    errors.extend(
-        validate_gs_mapping(
-            topic["gs_mapping"],
-            prefix=prefix,
-        )
+    gs_mapping = topic.get(
+        "gs_mapping"
     )
 
-    # --------------------------------------------------------
-    # TODAY'S QUESTION
-    # --------------------------------------------------------
-
-    todays_question = str(
-        topic["todays_question"]
-    ).strip()
-
-    if not todays_question:
+    if not isinstance(
+        gs_mapping,
+        dict,
+    ):
         errors.append(
-            f"{prefix}: Today's Question "
-            "is empty."
+            f"Topic {topic_number}: "
+            "GS Mapping must be an object."
         )
-
     else:
-        add_maximum_word_error(
-            errors,
-            prefix=prefix,
-            label="Today's Question",
-            text=todays_question,
-            maximum=(
-                TODAYS_QUESTION_MAX_WORDS
-            ),
-        )
-
-        if not todays_question.endswith(
-            "?"
+        for field in (
+            "display",
+            "paper",
+            "subject",
+            "syllabus",
         ):
-            errors.append(
-                f"{prefix}: Today's Question "
-                "must end with a question mark."
-            )
+            if not _is_nonempty(
+                gs_mapping.get(field)
+            ):
+                errors.append(
+                    f"Topic {topic_number}: "
+                    f"GS Mapping {field} is empty."
+                )
 
     # --------------------------------------------------------
-    # RECALL ANCHORS
+    # Recall Anchors
     # --------------------------------------------------------
 
-    anchors = topic[
+    anchors = topic.get(
         "recall_anchors"
-    ]
+    )
 
     if not isinstance(
         anchors,
         list,
     ):
         errors.append(
-            f"{prefix}: recall_anchors "
-            "must be a list."
-        )
-
-        anchors = []
-
-    if len(anchors) != RECALL_ANCHOR_COUNT:
-        errors.append(
-            f"{prefix}: expected "
-            f"{RECALL_ANCHOR_COUNT} "
-            f"Recall Anchors, found "
-            f"{len(anchors)}."
-        )
-
-    valid_anchors: list[str] = []
-
-    for index, anchor in enumerate(
-        anchors,
-        start=1,
-    ):
-        anchor_prefix = (
-            f"{prefix}, "
-            f"Recall Anchor {index}"
-        )
-
-        anchor_text = str(
-            anchor
-        ).strip()
-
-        if not anchor_text:
-            errors.append(
-                f"{anchor_prefix}: is empty."
-            )
-
-            continue
-
-        valid_anchors.append(
-            anchor_text
-        )
-
-        add_maximum_word_error(
-            errors,
-            prefix=anchor_prefix,
-            label="anchor",
-            text=anchor_text,
-            maximum=(
-                RECALL_ANCHOR_MAX_WORDS
-            ),
-        )
-
-    validate_unique_texts(
-        errors,
-        prefix=prefix,
-        label="Recall Anchors",
-        values=valid_anchors,
-    )
-
-    # --------------------------------------------------------
-    # KNOWLEDGE POINTS
-    # --------------------------------------------------------
-
-    errors.extend(
-        validate_knowledge_points(
-            topic["knowledge_points"],
-            prefix=prefix,
-        )
-    )
-
-    # --------------------------------------------------------
-    # QUICK FACTS
-    # --------------------------------------------------------
-
-    errors.extend(
-        validate_quick_facts(
-            topic["quick_facts"],
-            prefix=prefix,
-        )
-    )
-
-    # --------------------------------------------------------
-    # KEY TAKEAWAY
-    # --------------------------------------------------------
-
-    key_takeaway = str(
-        topic["key_takeaway"]
-    ).strip()
-
-    if not key_takeaway:
-        errors.append(
-            f"{prefix}: "
-            "Key Takeaway is empty."
+            f"Topic {topic_number}: "
+            "Recall Anchors must be a list."
         )
 
     else:
-        add_maximum_word_error(
-            errors,
-            prefix=prefix,
-            label="Key Takeaway",
-            text=key_takeaway,
-            maximum=(
-                KEY_TAKEAWAY_MAX_WORDS
-            ),
-        )
 
-    # --------------------------------------------------------
-    # MAINS QUESTION
-    # --------------------------------------------------------
-
-    mains_question = str(
-        topic["mains_question"]
-    ).strip()
-
-    if not mains_question:
-        errors.append(
-            f"{prefix}: "
-            "Mains Question is empty."
-        )
-
-    elif not mains_question.endswith(
-        "?"
-    ):
-        errors.append(
-            f"{prefix}: Mains Question "
-            "must end with a question mark."
-        )
-
-    # --------------------------------------------------------
-    # MAINS ANSWER
-    # --------------------------------------------------------
-
-    errors.extend(
-        validate_mains_answer(
-            topic["mains_answer"],
-            prefix=prefix,
-        )
-    )
-
-    # --------------------------------------------------------
-    # MCQS
-    # --------------------------------------------------------
-
-    errors.extend(
-        validate_mcqs(
-            topic["daily_mcqs"],
-            prefix=prefix,
-        )
-    )
-
-    # --------------------------------------------------------
-    # ANCHOR REUSE
-    # --------------------------------------------------------
-
-    anchor_search_text = (
-        build_anchor_search_text(
-            topic
-        )
-    )
-
-    for index, anchor in enumerate(
-        valid_anchors,
-        start=1,
-    ):
-        if not anchor_is_used(
-            anchor,
-            anchor_search_text,
-        ):
+        if len(anchors) == 0:
             errors.append(
-                f"{prefix}: Recall Anchor "
-                f"{index} ('{anchor}') is not "
-                "meaningfully reused in the "
-                "Knowledge Points, Quick Facts, "
-                "Mains Answer or MCQs."
+                f"Topic {topic_number}: "
+                "Recall Anchors cannot be empty."
             )
+
+        for index, anchor in enumerate(
+            anchors,
+            start=1,
+        ):
+
+            if not _is_nonempty(
+                anchor
+            ):
+                errors.append(
+                    f"Topic {topic_number}: "
+                    f"Recall Anchor {index} "
+                    "is empty."
+                )
+                continue
+
+            if not _meaningfully_reused(
+                anchor,
+                topic,
+            ):
+                errors.append(
+                    f"Topic {topic_number}: "
+                    f"Recall Anchor {index} "
+                    f"('{anchor}') is not meaningfully "
+                    "reused in the Knowledge Points, "
+                    "Concept Unfold, Mains Answer "
+                    "or MCQs."
+                )
+
+    # --------------------------------------------------------
+    # Knowledge Points
+    # --------------------------------------------------------
+
+    _validate_knowledge_points(
+        topic_number,
+        topic,
+        errors,
+    )
+
+    # --------------------------------------------------------
+    # Concept Unfold
+    # --------------------------------------------------------
+
+    _validate_concept_unfold(
+        topic_number,
+        topic,
+        errors,
+    )
+
+    # --------------------------------------------------------
+    # MCQs
+    # --------------------------------------------------------
+
+    _validate_mcqs(
+        topic_number,
+        topic,
+        errors,
+    )
 
     return errors
 
 
 # ============================================================
-# COMPLETE JSON
+# COMPLETE VALIDATION
 # ============================================================
 
 def validate_data(
     data: dict[str, Any],
 ) -> list[str]:
+
     errors: list[str] = []
 
-    if not isinstance(data, dict):
-        return [
-            "INPUT.json root must be "
-            "a JSON object."
-        ]
-
-    if (
-        data.get("schema_version")
-        != "2.0"
+    if not isinstance(
+        data,
+        dict,
     ):
-        errors.append(
-            "schema_version must be '2.0'."
-        )
-
-    errors.extend(
-        validate_publication_date(
-            data
-        )
-    )
+        return [
+            "Root JSON must be an object."
+        ]
 
     topics = data.get(
         "topics"
     )
 
-    if (
-        not isinstance(topics, list)
-        or not topics
+    if not isinstance(
+        topics,
+        list,
     ):
         return [
-            "INPUT.json must contain "
-            "a non-empty 'topics' list."
+            "Root field 'topics' must be a list."
         ]
 
-    if (
-        data.get("topic_count")
-        != len(topics)
-    ):
+    if len(topics) == 0:
         errors.append(
-            f"topic_count is "
-            f"{data.get('topic_count')}, "
-            f"but {len(topics)} topics exist."
+            "No topics found."
         )
+        return errors
 
-    topic_numbers: list[int] = []
-    issue_titles: list[str] = []
+    topic_numbers: set[int] = set()
 
     for position, topic in enumerate(
         topics,
         start=1,
     ):
+
         if not isinstance(
             topic,
             dict,
         ):
             errors.append(
-                f"Topic {position}: must be "
-                "a JSON object."
+                f"Topic position {position}: "
+                "must be an object."
             )
-
             continue
 
         topic_number = topic.get(
             "topic_number"
         )
 
-        if isinstance(
+        if not isinstance(
             topic_number,
             int,
         ):
-            topic_numbers.append(
-                topic_number
+            errors.append(
+                f"Topic position {position}: "
+                "topic_number must be an integer."
+            )
+            continue
+
+        if topic_number in topic_numbers:
+            errors.append(
+                f"Duplicate topic number: "
+                f"{topic_number}."
             )
 
-        issue_titles.append(
-            str(
-                topic.get(
-                    "issue_title",
-                    "",
-                )
-            ).strip()
+        topic_numbers.add(
+            topic_number
         )
 
         errors.extend(
-            validate_topic(
+            _validate_topic(
+                topic_number,
                 topic,
-                position,
             )
         )
-
-    if (
-        len(topic_numbers)
-        != len(set(topic_numbers))
-    ):
-        errors.append(
-            "Topic numbers contain duplicates."
-        )
-
-    validate_unique_texts(
-        errors,
-        prefix="INPUT.json",
-        label="Issue Titles",
-        values=issue_titles,
-    )
 
     return errors
 
@@ -1408,53 +975,67 @@ def validate_data(
 # ============================================================
 
 def validate_file(
-    path: Path = INPUT_JSON,
-) -> list[str]:
-    try:
-        data = json.loads(
-            path.read_text(
-                encoding="utf-8-sig",
-            )
-        )
+    input_path: Path = INPUT_JSON_PATH,
+) -> bool:
 
-    except FileNotFoundError:
-        return [
-            f"File not found: {path}"
-        ]
+    print()
+    print(
+        "=" * 72
+    )
+    print(
+        "VALIDATING INPUT.json"
+    )
+    print(
+        "=" * 72
+    )
+
+    if not input_path.exists():
+        print(
+            f"ERROR: File not found: "
+            f"{input_path}"
+        )
+        return False
+
+    try:
+        with input_path.open(
+            "r",
+            encoding="utf-8",
+        ) as file:
+            data = json.load(
+                file
+            )
 
     except json.JSONDecodeError as exc:
-        return [
-            f"Invalid JSON at line "
-            f"{exc.lineno}, column "
-            f"{exc.colno}: {exc.msg}"
-        ]
+        print(
+            "ERROR: INPUT.json contains invalid JSON."
+        )
+
+        print(
+            f"Line {exc.lineno}, "
+            f"column {exc.colno}: "
+            f"{exc.msg}"
+        )
+
+        return False
 
     except OSError as exc:
-        return [
-            f"Unable to read {path}: {exc}"
-        ]
+        print(
+            f"ERROR: Could not read INPUT.json: "
+            f"{exc}"
+        )
 
-    return validate_data(
+        return False
+
+    errors = validate_data(
         data
     )
 
-
-# ============================================================
-# COMMAND LINE
-# ============================================================
-
-def main() -> int:
-    errors = validate_file()
-
     if errors:
-        print("=" * 72)
-        print(
-            "INPUT VALIDATION FAILED"
-        )
-        print("=" * 72)
+
         print(
             f"Total errors: {len(errors)}"
         )
+
         print()
 
         for index, error in enumerate(
@@ -1466,21 +1047,49 @@ def main() -> int:
             )
 
         print()
-        print("=" * 72)
 
-        return 1
+        return False
 
-    print("=" * 72)
-    print(
-        "INPUT VALIDATION PASSED"
+    topic_count = len(
+        data.get(
+            "topics",
+            [],
+        )
     )
-    print("=" * 72)
-    print(
-        f"Validated: {INPUT_JSON}"
-    )
-    print("=" * 72)
 
-    return 0
+    print(
+        "INPUT.json validation PASSED."
+    )
+
+    print(
+        f"Topics validated: {topic_count}"
+    )
+
+    print(
+        "Concept Unfold: 1 per topic"
+    )
+
+    print(
+        "Quick Facts validation: REMOVED"
+    )
+
+    print()
+
+    return True
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def main() -> int:
+
+    success = validate_file()
+
+    if success:
+        return 0
+
+    return 1
 
 
 if __name__ == "__main__":

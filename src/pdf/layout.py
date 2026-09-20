@@ -53,17 +53,17 @@ FOOTER_HEIGHT = 6 * mm
 SECTION_GAP = 1.2 * mm
 COLUMN_GAP = 1.2* mm
 
-QUESTION_PANEL_HEIGHT = 18* mm
+QUESTION_PANEL_HEIGHT = 18 * mm
 
 # Top question-panel split:
-# 86% Curiosity Question
-# 14% GS Mapping
-GS_MAPPING_RATIO = 0.15
+# 83% Curiosity Question
+# 17% GS Mapping
+GS_MAPPING_RATIO = 0.17
 
 TOP_CONTENT_LEFT_RATIO = 0.50
 BOTTOM_CONTENT_LEFT_RATIO = 0.50
 
-QUICK_FACTS_RATIO = 0.73
+CONCEPT_UNFOLD_RATIO = 0.73
 
 
 # ============================================================
@@ -103,7 +103,7 @@ class FullPageLayout:
     top_content: Rect
     knowledge_points: Rect
     right_top_column: Rect
-    quick_facts: Rect
+    concept_unfold: Rect
     takeaway: Rect
 
     bottom_content: Rect
@@ -227,27 +227,31 @@ def build_full_page_layout() -> FullPageLayout:
         )
     )
 
+    # ========================================================
+    # CONCEPT UNFOLD / KEY TAKEAWAY
+    # ========================================================
+
     available_right_height = (
         right_top_column.height
         - SECTION_GAP
     )
 
-    quick_facts_height = (
+    concept_unfold_height = (
         available_right_height
-        * QUICK_FACTS_RATIO
+        * CONCEPT_UNFOLD_RATIO
     )
 
     takeaway_height = (
         available_right_height
-        - quick_facts_height
+        - concept_unfold_height
     )
 
-    quick_facts = Rect(
+    concept_unfold = Rect(
         x=right_top_column.x,
         y=right_top_column.top
-        - quick_facts_height,
+        - concept_unfold_height,
         width=right_top_column.width,
-        height=quick_facts_height,
+        height=concept_unfold_height,
     )
 
     takeaway = Rect(
@@ -288,7 +292,7 @@ def build_full_page_layout() -> FullPageLayout:
         top_content=top_content,
         knowledge_points=knowledge_points,
         right_top_column=right_top_column,
-        quick_facts=quick_facts,
+        concept_unfold=concept_unfold,
         takeaway=takeaway,
         bottom_content=bottom_content,
         mains_answer=mains_answer,
