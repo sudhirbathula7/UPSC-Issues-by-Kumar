@@ -1,88 +1,89 @@
 {
   "schema_version": "2.0",
-  "publication_date": "06 September 2026",
-  "publication_date_iso": "2026-09-06",
+  "publication_date": "21 September 2026",
+  "publication_date_iso": "2026-09-21",
   "topic_count": 2,
   "topics": [
     {
       "topic_number": 1,
-      "issue_title": "Geosynchronous Earth Observation and Space Data Governance",
+      "issue_title": "US Russia Sanctions Act and India's Energy-Trade Dilemma",
       "rating": 4.5,
       "editorial_sources": [
-        "Not specified"
+        "The Hindu"
       ],
       "gs_mapping": {
-        "display": "GS Paper III | Science and Tech | Disaster Management",
-        "paper": "GS Paper III",
-        "subject": "Science and Tech",
-        "syllabus": "Disaster Management"
+        "display": "GS II | Bilateral | Groupings and Agreements",
+        "paper": "GS II",
+        "subject": "Bilateral",
+        "syllabus": "Groupings and Agreements"
       },
-      "todays_question": "How does a geosynchronous earth-imaging satellite improve continuous environmental and disaster monitoring over India?",
+      "todays_question": "How could American tariffs over Russian oil purchases affect India's exports and energy choices?",
       "recall_anchors": [
-        "Geosynchronous orbit",
-        "Administrative silos",
-        "INSAT-3D series",
-        "Stubble fires",
-        "Evacuation drills"
+        "Strait of Hormuz",
+        "Section 232",
+        "domestic inflation",
+        "geographic diversification",
+        "strategic petroleum reserves"
       ],
       "knowledge_points": [
         {
           "number": 1,
-          "heading": "Fixed vantage point",
-          "explanation": "By matching Earth's rotation at 36,000 kilometres altitude, the satellite stays focused over one region. This eliminates gaps between passes, letting scientists observe the same landscape without waiting days for the spacecraft to circle back."
+          "heading": "Exports Become Costlier",
+          "explanation": "High American tariffs would make Indian products more expensive in the U.S. market. Smaller exporters may struggle to absorb these extra costs, reducing their competitiveness, profits and ability to retain overseas customers."
         },
         {
           "number": 2,
-          "heading": "Real-time disaster tracking",
-          "explanation": "The spacecraft watches fast-evolving emergencies like flash floods, cyclones, and forest fires as they unfold. Continuous imaging helps emergency teams detect sudden environmental shifts instantly and respond before natural crises cause widespread community damage."
+          "heading": "Oil Alternatives Are Limited",
+          "explanation": "Replacing Russian oil quickly is difficult because India needs large and affordable energy supplies. Other suppliers may cost more, while tensions around routes such as the Strait of Hormuz can disrupt regular energy supplies."
         },
         {
           "number": 3,
-          "heading": "Advanced spectral scanning",
-          "explanation": "Instead of simple photography, specialized sensors record reflected light across multiple wavelengths. This technical capability lets researchers clearly distinguish farm crops, water bodies, and vegetation health, exposing subtle ecological changes across seasons."
+          "heading": "India Faces Difficult Choices",
+          "explanation": "India must balance affordable Russian oil, access to the American market and its independent foreign policy. Protecting one interest may create economic costs, diplomatic pressure or energy risks for another important national interest."
         },
         {
           "number": 4,
-          "heading": "Orbit trade-offs",
-          "explanation": "Low-earth satellites circle a few hundred kilometres up, capturing very sharp images but taking days to revisit any area. In contrast, higher geosynchronous satellites sacrifice pinpoint detail to deliver continuous regional views."
+          "heading": "Law Can Limit Flexibility",
+          "explanation": "Sanctions backed by legislation can be harder to change than temporary executive actions. If waivers require formal approval or justification, governments have less freedom to quickly relax restrictions when economic conditions change."
         },
         {
           "number": 5,
-          "heading": "Preventing monitoring gaps",
-          "explanation": "Farmers sometimes burn crop stubble at odd hours to evade low-orbit satellites that pass only at fixed times. Constant observation ensures continuous monitoring, making it impossible for polluters to hide smoke emissions."
+          "heading": "Small Exporters Face Greater Risk",
+          "explanation": "MSMEs usually have smaller financial reserves than large companies. A sudden rise in export tariffs can reduce their profits, weaken overseas demand and threaten jobs and business survival in export-dependent sectors."
         }
       ],
       "concept_unfold": {
-        "concept": "Continuous observation of the same area improves monitoring",
+        "concept": "Economic Interdependence Lets Powerful States Influence Other Countries",
         "consequences": [
           {
-            "title": "Changes can be detected quickly",
-            "explanation": "When a satellite keeps watching the same region, sudden events such as floods, fires or cyclones can be noticed without waiting for another satellite pass."
+            "title": "Market Access Pressure",
+            "explanation": "Countries and firms may change trade decisions when business with a sanctioned country threatens their access to important international markets or financial systems."
           },
           {
-            "title": "Faster detection supports faster response",
-            "explanation": "When authorities receive information quickly, they get more time to issue warnings, plan evacuations and send help before a disaster becomes more dangerous."
+            "title": "Energy Security Pressure",
+            "explanation": "Countries dependent on imported energy may face higher costs or supply risks when sanctions make their established sources harder to access."
           },
           {
-            "title": "Repeated observations improve situation tracking",
-            "explanation": "Continuous images allow authorities to compare conditions over time, helping them track how a cyclone, flood or wildfire is developing and adjust their response accordingly."
+            "title": "Strategic Autonomy Pressure",
+            "explanation": "Governments may find it harder to make independent foreign-policy choices when those decisions could bring serious trade, financial or energy costs."
           }
         ]
       },
-      "key_takeaway": "By operating continuously from geosynchronous orbit, EOS-05 replaces intermittent satellite passes with uninterrupted spectral monitoring, giving disaster responders and environmental managers instant views of rapid ground changes across India.",
-      "mains_question": "Examine the operational and institutional challenges in translating real-time satellite data into grassroots disaster risk reduction?",
+      "key_takeaway": "India must carefully balance affordable energy, export competitiveness and strategic autonomy when external sanctions make trade with an important partner costly and create wider risks for the domestic economy.",
+      "mains_question": "Analyze how secondary sanctions can affect global energy supply chains and explain how India can reduce its dependence on vulnerable energy sources?",
       "mains_answer": {
         "paragraphs": [
-          "Continuous space observation provides rich disaster data, but turning raw aerial observations into life-saving village action requires crossing significant administrative and technical divides. Technological capability alone cannot ensure community safety without seamless ground translation.",
-          "At the operational level, complex spectral datasets must undergo immediate processing and domain interpretation before emergency personnel can act. Without automated analysis tools and localized mapping, raw information overwhelms field officers instead of clarifying danger zones. Furthermore, last-mile communication infrastructure often collapses during severe weather, preventing early warnings from reaching vulnerable hamlets. Institutionally, deep administrative silos between space agencies, central forecasting departments, and state disaster management authorities hinder fluid coordination. Standard operating procedures frequently prioritize formal bureaucratic clearances over rapid information dissemination, causing costly response delays. Additionally, municipal and panchayat-level responders generally lack the technical training required to interpret specialized hazard maps or incorporate them into local evacuation planning. Without clear protocols establishing local command structures and community-level drills, sophisticated space feeds remain trapped within central control rooms rather than steering timely on-ground interventions.",
-          "Overcoming these hurdles demands decentralized data platforms, regional language mobile alerts, and routine community evacuation drills. Bridging the gap between orbital intelligence and local administration is vital for resilient disaster risk reduction."
+          "Secondary sanctions are restrictions that can affect countries or companies dealing with an already sanctioned country. They can therefore influence trade even beyond the country directly targeted by sanctions.",
+          "Energy-importing countries can face serious problems when sanctions suddenly make an important supplier difficult to use. They may need to find new suppliers, shipping routes, payment systems and insurance arrangements. This can increase transport costs and energy prices. For India, higher crude oil costs can also increase domestic inflation because fuel affects transport, industry and many everyday goods.",
+          "India can reduce these risks through geographic diversification, which means buying energy from a wider range of countries instead of depending heavily on a few suppliers. Long-term agreements with producers in different regions can provide greater stability. India can also expand strategic petroleum reserves so that temporary supply disruptions do not immediately create shortages. Investment in renewable energy and domestic energy production can further reduce dependence on imported fossil fuels.",
+          "India therefore needs both short-term protection against supply shocks and a long-term shift towards a more diverse energy system. This can strengthen energy security while giving the country greater freedom in its foreign-policy choices."
         ],
-        "full_text": "Continuous space observation provides rich disaster data, but turning raw aerial observations into life-saving village action requires crossing significant administrative and technical divides. Technological capability alone cannot ensure community safety without seamless ground translation.\n\nAt the operational level, complex spectral datasets must undergo immediate processing and domain interpretation before emergency personnel can act. Without automated analysis tools and localized mapping, raw information overwhelms field officers instead of clarifying danger zones. Furthermore, last-mile communication infrastructure often collapses during severe weather, preventing early warnings from reaching vulnerable hamlets. Institutionally, deep administrative silos between space agencies, central forecasting departments, and state disaster management authorities hinder fluid coordination. Standard operating procedures frequently prioritize formal bureaucratic clearances over rapid information dissemination, causing costly response delays. Additionally, municipal and panchayat-level responders generally lack the technical training required to interpret specialized hazard maps or incorporate them into local evacuation planning. Without clear protocols establishing local command structures and community-level drills, sophisticated space feeds remain trapped within central control rooms rather than steering timely on-ground interventions.\n\nOvercoming these hurdles demands decentralized data platforms, regional language mobile alerts, and routine community evacuation drills. Bridging the gap between orbital intelligence and local administration is vital for resilient disaster risk reduction."
+        "full_text": "Secondary sanctions are restrictions that can affect countries or companies dealing with an already sanctioned country. They can therefore influence trade even beyond the country directly targeted by sanctions.\n\nEnergy-importing countries can face serious problems when sanctions suddenly make an important supplier difficult to use. They may need to find new suppliers, shipping routes, payment systems and insurance arrangements. This can increase transport costs and energy prices. For India, higher crude oil costs can also increase domestic inflation because fuel affects transport, industry and many everyday goods.\n\nIndia can reduce these risks through geographic diversification, which means buying energy from a wider range of countries instead of depending heavily on a few suppliers. Long-term agreements with producers in different regions can provide greater stability. India can also expand strategic petroleum reserves so that temporary supply disruptions do not immediately create shortages. Investment in renewable energy and domestic energy production can further reduce dependence on imported fossil fuels.\n\nIndia therefore needs both short-term protection against supply shocks and a long-term shift towards a more diverse energy system. This can strengthen energy security while giving the country greater freedom in its foreign-policy choices."
       },
       "daily_mcqs": [
         {
           "number": 1,
-          "question": "Consider the following statements regarding satellite orbits:\nLow-earth orbit satellites move rapidly across the sky, taking several days to revisit the same location.\nA satellite in geosynchronous orbit remains synchronized with Earth's rotation, enabling continuous observation of a specific region.\nWhich of the statements given above is/are correct?",
+          "question": "Consider the following statements regarding the Strait of Hormuz:\n1. It connects the Persian Gulf with the Gulf of Oman and the Arabian Sea.\n2. It carries a significant share of global petroleum trade.\nWhich of the statements given above is/are correct?",
           "options": {
             "A": "1 only",
             "B": "2 only",
@@ -90,145 +91,147 @@
             "D": "Neither 1 nor 2"
           },
           "correct_answer": "C",
-          "explanation": "Low-earth orbit satellites circle close to Earth and take days to return to the same strip of land, whereas geosynchronous satellites match Earth's rotational speed at ~36,000 km altitude, maintaining a constant view over a fixed area."
+          "explanation": "The Strait of Hormuz connects the Persian Gulf with waters leading to the Arabian Sea and is an important route for global oil and gas shipments."
         },
         {
           "number": 2,
-          "question": "With reference to Earth observation sensors, which of the following best describes the function of spectral imaging over conventional optical photography?",
+          "question": "With reference to international trade, what does Section 232 of the U.S. Trade Expansion Act mainly deal with?",
           "options": {
-            "A": "It relies exclusively on ambient sound waves reflected from ground structures.",
-            "B": "It analyzes reflected light across distinct wavelengths to identify surface materials and plant health.",
-            "C": "It penetrates deep into Earth's mantle to detect tectonic shifts.",
-            "D": "It produces black-and-white photographs by measuring only visible sunlight."
+            "A": "Duties against foreign export subsidies",
+            "B": "Import restrictions linked to national security",
+            "C": "Sanctions only for intellectual property violations",
+            "D": "Quotas created under free trade agreements"
           },
           "correct_answer": "B",
-          "explanation": "Spectral sensors analyze how land features reflect different wavelengths of electromagnetic radiation, making it possible to differentiate crops, soil moisture, and water bodies far better than ordinary cameras."
+          "explanation": "Section 232 allows the U.S. government to investigate whether certain imports threaten national security and, where legally justified, impose measures such as tariffs or other restrictions."
         },
         {
           "number": 3,
-          "question": "Prior to dedicated land-imaging geosynchronous satellites like EOS-05, India primarily maintained which series of satellites for continuous observation from geostationary orbit?",
+          "question": "What is a major immediate problem for MSME exporters when a destination country imposes very high tariffs on their products?",
           "options": {
-            "A": "Cartosat series",
-            "B": "RISAT series",
-            "C": "INSAT-3D series",
-            "D": "Oceansat series"
+            "A": "Immediate capital flight from Indian stock markets",
+            "B": "Lower competitiveness and pressure on small profit margins",
+            "C": "Automatic loss of intellectual property rights",
+            "D": "Compulsory conversion into large companies"
           },
-          "correct_answer": "C",
-          "explanation": "India long operated the INSAT-3D series in geostationary orbit for continuous meteorological and weather tracking, while its dedicated land-imaging satellites were restricted to polar or low-earth orbits."
+          "correct_answer": "B",
+          "explanation": "High tariffs make exported goods more expensive in the destination market. MSMEs often have limited financial reserves, making it difficult for them to absorb these additional costs."
         }
       ]
     },
     {
       "topic_number": 2,
-      "issue_title": "Strait of Hormuz Conflict and Global Energy Security",
+      "issue_title": "Counterfeit Medicines and Pharmaceutical Quality Control in India",
       "rating": 4.5,
       "editorial_sources": [
         "The Hindu"
       ],
       "gs_mapping": {
-        "display": "GS Paper II | Policies | Developed and Developing Countries",
-        "paper": "GS Paper II",
-        "subject": "Policies",
-        "syllabus": "Developed and Developing Countries"
+        "display": "GS II | Governance | Health Services",
+        "paper": "GS II",
+        "subject": "Governance",
+        "syllabus": "Health Services"
       },
-      "todays_question": "How has the Strait of Hormuz trapped the United States in an unwinnable regional conflict?",
+      "todays_question": "Why do counterfeit medicines entering hospital networks threaten patient safety and public trust?",
       "recall_anchors": [
-        "balance-of-payments",
-        "Islamabad agreement",
-        "Petroleum reserves",
-        "Foreign remittances",
-        "Gulf of Oman"
+        "CDSCO",
+        "unannounced market audits",
+        "spurious drug",
+        "State Licensing Authorities",
+        "unique QR codes"
       ],
       "knowledge_points": [
         {
           "number": 1,
-          "heading": "Strategic battlefield shift",
-          "explanation": "Tehran turned the narrow waterway into the main arena of war. This move completely shifted focus away from America's original goals of destroying nuclear sites or changing Iran's government, forcing Washington into a frustrating tactical maritime battle."
+          "heading": "Fake Medicines Harm Patients",
+          "explanation": "Counterfeit medicines may contain the wrong ingredients, unsafe substances or too little active medicine. For seriously ill patients, this can cause treatment failure, harmful reactions, delayed recovery or even preventable loss of life."
         },
         {
           "number": 2,
-          "heading": "Asymmetric deterrence power",
-          "explanation": "Iran repeatedly targets commercial ships and military vessels using geography to its advantage. Even heavy economic sanctions and naval blockades have failed to break Iran's chokehold, leaving America unable to secure the shipping lane or claim decisive victory."
+          "heading": "Healthcare Trust Can Fall",
+          "explanation": "Patients expect hospitals and pharmacies to provide safe and genuine medicines. When fake drugs enter trusted healthcare facilities, people may begin to doubt hospitals, doctors, pharmacies and the wider public health system."
         },
         {
           "number": 3,
-          "heading": "Regional base vulnerability",
-          "explanation": "Whenever American forces strike Iranian targets or tankers, Iran retaliates directly against American military bases in Kuwait, Bahrain, and Jordan. This pushback raises the human and material cost of the war, trapping American forces in endless counter-strikes."
+          "heading": "Supply Chains Can Be Misused",
+          "explanation": "Medicines pass through manufacturers, distributors, warehouses, pharmacies and hospitals before reaching patients. Weak checks at any stage can allow expired, altered or counterfeit products to enter legitimate supplies and eventually reach unsuspecting patients."
         },
         {
           "number": 4,
-          "heading": "Mowing the lawn",
-          "explanation": "Instead of achieving a decisive political breakthrough, Washington engages in repetitive strikes simply to blunt Iranian capabilities. This attritional cycle never eliminates underlying threats, as each wave of attacks provokes bolder Iranian responses."
+          "heading": "India's Reputation Is Affected",
+          "explanation": "Repeated reports of poor-quality or counterfeit medicines can damage confidence in Indian pharmaceutical products. This may lead foreign regulators and buyers to demand stronger checks and greater proof of medicine quality."
         },
         {
           "number": 5,
-          "heading": "Failed peace diplomacy",
-          "explanation": "The collapse of the June 17 Islamabad agreement removed formal diplomatic guardrails. Without open communication channels or agreed ceasefire terms, minor tactical clashes at sea quickly escalate into wider regional conflict."
+          "heading": "Regulation Is Shared",
+          "explanation": "Drug regulation in India involves both central and state authorities. Differences in enforcement, inspections and laboratory capacity can create regulatory gaps that make consistent medicine quality control more difficult across different states."
         }
       ],
       "concept_unfold": {
-        "concept": "Heavy dependence on a maritime chokepoint increases vulnerability",
+        "concept": "Medicine Quality Depends on Control Across the Entire Supply Chain",
         "consequences": [
           {
-            "title": "A local disruption can affect many countries",
-            "explanation": "When large amounts of oil and gas pass through one narrow route, war or blockage there can interrupt energy supplies far beyond the conflict area."
+            "title": "Manufacturing Control",
+            "explanation": "Medicines must be produced under proper quality standards so that their ingredients, strength, safety and effectiveness remain consistent before entering the market."
           },
           {
-            "title": "Energy costs can rise across the economy",
-            "explanation": "Reduced supply can make oil and gas more expensive. Higher fuel costs then increase transport and production expenses, making many everyday goods costlier."
+            "title": "Distribution Integrity",
+            "explanation": "Strong checks during storage and distribution help prevent counterfeit, expired or improperly handled medicines from entering legitimate hospitals, pharmacies and supply networks."
           },
           {
-            "title": "Countries may seek alternative supply routes",
-            "explanation": "Repeated disruption risks can encourage governments and companies to diversify energy suppliers, transport routes and strategic reserves to reduce dependence on a single chokepoint."
+            "title": "Regulatory Traceability",
+            "explanation": "Reliable records and product tracking help regulators trace suspicious medicines to their source, identify responsible actors and take appropriate enforcement action."
           }
         ]
       },
-      "key_takeaway": "By turning the Strait of Hormuz into an asymmetric battleground, Iran deflected Washington's primary war objectives and trapped American forces in an escalating, open-ended attritional conflict without any clear exit strategy.",
-      "mains_question": "Examine the strategic and economic vulnerabilities for net energy-importing nations arising from militarisation of the Strait of Hormuz?",
+      "key_takeaway": "Medicine safety depends on strong quality control from manufacturing to final sale, because weaknesses anywhere in the supply chain can endanger patients, weaken healthcare trust and allow counterfeit medicines to spread.",
+      "mains_question": "Evaluate the challenges of monitoring pharmaceutical supply chains in India and suggest governance measures to curb counterfeit medicines?",
       "mains_answer": {
         "paragraphs": [
-          "Militarisation of the Strait of Hormuz directly threatens global energy security, leaving import-dependent nations exposed to severe supply disruptions, inflationary pressures, and strategic policy dilemmas. Protecting national economic growth requires addressing these acute external shocks.",
-          "Net energy importers like India face immediate balance-of-payments crises when Persian Gulf shipping lanes are contested. Soaring war-risk insurance premiums, freight costs, and sudden spikes in global crude prices rapidly widen current account deficits and accelerate imported inflation. These price surges deplete foreign exchange reserves, weaken domestic currencies, and force central banks to raise interest rates, ultimately curtailing broader industrial growth. Furthermore, manufacturing industries and fertilizer production suffer severe operational disruptions due to unpredictable liquefied natural gas supplies. Beyond commercial losses, regional hostilities create acute diplomatic complexities for emerging economies that rely heavily on West Asian energy partnerships while attempting to maintain cordial ties with Western powers. Additionally, safety threats to millions of expatriate workers across Gulf nations present immense consular crises and jeopardize critical inward foreign remittances.",
-          "To insulate national economies from such chokepoint vulnerabilities, importing countries must accelerate the diversification of energy partners, expand strategic petroleum reserves, and transition rapidly toward domestic renewable power. Strengthening international diplomatic coalitions for maritime freedom remains equally indispensable."
+          "India has a large pharmaceutical market in which medicines move through many manufacturers, distributors, warehouses, pharmacies and hospitals. This makes supply-chain monitoring essential but also difficult.",
+          "One major challenge is the large number of businesses involved in storing and distributing medicines. Weak checks can allow counterfeit, expired or relabelled products to enter genuine supplies. Medicines may also move across state borders, making coordination between different State Licensing Authorities important. Differences in inspection capacity and testing facilities can make enforcement uneven.",
+          "India can strengthen monitoring through end-to-end track-and-trace systems. Unique QR codes or other identifiers can help connect a medicine to important information such as its batch and manufacturer. Hospitals and pharmacies can use these records to verify products before dispensing them. Better coordination between central and state regulators can also help authorities follow suspicious medicines across state borders.",
+          "Regular market inspections and stronger testing laboratories are equally important because digital tracking alone cannot prove that a medicine contains the correct ingredients. Hospitals should also maintain clear procurement records and buy medicines through authorised channels.",
+          "A strong pharmaceutical safety system therefore requires manufacturing standards, secure distribution, reliable tracking, laboratory testing and effective enforcement. Together, these measures can protect patients and strengthen public confidence in India's pharmaceutical sector."
         ],
-        "full_text": "Militarisation of the Strait of Hormuz directly threatens global energy security, leaving import-dependent nations exposed to severe supply disruptions, inflationary pressures, and strategic policy dilemmas. Protecting national economic growth requires addressing these acute external shocks.\n\nNet energy importers like India face immediate balance-of-payments crises when Persian Gulf shipping lanes are contested. Soaring war-risk insurance premiums, freight costs, and sudden spikes in global crude prices rapidly widen current account deficits and accelerate imported inflation. These price surges deplete foreign exchange reserves, weaken domestic currencies, and force central banks to raise interest rates, ultimately curtailing broader industrial growth. Furthermore, manufacturing industries and fertilizer production suffer severe operational disruptions due to unpredictable liquefied natural gas supplies. Beyond commercial losses, regional hostilities create acute diplomatic complexities for emerging economies that rely heavily on West Asian energy partnerships while attempting to maintain cordial ties with Western powers. Additionally, safety threats to millions of expatriate workers across Gulf nations present immense consular crises and jeopardize critical inward foreign remittances.\n\nTo insulate national economies from such chokepoint vulnerabilities, importing countries must accelerate the diversification of energy partners, expand strategic petroleum reserves, and transition rapidly toward domestic renewable power. Strengthening international diplomatic coalitions for maritime freedom remains equally indispensable."
+        "full_text": "India has a large pharmaceutical market in which medicines move through many manufacturers, distributors, warehouses, pharmacies and hospitals. This makes supply-chain monitoring essential but also difficult.\n\nOne major challenge is the large number of businesses involved in storing and distributing medicines. Weak checks can allow counterfeit, expired or relabelled products to enter genuine supplies. Medicines may also move across state borders, making coordination between different State Licensing Authorities important. Differences in inspection capacity and testing facilities can make enforcement uneven.\n\nIndia can strengthen monitoring through end-to-end track-and-trace systems. Unique QR codes or other identifiers can help connect a medicine to important information such as its batch and manufacturer. Hospitals and pharmacies can use these records to verify products before dispensing them. Better coordination between central and state regulators can also help authorities follow suspicious medicines across state borders.\n\nRegular market inspections and stronger testing laboratories are equally important because digital tracking alone cannot prove that a medicine contains the correct ingredients. Hospitals should also maintain clear procurement records and buy medicines through authorised channels.\n\nA strong pharmaceutical safety system therefore requires manufacturing standards, secure distribution, reliable tracking, laboratory testing and effective enforcement. Together, these measures can protect patients and strengthen public confidence in India's pharmaceutical sector."
       },
       "daily_mcqs": [
         {
           "number": 1,
-          "question": "The Strait of Hormuz, a critical maritime chokepoint often vulnerable to regional geopolitical escalations, connects which two bodies of water?",
+          "question": "Consider the following statements regarding drug regulation in India:\n1. The Central Drugs Standard Control Organisation (CDSCO) performs important regulatory functions under India's drug-control framework.\n2. State authorities have important responsibilities relating to the manufacture, sale and distribution of drugs.\nWhich of the statements given above is/are correct?",
           "options": {
-            "A": "Red Sea and the Gulf of Aden",
-            "B": "Persian Gulf and the Gulf of Oman",
-            "C": "Mediterranean Sea and the Black Sea",
-            "D": "Caspian Sea and the Persian Gulf"
+            "A": "1 only",
+            "B": "2 only",
+            "C": "Both 1 and 2",
+            "D": "Neither 1 nor 2"
           },
-          "correct_answer": "B",
-          "explanation": "The Strait of Hormuz connects the Persian Gulf with the Gulf of Oman (which opens into the Arabian Sea), serving as the world's most critical transit route for sea-borne petroleum."
+          "correct_answer": "C",
+          "explanation": "Drug regulation in India involves both central and state authorities. CDSCO performs important central functions, while state regulators have major responsibilities for licensing and enforcement within states."
         },
         {
           "number": 2,
-          "question": "In strategic studies and military terminology, the phrase \"mowing the lawn\" generally refers to:",
+          "question": "What is the main purpose of using unique QR codes or barcodes on medicine packaging?",
           "options": {
-            "A": "Complete and permanent disarmament of an adversary state through direct invasion",
-            "B": "Periodic, attritional military strikes to blunt an adversary’s combat capabilities without resolving the political conflict",
-            "C": "Diplomatic negotiations aimed at establishing permanent maritime exclusion zones",
-            "D": "Cooperative multilateral naval operations designed to protect civilian shipping lanes"
+            "A": "To automatically decide the retail price of every medicine",
+            "B": "To support product identification, tracking and authenticity checks",
+            "C": "To replace laboratory testing of medicines",
+            "D": "To provide automatic medical consultations to patients"
           },
           "correct_answer": "B",
-          "explanation": "\"Mowing the lawn\" describes a cyclical military strategy of repeatedly degrading an enemy's combat assets and offensive capacities periodically, rather than seeking a definitive political solution or regime change."
+          "explanation": "Unique identifiers can help connect medicine packages with information such as batch details and manufacturing records, making products easier to identify and trace through the supply chain."
         },
         {
           "number": 3,
-          "question": "How does maritime disruption in the Strait of Hormuz primarily impact net oil-importing developing nations?",
+          "question": "In the context of Indian drug law, which description best represents a spurious drug?",
           "options": {
-            "A": "It eliminates domestic reliance on strategic petroleum reserves.",
-            "B": "It causes trade deficits to widen due to soaring energy import bills and freight insurance.",
-            "C": "It triggers a sudden surplus in sovereign foreign exchange holdings.",
-            "D": "It forces an immediate collapse of all renewable energy infrastructure."
+            "A": "A generic medicine produced after a patent expires",
+            "B": "A drug made or labelled to falsely appear as another genuine drug",
+            "C": "Any imported medicine on which customs duty has not been paid",
+            "D": "A medicine being tested during an early clinical trial"
           },
           "correct_answer": "B",
-          "explanation": "Disruptions in key energy corridors cause crude oil prices and maritime freight insurance to surge, which widens current account deficits and stokes inflation in import-dependent countries."
+          "explanation": "A spurious drug can falsely use another drug's name, imitate another medicine or carry misleading information about its identity or manufacturer."
         }
       ]
     }

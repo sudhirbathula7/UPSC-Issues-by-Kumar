@@ -242,6 +242,50 @@
     "content_hash": "8dec9ed75fd8db221dc42dd42a4e0d7b03c3e9e43e2dc4cc521fd5cf5d08d4a8"
   },
   {
+    "issue_id": "UAK-260920-01",
+    "publication_date": "20 September 2026",
+    "edition_code": "UAK-260920",
+    "topic_number": 1,
+    "issue_title": "US Russia Sanctions Act and India's Energy-Trade Dilemma",
+    "rating": 4.5,
+    "gs_paper": "GS II",
+    "gs_subject": "Bilateral",
+    "content_hash": "8d0cacc529c5e63bc5b8e9ed2342a246f06bac8c53d99176bbc3541e1a6f19f5"
+  },
+  {
+    "issue_id": "UAK-260920-02",
+    "publication_date": "20 September 2026",
+    "edition_code": "UAK-260920",
+    "topic_number": 2,
+    "issue_title": "Counterfeit Medicines and Pharmaceutical Quality Control in India",
+    "rating": 4.5,
+    "gs_paper": "GS II",
+    "gs_subject": "Governance",
+    "content_hash": "f6a81b6665ed987f07e31a6ffd604f542a19c39e82155270022bda860397ef80"
+  },
+  {
+    "issue_id": "UAK-260921-01",
+    "publication_date": "21 September 2026",
+    "edition_code": "UAK-260921",
+    "topic_number": 1,
+    "issue_title": "US Russia Sanctions Act and India's Energy-Trade Dilemma",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Bilateral Groupings and Agreements Involving India and Affecting India's Interests",
+    "content_hash": "5f2f948623818cdf96f8afaf1e58e8436acd7bb7c210753ac02ec0aabbc3ba1e"
+  },
+  {
+    "issue_id": "UAK-260921-02",
+    "publication_date": "21 September 2026",
+    "edition_code": "UAK-260921",
+    "topic_number": 2,
+    "issue_title": "Counterfeit Medicines and Pharmaceutical Quality Control in India",
+    "rating": 4.5,
+    "gs_paper": "GS Paper II",
+    "gs_subject": "Governance",
+    "content_hash": "2347eeb13262135c3cba6360e9de20d630ca899c2cb3e902160e20e5d2b260da"
+  },
+  {
     "issue_id": "UAK-260824-01",
     "publication_date": "24 August 2026",
     "edition_code": "UAK-260824",

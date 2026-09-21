@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.units import mm
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen.canvas import Canvas
@@ -56,6 +56,7 @@ def _draw_section_title(
     rect: Rect,
     title: str,
 ) -> Rect:
+
     heading_rect = Rect(
         x=rect.x + 3 * mm,
         y=(
@@ -117,7 +118,10 @@ def _draw_concept(
     concept: str,
 ) -> None:
     """
-    Draw the underlying UPSC concept.
+    Draw the underlying concept/cause.
+
+    The concept is centered and deliberately has no side arrow.
+    The flow arrow is rendered separately below it.
     """
 
     style = paragraph_style(
@@ -126,12 +130,12 @@ def _draw_concept(
         font_size=CONCEPT_UNFOLD_SIZE,
         leading=CONCEPT_UNFOLD_LEADING,
         text_color=BLACK,
-        alignment=TA_LEFT,
+        alignment=TA_CENTER,
     )
 
     draw_paragraph(
         canvas=canvas,
-        text=f"{concept} →",
+        text=concept,
         rect=rect,
         style=style,
         vertical_align="top",
@@ -149,10 +153,11 @@ def _draw_consequence(
     index: int,
 ) -> None:
     """
-    Draw one consequence.
+    Draw one centered consequence.
 
-    Paragraph rendering is used for both heading and explanation
-    so Pro PDF recall-anchor highlighting markup remains supported.
+    The title and explanation are both centered.
+    Paragraph rendering is retained so Pro PDF
+    recall-anchor highlighting continues to work.
     """
 
     if rect.height <= 0:
@@ -176,7 +181,7 @@ def _draw_consequence(
         font_size=CONCEPT_UNFOLD_SIZE,
         leading=CONCEPT_UNFOLD_LEADING,
         text_color=BLACK,
-        alignment=TA_LEFT,
+        alignment=TA_CENTER,
     )
 
     draw_paragraph(
@@ -208,7 +213,7 @@ def _draw_consequence(
         font_size=CONCEPT_UNFOLD_SIZE,
         leading=CONCEPT_UNFOLD_LEADING,
         text_color=BLACK,
-        alignment=TA_LEFT,
+        alignment=TA_CENTER,
     )
 
     draw_paragraph(
@@ -226,13 +231,18 @@ def _draw_consequence(
 
 def _draw_flow_arrow(
     canvas: Canvas,
-    x: float,
-    y: float,
+    rect: Rect,
 ) -> None:
     """
-    Draw a small downward arrow to visually connect
-    the concept and consequences.
+    Draw a downward arrow exactly in the centre of a dedicated
+    arrow region.
+
+    Using a dedicated rectangle prevents arrows from touching
+    either the text above or the text below.
     """
+
+    if rect.height <= 0:
+        return
 
     canvas.saveState()
 
@@ -245,9 +255,17 @@ def _draw_flow_arrow(
         CONCEPT_UNFOLD_SIZE,
     )
 
+    # Approximate vertical centering of the text glyph inside
+    # the dedicated arrow region.
+    baseline = (
+        rect.y
+        + (rect.height - CONCEPT_UNFOLD_SIZE) / 2
+        + 1.4
+    )
+
     canvas.drawCentredString(
-        x,
-        y,
+        rect.centre_x,
+        baseline,
         "↓",
     )
 
@@ -264,19 +282,29 @@ def draw_concept_unfold(
     data: ConceptUnfoldData,
 ) -> None:
     """
-    Render one Concept Unfold with exactly three consequences.
-
-    Vertical structure:
+    Render Concept Unfold as a clean vertical cause/consequence
+    learning flow:
 
         CONCEPT UNFOLD
-        [SECTION_CONTENT_GAP]
-        Basic concept →
-              ↓
+
+        Basic Concept
+
+             ↓
+
         Consequence 1
-              ↓
+        Explanation
+
+             ↓
+
         Consequence 2
-              ↓
+        Explanation
+
+             ↓
+
         Consequence 3
+        Explanation
+
+    Every arrow receives its own reserved vertical region.
     """
 
     if not data.concept.strip():
@@ -322,57 +350,75 @@ def draw_concept_unfold(
         return
 
     # --------------------------------------------------------
-    # HEADING -> FIRST CONTENT SPACING
+    # HEADING -> CONTENT GAP
     # --------------------------------------------------------
 
-    concept_top = max(
-        content_rect.y,
+    usable_top = (
         content_rect.top
-        - SECTION_CONTENT_GAP,
+        - SECTION_CONTENT_GAP
     )
 
+    usable_height = max(
+        0,
+        usable_top - content_rect.y,
+    )
+
+    if usable_height <= 0:
+        return
+
     # --------------------------------------------------------
-    # VERTICAL LAYOUT
+    # VERTICAL ALLOCATION
+    # --------------------------------------------------------
+    #
+    # The arrows now have dedicated rows.
+    #
+    # This is the important change that prevents:
+    #
+    # explanation
+    #      ↓
+    #
+    # from visually colliding.
     # --------------------------------------------------------
 
     concept_height = min(
-        10.0 * mm,
-        max(
-            0,
-            content_rect.height
-            - SECTION_CONTENT_GAP,
-        )
-        * 0.18,
+        5.5 * mm,
+        usable_height * 0.14,
     )
 
     arrow_height = min(
-        3.2 * mm,
-        content_rect.height * 0.055,
+        6.0 * mm,
+        usable_height * 0.085,
     )
 
-    consequence_gap = min(
-        0.8 * mm,
-        content_rect.height * 0.012,
+    total_arrow_height = (
+        arrow_height * 3
     )
 
+    available_consequence_height = max(
+        0,
+        usable_height
+        - concept_height
+        - total_arrow_height,
+    )
+
+    consequence_height = (
+        available_consequence_height / 3
+    )
+
+    if consequence_height <= 0:
+        return
+
     # --------------------------------------------------------
-    # CONCEPT
+    # CONCEPT / CAUSE
     # --------------------------------------------------------
+
+    cursor_top = usable_top
 
     concept_rect = Rect(
         x=content_rect.x,
-        y=max(
-            content_rect.y,
-            concept_top - concept_height,
-        ),
+        y=cursor_top - concept_height,
         width=content_rect.width,
-        height=max(
-            0,
-            min(
-                concept_height,
-                concept_top - content_rect.y,
-            ),
-        ),
+        height=concept_height,
     )
 
     _draw_concept(
@@ -381,73 +427,34 @@ def draw_concept_unfold(
         concept=data.concept,
     )
 
+    cursor_top = concept_rect.y
+
     # --------------------------------------------------------
-    # FIRST FLOW ARROW
+    # ARROW 1
     # Concept -> Consequence 1
     # --------------------------------------------------------
 
-    first_arrow_y = (
-        concept_rect.y
-        - 0.4 * mm
+    arrow_1_rect = Rect(
+        x=content_rect.x,
+        y=cursor_top - arrow_height,
+        width=content_rect.width,
+        height=arrow_height,
     )
 
     _draw_flow_arrow(
         canvas=canvas,
-        x=content_rect.centre_x,
-        y=first_arrow_y,
+        rect=arrow_1_rect,
     )
 
-    # --------------------------------------------------------
-    # CONSEQUENCE REGION
-    # --------------------------------------------------------
-
-    consequences_top = (
-        first_arrow_y
-        - arrow_height
-    )
-
-    consequences_bottom = (
-        content_rect.y
-    )
-
-    total_internal_arrow_space = (
-        2 * arrow_height
-    )
-
-    total_gap_space = (
-        2 * consequence_gap
-    )
-
-    available_consequence_height = max(
-        0,
-        consequences_top
-        - consequences_bottom
-        - total_internal_arrow_space
-        - total_gap_space,
-    )
-
-    consequence_height = (
-        available_consequence_height
-        / 3
-    )
-
-    if consequence_height <= 0:
-        return
+    cursor_top = arrow_1_rect.y
 
     # --------------------------------------------------------
     # CONSEQUENCE 1
     # --------------------------------------------------------
 
-    consequence_1_top = consequences_top
-
-    consequence_1_bottom = (
-        consequence_1_top
-        - consequence_height
-    )
-
     consequence_1_rect = Rect(
         x=content_rect.x,
-        y=consequence_1_bottom,
+        y=cursor_top - consequence_height,
         width=content_rect.width,
         height=consequence_height,
     )
@@ -459,40 +466,34 @@ def draw_concept_unfold(
         index=1,
     )
 
+    cursor_top = consequence_1_rect.y
+
     # --------------------------------------------------------
-    # SECOND FLOW ARROW
+    # ARROW 2
     # Consequence 1 -> Consequence 2
     # --------------------------------------------------------
 
-    second_arrow_y = (
-        consequence_1_bottom
-        - 0.4 * mm
+    arrow_2_rect = Rect(
+        x=content_rect.x,
+        y=cursor_top - arrow_height,
+        width=content_rect.width,
+        height=arrow_height,
     )
 
     _draw_flow_arrow(
         canvas=canvas,
-        x=content_rect.centre_x,
-        y=second_arrow_y,
+        rect=arrow_2_rect,
     )
+
+    cursor_top = arrow_2_rect.y
 
     # --------------------------------------------------------
     # CONSEQUENCE 2
     # --------------------------------------------------------
 
-    consequence_2_top = (
-        second_arrow_y
-        - arrow_height
-        - consequence_gap
-    )
-
-    consequence_2_bottom = (
-        consequence_2_top
-        - consequence_height
-    )
-
     consequence_2_rect = Rect(
         x=content_rect.x,
-        y=consequence_2_bottom,
+        y=cursor_top - consequence_height,
         width=content_rect.width,
         height=consequence_height,
     )
@@ -504,31 +505,30 @@ def draw_concept_unfold(
         index=2,
     )
 
+    cursor_top = consequence_2_rect.y
+
     # --------------------------------------------------------
-    # THIRD FLOW ARROW
+    # ARROW 3
     # Consequence 2 -> Consequence 3
     # --------------------------------------------------------
 
-    third_arrow_y = (
-        consequence_2_bottom
-        - 0.4 * mm
+    arrow_3_rect = Rect(
+        x=content_rect.x,
+        y=cursor_top - arrow_height,
+        width=content_rect.width,
+        height=arrow_height,
     )
 
     _draw_flow_arrow(
         canvas=canvas,
-        x=content_rect.centre_x,
-        y=third_arrow_y,
+        rect=arrow_3_rect,
     )
+
+    cursor_top = arrow_3_rect.y
 
     # --------------------------------------------------------
     # CONSEQUENCE 3
     # --------------------------------------------------------
-
-    consequence_3_top = (
-        third_arrow_y
-        - arrow_height
-        - consequence_gap
-    )
 
     consequence_3_rect = Rect(
         x=content_rect.x,
@@ -536,8 +536,7 @@ def draw_concept_unfold(
         width=content_rect.width,
         height=max(
             0,
-            consequence_3_top
-            - content_rect.y,
+            cursor_top - content_rect.y,
         ),
     )
 
