@@ -1,0 +1,122 @@
+{
+  "schema_version": "2.0",
+  "publication_date": "10 October 2026",
+  "publication_date_iso": "2026-10-10",
+  "topic_count": 1,
+  "topics": [
+    {
+      "topic_number": 1,
+      "issue_title": "Public Consent and Democratic Accountability",
+      "rating": 4.5,
+      "editorial_sources": [
+        "The Indian Express"
+      ],
+      "gs_mapping": {
+        "display": "GS Paper II | Governance | Democratic Accountability and Electoral Institutions",
+        "paper": "GS Paper II",
+        "subject": "Governance",
+        "syllabus": "Democratic Accountability and Electoral Institutions"
+      },
+      "todays_question": "What happens to democracy when public anger grows but the government refuses to respond?",
+      "recall_anchors": [
+        "Public institutions",
+        "Peaceful assembly",
+        "Public acceptance",
+        "Grievance systems",
+        "Constitutional freedoms"
+      ],
+      "knowledge_points": [
+        {
+          "number": 1,
+          "heading": "Public Trust Weakens",
+          "explanation": "When people repeatedly raise concerns but receive no meaningful response, they may lose faith in the government and public institutions. Democracy becomes weaker because citizens begin doubting whether their voices matter."
+        },
+        {
+          "number": 2,
+          "heading": "Protests May Intensify",
+          "explanation": "When peaceful protests fail to bring change, public frustration can grow. More people may join demonstrations, and tensions may increase. The editorial warns that continued resistance could make future protests harder to control."
+        },
+        {
+          "number": 3,
+          "heading": "Democratic Accountability Suffers",
+          "explanation": "Elections allow citizens to choose governments, but democracy also requires leaders to listen between elections. When governments dismiss public concerns, citizens may struggle to hold those in power accountable for their decisions."
+        },
+        {
+          "number": 4,
+          "heading": "Institutional Independence",
+          "explanation": "Institutions such as the Election Commission must make decisions fairly, without political pressure. When people question their independence, confidence in elections can decline. Independent institutions help ensure that governments follow democratic rules."
+        },
+        {
+          "number": 5,
+          "heading": "Peaceful Protest Rights",
+          "explanation": "Citizens can express disagreement through peaceful protests. Article 19 of the Indian Constitution protects freedom of speech and peaceful assembly, subject to reasonable restrictions. These freedoms allow people to question government decisions between elections."
+        }
+      ],
+      "concept_unfold": {
+        "concept": "Public consent gives democratic governments their authority",
+        "consequences": [
+          {
+            "title": "Authority Needs Acceptance",
+            "explanation": "Winning elections gives governments legal power, but public acceptance helps them govern effectively. When citizens lose confidence, government decisions may face stronger resistance."
+          },
+          {
+            "title": "Legitimacy Can Decline",
+            "explanation": "A government may remain legally in power even when many citizens question its decisions. This creates a gap between holding authority and being trusted."
+          },
+          {
+            "title": "Dialogue Builds Consent",
+            "explanation": "Public consent is strengthened when governments explain decisions, hear criticism and address reasonable concerns. Such dialogue helps citizens accept decisions even when they disagree."
+          }
+        ]
+      },
+      "key_takeaway": "Ignoring growing public anger can deepen the distance between citizens and their government. As trust declines and protests intensify, democracy becomes vulnerable because elected leaders are no longer seen as responsive to people.",
+      "mains_question": "What measures can governments adopt to resolve public grievances while maintaining democratic stability?",
+      "mains_answer": {
+        "paragraphs": [
+          "Public grievances arise when citizens feel that their problems are being ignored or handled unfairly. Governments can maintain democratic stability by creating reliable ways to hear complaints, resolve disputes and prevent unnecessary conflicts.",
+          "First, governments should establish accessible grievance systems where citizens can register complaints and receive responses within fixed deadlines. Independent review bodies should examine unresolved cases to prevent officials from ignoring serious problems. Second, public consultation should become part of major policy decisions. Before introducing important changes, authorities can invite suggestions from citizens, experts and affected communities. Third, transparency is essential. Governments should clearly explain their decisions, publish relevant information and provide reasons when public demands cannot be accepted. Fourth, peaceful protests should be managed through dialogue and lawful policing rather than unnecessary force. This protects public safety while respecting constitutional freedoms. Fifth, institutions responsible for elections, investigations and public accountability must function independently and follow fair procedures. Finally, regular meetings between officials and community representatives can identify emerging problems before they develop into larger disputes. These measures make grievance resolution more predictable, accessible and fair.",
+          "Democratic stability does not require agreement on every decision. It requires fair procedures, open communication and peaceful ways to settle disagreements. Governments that address grievances through accountable institutions can strengthen cooperation and public confidence."
+        ],
+        "full_text": "Public grievances arise when citizens feel that their problems are being ignored or handled unfairly. Governments can maintain democratic stability by creating reliable ways to hear complaints, resolve disputes and prevent unnecessary conflicts.\n\nFirst, governments should establish accessible grievance systems where citizens can register complaints and receive responses within fixed deadlines. Independent review bodies should examine unresolved cases to prevent officials from ignoring serious problems. Second, public consultation should become part of major policy decisions. Before introducing important changes, authorities can invite suggestions from citizens, experts and affected communities. Third, transparency is essential. Governments should clearly explain their decisions, publish relevant information and provide reasons when public demands cannot be accepted. Fourth, peaceful protests should be managed through dialogue and lawful policing rather than unnecessary force. This protects public safety while respecting constitutional freedoms. Fifth, institutions responsible for elections, investigations and public accountability must function independently and follow fair procedures. Finally, regular meetings between officials and community representatives can identify emerging problems before they develop into larger disputes. These measures make grievance resolution more predictable, accessible and fair.\n\nDemocratic stability does not require agreement on every decision. It requires fair procedures, open communication and peaceful ways to settle disagreements. Governments that address grievances through accountable institutions can strengthen cooperation and public confidence."
+      },
+      "daily_mcqs": [
+        {
+          "number": 1,
+          "question": "Consider the following statements regarding the Indian Constitution:\n1. Article 19 protects the right to freedom of speech and expression.\n2. Citizens have an unrestricted constitutional right to hold peaceful assemblies.\n3. The Constitution permits reasonable restrictions on certain freedoms under Article 19.\nSelect the correct answer:",
+          "options": {
+            "A": "1 and 2 only",
+            "B": "1 and 3 only",
+            "C": "2 and 3 only",
+            "D": "1, 2 and 3"
+          },
+          "correct_answer": "B",
+          "explanation": "Article 19 protects freedom of speech and peaceful assembly, but these rights are not absolute. The Constitution allows reasonable restrictions under specified grounds."
+        },
+        {
+          "number": 2,
+          "question": "A government wins an election legally, but many citizens begin questioning its decisions. Which conclusion is most appropriate?\nSelect the correct answer:",
+          "options": {
+            "A": "The government automatically loses its constitutional authority.",
+            "B": "Legal authority and continuing public acceptance are different aspects of governance.",
+            "C": "Every public disagreement requires the government to resign.",
+            "D": "Public consent matters only during elections."
+          },
+          "correct_answer": "B",
+          "explanation": "Winning elections provides legal authority, but continuing public acceptance helps governments exercise that authority effectively. Public disagreement alone does not remove a government's legal mandate."
+        },
+        {
+          "number": 3,
+          "question": "Which of the following measures can improve public grievance resolution?\n1. Setting clear deadlines for responding to complaints.\n2. Providing independent review of unresolved grievances.\n3. Allowing public consultation before major policy decisions.\nSelect the correct answer:",
+          "options": {
+            "A": "1 only",
+            "B": "1 and 2 only",
+            "C": "2 and 3 only",
+            "D": "1, 2 and 3"
+          },
+          "correct_answer": "D",
+          "explanation": "Timely responses improve accountability, independent review reduces unfair treatment, and public consultation helps authorities understand concerns before decisions create disputes."
+        }
+      ]
+    }
+  ]
+}
