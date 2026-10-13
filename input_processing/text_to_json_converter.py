@@ -1,33 +1,19 @@
 import json
 import re
 import sys
-
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 
-# ============================================================
-# PATHS
-# ============================================================
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-OUTPUT_PATH = (
-    Path(__file__).resolve().parent
-    / "INPUT.json"
-)
+OUTPUT_PATH = Path(__file__).resolve().parent / "INPUT.json"
 
 INPUT_CANDIDATES = (
-    PROJECT_ROOT / "INPUT_DATA.txt",
     PROJECT_ROOT / "input.txt",
     PROJECT_ROOT / "INPUT.txt",
+    PROJECT_ROOT / "INPUT_DATA.txt",
 )
-
-
-# ============================================================
-# CONSTANTS
-# ============================================================
 
 PUBLICATION_DATE_HEADING = "PUBLICATION DATE"
 
@@ -39,35 +25,11 @@ SUPPORTED_PUBLICATION_DATE_FORMATS = (
     "%d-%m-%Y",
     "%d/%m/%Y",
     "%d %B %Y",
-    "%d %b %Y",
 )
 
-EDITORIAL_SECTION_HEADINGS = (
-    "HEADING",
-    "GS PAPER",
-    "QUESTION",
-    "POINT 1",
-    "POINT 2",
-    "POINT 3",
-    "POINT 4",
-    "TAKEAWAY",
-    "ANCHORS",
-)
-
-VALID_GS_PAPERS = {
-    "GS I",
-    "GS II",
-    "GS III",
-    "GS IV",
-}
-
-
-# ============================================================
-# ERRORS
-# ============================================================
 
 class ConversionError(ValueError):
-    """Raised when INPUT_DATA.txt cannot be converted safely."""
+    """Raised when input text cannot be converted safely."""
 
 
 # ============================================================
@@ -75,13 +37,13 @@ class ConversionError(ValueError):
 # ============================================================
 
 def _clean(value: str) -> str:
-    """
-    Normalize line endings and unnecessary whitespace while
-    preserving meaningful paragraph structure.
-    """
-
-    value = value.replace("\r\n", "\n")
-    value = value.replace("\r", "\n")
+    value = value.replace(
+        "\r\n",
+        "\n",
+    ).replace(
+        "\r",
+        "\n",
+    )
 
     value = re.sub(
         r"[ \t]+",
@@ -98,9 +60,9 @@ def _clean(value: str) -> str:
     return value.strip()
 
 
-def _nonempty_lines(value: str) -> list[str]:
-    """Return only non-empty stripped lines."""
-
+def _nonempty_lines(
+    value: str,
+) -> list[str]:
     return [
         line.strip()
         for line in value.splitlines()
@@ -109,20 +71,18 @@ def _nonempty_lines(value: str) -> list[str]:
 
 
 def _find_input_file() -> Path:
-    """Find the project's text input file."""
-
     for path in INPUT_CANDIDATES:
         if path.exists():
             return path
 
-    expected = ", ".join(
+    names = ", ".join(
         path.name
         for path in INPUT_CANDIDATES
     )
 
     raise FileNotFoundError(
-        "No input text file was found in the project root.\n"
-        f"Expected one of: {expected}"
+        "No input text file found in project root. "
+        f"Expected one of: {names}"
     )
 
 
@@ -133,10 +93,13 @@ def _find_input_file() -> Path:
 def _parse_publication_date(
     raw_date: str,
 ) -> datetime:
+    cleaned_date = _clean(
+        raw_date
+    )
 
-    cleaned_date = _clean(raw_date)
-
-    for date_format in SUPPORTED_PUBLICATION_DATE_FORMATS:
+    for date_format in (
+        SUPPORTED_PUBLICATION_DATE_FORMATS
+    ):
         try:
             return datetime.strptime(
                 cleaned_date,
@@ -148,50 +111,80 @@ def _parse_publication_date(
 
     raise ConversionError(
         "Unsupported PUBLICATION DATE format.\n\n"
-        "Examples:\n"
-        "21.09.2026\n"
-        "21-09-2026\n"
-        "21/09/2026\n"
-        "21 September 2026"
+        "Supported examples:\n"
+        "03.08.26\n"
+        "03-08-26\n"
+        "03/08/26\n"
+        "03.08.2026\n"
+        "03-08-2026\n"
+        "03/08/2026\n"
+        "03 August 2026"
     )
 
 
 def _extract_publication_date(
     text: str,
 ) -> tuple[str, str]:
+    """
+    Read PUBLICATION DATE from the content before TOPIC 1.
 
-    normalized = (
+    Accepted formats:
+
+        03.08.26
+        03-08-26
+        03/08/26
+        03.08.2026
+        03-08-2026
+        03/08/2026
+        03 August 2026
+
+    Returns:
+
+        display_date -> 03 August 2026
+        iso_date     -> 2026-08-03
+    """
+
+    normalized_text = (
         text
-        .replace("\r\n", "\n")
-        .replace("\r", "\n")
+        .replace(
+            "\r\n",
+            "\n",
+        )
+        .replace(
+            "\r",
+            "\n",
+        )
     )
 
-    first_editorial = re.search(
-        r"(?mi)^\s*EDITORIAL\s+\d+\s*$",
-        normalized,
+    first_topic_match = re.search(
+        r"(?m)^\s*TOPIC\s+\d+\s*$",
+        normalized_text,
     )
 
-    if not first_editorial:
+    if not first_topic_match:
         raise ConversionError(
-            "No 'EDITORIAL X' heading was found."
+            "No 'TOPIC X' heading was found."
         )
 
-    metadata = normalized[
-        :first_editorial.start()
+    metadata_block = normalized_text[
+        :first_topic_match.start()
     ]
 
     date_match = re.search(
-        rf"(?mi)"
-        rf"^\s*{re.escape(PUBLICATION_DATE_HEADING)}\s*$"
-        rf"\s*"
-        rf"^\s*(.+?)\s*$",
-        metadata,
+        rf"(?im)^\s*"
+        rf"{re.escape(PUBLICATION_DATE_HEADING)}"
+        rf"\s*$"
+        rf"\s*^\s*(.+?)\s*$",
+        metadata_block,
     )
 
     if not date_match:
         raise ConversionError(
-            "Missing PUBLICATION DATE at the top "
-            "of INPUT_DATA.txt."
+            "Missing PUBLICATION DATE block at "
+            "the top of the input.\n\n"
+            "Expected example:\n\n"
+            "PUBLICATION DATE\n\n"
+            "03.08.26"
         )
 
     parsed_date = _parse_publication_date(
@@ -206,66 +199,106 @@ def _extract_publication_date(
         "%Y-%m-%d"
     )
 
-    return display_date, iso_date
+    return (
+        display_date,
+        iso_date,
+    )
 
 
 # ============================================================
-# EDITORIAL SPLITTING
+# TOPIC SPLITTING
 # ============================================================
 
-def _split_editorials(
+def _split_topics(
     text: str,
 ) -> list[tuple[int, str]]:
-
-    normalized = (
-        text
-        .replace("\r\n", "\n")
+    text = (
+        text.replace("\r\n", "\n")
         .replace("\r", "\n")
+    )
+
+    # Remove long visual separators.
+    text = re.sub(
+        r"\s*-{20,}\s*",
+        "\n\n",
+        text,
     )
 
     matches = list(
         re.finditer(
-            r"(?mi)^\s*EDITORIAL\s+(\d+)\s*$",
-            normalized,
+            r"(?m)^\s*TOPIC\s+(\d+)\s*$",
+            text,
         )
     )
 
     if not matches:
         raise ConversionError(
-            "No 'EDITORIAL X' headings were found."
+            "No 'TOPIC X' heading was found."
         )
 
-    editorials: list[
+    topics: list[
         tuple[int, str]
     ] = []
 
-    for index, match in enumerate(matches):
-
-        editorial_number = int(
-            match.group(1)
-        )
-
+    for index, match in enumerate(
+        matches
+    ):
         start = match.end()
 
         end = (
             matches[index + 1].start()
             if index + 1 < len(matches)
-            else len(normalized)
+            else len(text)
         )
 
-        block = normalized[
+        topic_number = int(
+            match.group(1)
+        )
+
+        block = text[
             start:end
         ].strip()
 
-        editorials.append(
+        block = re.sub(
+            r"(?m)^\s*END TOPIC\s*$",
+            "",
+            block,
+        ).strip()
+
+        topics.append(
             (
-                editorial_number,
+                topic_number,
                 block,
             )
         )
 
-    return editorials
+    return topics
 
+
+# ============================================================
+# SECTION HEADINGS
+# ============================================================
+
+SECTION_HEADINGS = [
+    "ISSUE TITLE",
+    "RATING",
+    "EDITORIAL SOURCE(S)",
+    "GS MAPPING",
+    "TODAY'S QUESTION",
+    "RECALL ANCHORS",
+    "KNOWLEDGE POINT 1",
+    "KNOWLEDGE POINT 2",
+    "KNOWLEDGE POINT 3",
+    "KNOWLEDGE POINT 4",
+    "KNOWLEDGE POINT 5",
+    "CONCEPT UNFOLD",
+    "KEY TAKEAWAY",
+    "MAINS QUESTION",
+    "MAINS ANSWER",
+    "DAILY MCQ 1",
+    "DAILY MCQ 2",
+    "DAILY MCQ 3",
+]
 
 # ============================================================
 # SECTION EXTRACTION
@@ -273,60 +306,63 @@ def _split_editorials(
 
 def _extract_sections(
     block: str,
-    editorial_number: int,
 ) -> dict[str, str]:
 
-    headings_pattern = "|".join(
-        re.escape(heading)
-        for heading in EDITORIAL_SECTION_HEADINGS
+    headings = "|".join(
+        re.escape(item)
+        for item in SECTION_HEADINGS
     )
 
     pattern = re.compile(
-        rf"(?mi)^\s*({headings_pattern})\s*$"
+        rf"(?m)^\s*({headings})\s*$"
     )
 
     matches = list(
-        pattern.finditer(block)
+        pattern.finditer(
+            block
+        )
     )
 
-    found_headings = [
-        match.group(1).upper()
+    found = [
+        match.group(1)
         for match in matches
     ]
 
     missing = [
         heading
-        for heading in EDITORIAL_SECTION_HEADINGS
-        if heading not in found_headings
+        for heading in SECTION_HEADINGS
+        if heading not in found
     ]
 
     duplicates = sorted(
         {
             heading
-            for heading in found_headings
-            if found_headings.count(heading) > 1
+            for heading in found
+            if found.count(heading) > 1
         }
     )
 
     if missing:
         raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "missing section(s): "
+            "Missing section(s): "
             + ", ".join(missing)
         )
 
     if duplicates:
         raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "duplicate section(s): "
+            "Duplicate section(s): "
             + ", ".join(duplicates)
         )
 
-    sections: dict[str, str] = {}
+    sections: dict[
+        str,
+        str,
+    ] = {}
 
-    for index, match in enumerate(matches):
-
-        heading = match.group(1).upper()
+    for index, match in enumerate(
+        matches
+    ):
+        heading = match.group(1)
 
         start = match.end()
 
@@ -336,7 +372,9 @@ def _extract_sections(
             else len(block)
         )
 
-        sections[heading] = _clean(
+        sections[
+            heading
+        ] = _clean(
             block[start:end]
         )
 
@@ -344,255 +382,658 @@ def _extract_sections(
 
 
 # ============================================================
-# GS PAPER
+# GS MAPPING
 # ============================================================
 
-def _normalize_gs_paper(
+def _parse_gs_mapping(
     value: str,
-    editorial_number: int,
-) -> str:
+) -> dict[str, str]:
 
-    value = _clean(value).upper()
+    value = _clean(value)
 
-    value = re.sub(
-        r"\s+",
-        " ",
-        value,
-    )
+    paper = ""
+    subject = ""
+    syllabus = ""
 
-    # Allow:
-    # GS I
-    # GS II
-    # GS III
-    # GS IV
+    # Format:
+    # GS Paper II | Social Justice | Health and Education
     #
-    # Also tolerate:
-    # GS 1
-    # GS 2
-    # GS 3
-    # GS 4
+    # or:
+    # GS Paper II • Social Justice • Health and Education
+    if "|" in value or "•" in value:
+        parts = [
+            part.strip()
+            for part in re.split(
+                r"\s*[•|]\s*",
+                value,
+            )
+            if part.strip()
+        ]
 
-    numeric_map = {
-        "GS 1": "GS I",
-        "GS 2": "GS II",
-        "GS 3": "GS III",
-        "GS 4": "GS IV",
-    }
-
-    value = numeric_map.get(
-        value,
-        value,
-    )
-
-    if value not in VALID_GS_PAPERS:
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "GS PAPER must be one of: "
-            "GS I, GS II, GS III, GS IV."
+        paper = (
+            parts[0]
+            if len(parts) > 0
+            else ""
         )
 
-    return value
+        subject = (
+            parts[1]
+            if len(parts) > 1
+            else ""
+        )
+
+        syllabus = (
+            " • ".join(parts[2:])
+            if len(parts) > 2
+            else ""
+        )
+
+    # Format:
+    # GS Paper II — Health, Education, Government Policies
+    elif re.search(
+        r"\s+[—–-]\s+",
+        value,
+    ):
+        split_parts = re.split(
+            r"\s+[—–-]\s+",
+            value,
+            maxsplit=1,
+        )
+
+        paper = split_parts[0].strip()
+
+        remainder = (
+            split_parts[1].strip()
+            if len(split_parts) > 1
+            else ""
+        )
+
+        remainder_parts = [
+            part.strip()
+            for part in remainder.split(",")
+            if part.strip()
+        ]
+
+        subject = (
+            remainder_parts[0]
+            if remainder_parts
+            else ""
+        )
+
+        syllabus = (
+            ", ".join(
+                remainder_parts[1:]
+            )
+            if len(remainder_parts) > 1
+            else subject
+        )
+
+    # Labelled format:
+    #
+    # Paper: GS Paper II
+    # Subject: Social Justice
+    # Syllabus: Health and Education
+    else:
+        labelled: dict[str, str] = {}
+
+        for line in _nonempty_lines(value):
+            match = re.match(
+                r"(?i)^\s*"
+                r"(paper|subject|syllabus)"
+                r"\s*:\s*(.+?)\s*$",
+                line,
+            )
+
+            if match:
+                labelled[
+                    match.group(1).casefold()
+                ] = match.group(2).strip()
+
+        if labelled:
+            paper = labelled.get(
+                "paper",
+                "",
+            )
+
+            subject = labelled.get(
+                "subject",
+                "",
+            )
+
+            syllabus = labelled.get(
+                "syllabus",
+                "",
+            )
+
+        else:
+            parts = _nonempty_lines(
+                value
+            )
+
+            paper = (
+                parts[0]
+                if len(parts) > 0
+                else ""
+            )
+
+            subject = (
+                parts[1]
+                if len(parts) > 1
+                else ""
+            )
+
+            syllabus = (
+                " • ".join(parts[2:])
+                if len(parts) > 2
+                else ""
+            )
+
+    return {
+        "display": " | ".join(
+            item
+            for item in (
+                paper,
+                subject,
+                syllabus,
+            )
+            if item
+        ),
+        "paper": paper,
+        "subject": subject,
+        "syllabus": syllabus,
+    }
 
 
 # ============================================================
-# ANCHORS
+# KNOWLEDGE POINT
 # ============================================================
 
-def _parse_anchors(
+def _parse_knowledge_point(
     value: str,
-    editorial_number: int,
-) -> list[str]:
+    number: int,
+) -> dict[str, Any]:
 
-    anchors = _nonempty_lines(value)
+    lines = _nonempty_lines(
+        value
+    )
 
-    # Also tolerate:
-    # 1. anchor
-    # 2. anchor
-    # etc.
+    if len(lines) < 2:
+        raise ConversionError(
+            f"Knowledge Point {number} "
+            "must contain a heading "
+            "and explanation."
+        )
+
+    return {
+        "number": number,
+        "heading": lines[0],
+        "explanation": " ".join(
+            lines[1:]
+        ),
+    }
+
+
+# ============================================================
+# CONCEPT UNFOLD
+# ============================================================
+
+def _parse_concept_unfold(
+    value: str,
+) -> dict[str, Any]:
+    """
+    Parse the selected Concept Unfold for one editorial.
+
+    Expected input format:
+
+        [Basic UPSC concept / condition] →
+
+        [Consequence 1 heading]
+        [Consequence 1 explanation]
+
+        [Consequence 2 heading]
+        [Consequence 2 explanation]
+
+        [Consequence 3 heading]
+        [Consequence 3 explanation]
+
+    Example:
+
+        Heavy dependence on a maritime chokepoint increases vulnerability →
+
+        A local disruption can affect many countries
+        When large amounts of oil and gas pass through one narrow route,
+        war or blockage there can interrupt energy supplies far beyond
+        the conflict area.
+
+        Energy costs can rise across the economy
+        Reduced supply can make oil and gas more expensive. Higher fuel
+        costs then increase transport and production expenses, making
+        many everyday goods costlier.
+
+        Countries may seek alternative supply routes
+        Repeated disruption risks can encourage governments and companies
+        to diversify energy suppliers, transport routes and strategic
+        reserves to reduce dependence on a single chokepoint.
+
+    Stored JSON structure:
+
+        {
+            "concept": "...",
+            "consequences": [
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                },
+                {
+                    "title": "...",
+                    "explanation": "..."
+                }
+            ]
+        }
+
+    Important:
+    - Only ONE selected concept is stored.
+    - Exactly THREE consequences are required.
+    - The three candidate options used during content generation
+      are not part of the production input format.
+    """
+
+    lines = _nonempty_lines(value)
+
+    # --------------------------------------------------------
+    # STRUCTURE VALIDATION
+    # --------------------------------------------------------
+
+    # 1 concept
+    # + 3 consequence headings
+    # + 3 consequence explanations
+    # = 7 non-empty lines
+    expected_lines = 7
+
+    if len(lines) != expected_lines:
+        raise ConversionError(
+            "CONCEPT UNFOLD must contain exactly "
+            "7 non-empty lines:\n"
+            "1. Basic concept / condition\n"
+            "2. Consequence 1 heading\n"
+            "3. Consequence 1 explanation\n"
+            "4. Consequence 2 heading\n"
+            "5. Consequence 2 explanation\n"
+            "6. Consequence 3 heading\n"
+            "7. Consequence 3 explanation\n\n"
+            f"Found {len(lines)} non-empty line(s)."
+        )
+
+    # --------------------------------------------------------
+    # CONCEPT
+    # --------------------------------------------------------
+
+    concept = lines[0].strip()
+
+    if not concept:
+        raise ConversionError(
+            "CONCEPT UNFOLD concept cannot be empty."
+        )
+
+    # The arrow belongs to presentation.
+    # Accept common arrow styles in INPUT_DATA.txt,
+    # but remove them before storing the concept.
+
+    concept = re.sub(
+        r"\s*(?:→|->|=>)\s*$",
+        "",
+        concept,
+    ).strip()
+
+    if not concept:
+        raise ConversionError(
+            "CONCEPT UNFOLD concept cannot contain only an arrow."
+        )
+
+    # --------------------------------------------------------
+    # CONSEQUENCES
+    # --------------------------------------------------------
+
+    consequences: list[dict[str, str]] = []
+
+    line_index = 1
+
+    for consequence_number in range(1, 4):
+
+        title = lines[line_index].strip()
+        explanation = lines[line_index + 1].strip()
+
+        line_index += 2
+
+        if not title:
+            raise ConversionError(
+                "CONCEPT UNFOLD "
+                f"Consequence {consequence_number} "
+                "heading cannot be empty."
+            )
+
+        if not explanation:
+            raise ConversionError(
+                "CONCEPT UNFOLD "
+                f"Consequence {consequence_number} "
+                "explanation cannot be empty."
+            )
+
+        consequences.append(
+            {
+                "title": title,
+                "explanation": explanation,
+            }
+        )
+
+    # --------------------------------------------------------
+    # DUPLICATE CHECK
+    # --------------------------------------------------------
+
+    consequence_titles = [
+        consequence["title"].casefold()
+        for consequence in consequences
+    ]
+
+    if len(set(consequence_titles)) != len(consequence_titles):
+        raise ConversionError(
+            "CONCEPT UNFOLD consequence headings "
+            "must all be different."
+        )
+
+    # --------------------------------------------------------
+    # FINAL STRUCTURE
+    # --------------------------------------------------------
+
+    return {
+        "concept": concept,
+        "consequences": consequences,
+    }
+
+# ============================================================
+# DAILY MCQ
+# ============================================================
+
+def _parse_mcq(
+    value: str,
+    number: int,
+) -> dict[str, Any]:
+    """Parse one DAILY MCQ section."""
+
+    lines = _nonempty_lines(value)
+
+    if not lines:
+        raise ConversionError(
+            f"DAILY MCQ {number} cannot be empty."
+        )
+
+    option_pattern = re.compile(
+        r"^([A-D])\.\s*(.+)$",
+        re.IGNORECASE,
+    )
+    correct_pattern = re.compile(
+        r"^Correct\s+Answer\s*:\s*([A-D])\s*$",
+        re.IGNORECASE,
+    )
+    explanation_pattern = re.compile(
+        r"^Explanation\s*:\s*(.*)$",
+        re.IGNORECASE,
+    )
+
+    question_lines: list[str] = []
+    options: dict[str, str] = {}
+    correct_answer = ""
+    explanation_lines: list[str] = []
+    reading_explanation = False
+
+    for line in lines:
+        if reading_explanation:
+            explanation_lines.append(line)
+            continue
+
+        option_match = option_pattern.match(line)
+        if option_match:
+            letter = option_match.group(1).upper()
+            option_text = option_match.group(2).strip()
+            if letter in options:
+                raise ConversionError(
+                    f"DAILY MCQ {number}: duplicate option {letter}."
+                )
+            options[letter] = option_text
+            continue
+
+        correct_match = correct_pattern.match(line)
+        if correct_match:
+            correct_answer = correct_match.group(1).upper()
+            continue
+
+        explanation_match = explanation_pattern.match(line)
+        if explanation_match:
+            first_part = explanation_match.group(1).strip()
+            if first_part:
+                explanation_lines.append(first_part)
+            reading_explanation = True
+            continue
+
+        question_lines.append(line)
+
+    question = "\n".join(question_lines).strip()
+    if not question:
+        raise ConversionError(
+            f"DAILY MCQ {number}: question cannot be empty."
+        )
+
+    expected_options = {"A", "B", "C", "D"}
+    if set(options) != expected_options:
+        missing_options = sorted(expected_options - set(options))
+        raise ConversionError(
+            f"DAILY MCQ {number}: must contain options A, B, C and D. "
+            f"Missing: {', '.join(missing_options)}"
+        )
+
+    if not correct_answer:
+        raise ConversionError(
+            f"DAILY MCQ {number}: missing 'Correct Answer: X'."
+        )
+
+    if correct_answer not in options:
+        raise ConversionError(
+            f"DAILY MCQ {number}: correct answer {correct_answer} "
+            "does not match an option."
+        )
+
+    explanation = " ".join(explanation_lines).strip()
+    if not explanation:
+        raise ConversionError(
+            f"DAILY MCQ {number}: explanation cannot be empty."
+        )
+
+    return {
+        "number": number,
+        "question": question,
+        "options": {
+            "A": options["A"],
+            "B": options["B"],
+            "C": options["C"],
+            "D": options["D"],
+        },
+        "correct_answer": correct_answer,
+        "explanation": explanation,
+    }
+
+
+# ============================================================
+# TOPIC PARSER
+# ============================================================
+
+def _parse_topic(
+    topic_number: int,
+    block: str,
+) -> dict[str, Any]:
+
+    sections = _extract_sections(
+        block
+    )
+
+    rating_raw = sections[
+        "RATING"
+    ].strip()
+
+    rating_map = {
+        "low": 2.0,
+        "medium": 3.0,
+        "moderate": 3.0,
+        "high": 4.5,
+        "very high": 5.0,
+    }
+
+    try:
+        rating = float(
+            rating_raw
+        )
+
+    except ValueError as exc:
+        rating_key = rating_raw.casefold()
+
+        if rating_key not in rating_map:
+            raise ConversionError(
+                f"Topic {topic_number}: "
+                "RATING must be numeric or one of: "
+                "Low, Medium, Moderate, High, Very High."
+            ) from exc
+
+        rating = rating_map[
+            rating_key
+        ]
+
+    anchors = _nonempty_lines(
+        sections[
+            "RECALL ANCHORS"
+        ]
+    )
 
     anchors = [
         re.sub(
             r"^\d+\.\s*",
             "",
             anchor,
-        ).strip()
+        )
         for anchor in anchors
     ]
 
-    if len(anchors) != 4:
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "ANCHORS must contain exactly 4 "
-            "non-empty lines — one anchor for "
-            "each of Points 1–4."
+    source_text = sections[
+        "EDITORIAL SOURCE(S)"
+    ]
+
+    sources = [
+        source.strip()
+        for source in re.split(
+            r"\s*[,;]\s*",
+            source_text,
         )
+        if source.strip()
+    ]
 
-    if any(
-        not anchor
-        for anchor in anchors
-    ):
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "anchors cannot be empty."
-        )
-
-    return anchors
-
-
-def _anchor_exists_in_point(
-    anchor: str,
-    point: str,
-) -> bool:
-    """
-    Check whether the manually selected anchor exists
-    inside its corresponding point.
-
-    Matching is case-insensitive so:
-        Sanctions
-    can match:
-        sanctions
-    """
-
-    return (
-        anchor.casefold()
-        in point.casefold()
-    )
-
-
-# ============================================================
-# EDITORIAL PARSER
-# ============================================================
-
-def _parse_editorial(
-    editorial_number: int,
-    block: str,
-) -> dict[str, Any]:
-
-    sections = _extract_sections(
-        block,
-        editorial_number,
-    )
-
-    heading = _clean(
-        sections["HEADING"]
-    )
-
-    gs_paper = _normalize_gs_paper(
-        sections["GS PAPER"],
-        editorial_number,
-    )
-
-    question = _clean(
-        sections["QUESTION"]
-    )
-
-    takeaway = _clean(
-        sections["TAKEAWAY"]
-    )
-
-    points = [
+    paragraphs = [
         _clean(
-            sections[f"POINT {number}"]
+            paragraph
         )
-        for number in range(1, 5)
+        for paragraph in re.split(
+            r"\n\s*\n",
+            sections[
+                "MAINS ANSWER"
+            ],
+        )
+        if paragraph.strip()
     ]
 
-    anchors = _parse_anchors(
-        sections["ANCHORS"],
-        editorial_number,
+    knowledge_points = [
+        _parse_knowledge_point(
+            sections[
+                f"KNOWLEDGE POINT {index}"
+            ],
+            index,
+        )
+        for index in range(
+            1,
+            6,
+        )
+    ]
+
+    concept_unfold = (
+        _parse_concept_unfold(
+            sections[
+                "CONCEPT UNFOLD"
+            ]
+        )
     )
 
-    # --------------------------------------------------------
-    # REQUIRED CONTENT
-    # --------------------------------------------------------
-
-    if not heading:
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "HEADING cannot be empty."
+    daily_mcqs = [
+        _parse_mcq(
+            sections[
+                f"DAILY MCQ {index}"
+            ],
+            index,
         )
-
-    if not question:
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "QUESTION cannot be empty."
-        )
-
-    for number, point in enumerate(
-        points,
-        start=1,
-    ):
-        if not point:
-            raise ConversionError(
-                f"EDITORIAL {editorial_number}: "
-                f"POINT {number} cannot be empty."
-            )
-
-    if not takeaway:
-        raise ConversionError(
-            f"EDITORIAL {editorial_number}: "
-            "TAKEAWAY cannot be empty."
-        )
-
-    # --------------------------------------------------------
-    # ANCHOR ↔ POINT VALIDATION
-    # --------------------------------------------------------
-
-    for number, (
-        point,
-        anchor,
-    ) in enumerate(
-        zip(points, anchors),
-        start=1,
-    ):
-
-        if not _anchor_exists_in_point(
-            anchor,
-            point,
-        ):
-            raise ConversionError(
-                f"EDITORIAL {editorial_number}: "
-                f"ANCHOR {number} ('{anchor}') "
-                f"was not found inside POINT {number}.\n"
-                "Each anchor must be copied directly "
-                "from its corresponding point."
-            )
-
-    # --------------------------------------------------------
-    # FINAL POINT STRUCTURE
-    # --------------------------------------------------------
-
-    point_data = [
-        {
-            "number": number,
-            "text": point,
-            "anchor": anchor,
-        }
-        for number, (
-            point,
-            anchor,
-        ) in enumerate(
-            zip(points, anchors),
-            start=1,
+        for index in range(
+            1,
+            4,
         )
     ]
 
     return {
-        "editorial_number": editorial_number,
-        "heading": heading,
-        "gs_paper": gs_paper,
-
-        # Stored for revision / future social use.
-        # Not intended for the main PDF.
-        "question": question,
-
-        # Main PDF content.
-        "points": point_data,
-        "takeaway": takeaway,
-
-        # Also stored separately for convenient
-        # revision-data access.
-        "anchors": anchors,
+        "topic_number": topic_number,
+        "issue_title": (
+            sections[
+                "ISSUE TITLE"
+            ]
+        ),
+        "rating": rating,
+        "editorial_sources": sources,
+        "gs_mapping": (
+            _parse_gs_mapping(
+                sections[
+                    "GS MAPPING"
+                ]
+            )
+        ),
+        "todays_question": (
+            sections[
+                "TODAY'S QUESTION"
+            ]
+        ),
+        "recall_anchors": anchors,
+        "knowledge_points": (
+            knowledge_points
+        ),
+        "concept_unfold": (
+            concept_unfold
+        ),
+        "key_takeaway": (
+            sections[
+                "KEY TAKEAWAY"
+            ]
+        ),
+        "mains_question": (
+            sections[
+                "MAINS QUESTION"
+            ]
+            .rstrip()
+            .rstrip(".")
+            .rstrip("?")
+            + "?"
+        ),
+        "mains_answer": {
+            "paragraphs": paragraphs,
+            "full_text": "\n\n".join(
+                paragraphs
+            ),
+        },
+        "daily_mcqs": daily_mcqs,
     }
 
 
@@ -607,62 +1048,31 @@ def convert_text(
     (
         publication_date,
         publication_date_iso,
-    ) = _extract_publication_date(text)
-
-    editorial_blocks = _split_editorials(
+    ) = _extract_publication_date(
         text
     )
 
-    # Editorial numbering must be sequential.
-    numbers = [
-        number
-        for number, _ in editorial_blocks
-    ]
-
-    expected_numbers = list(
-        range(
-            1,
-            len(numbers) + 1,
-        )
-    )
-
-    if numbers != expected_numbers:
-        raise ConversionError(
-            "EDITORIAL numbering must start at 1 "
-            "and continue sequentially.\n"
-            f"Found: {numbers}\n"
-            f"Expected: {expected_numbers}"
-        )
-
-    editorials = [
-        _parse_editorial(
-            editorial_number,
+    topics = [
+        _parse_topic(
+            topic_number,
             block,
         )
-        for editorial_number, block
-        in editorial_blocks
+        for topic_number, block
+        in _split_topics(text)
     ]
 
-    if not editorials:
-         raise ConversionError(
-        "INPUT_DATA.txt must contain at least "
-        "one completed editorial."
-    )
-
     return {
-        "schema_version": "1.0",
-        "publication_date": publication_date,
+        "schema_version": "2.0",
+        "publication_date": (
+            publication_date
+        ),
         "publication_date_iso": (
             publication_date_iso
         ),
-        "editorial_count": len(editorials),
-        "editorials": editorials,
+        "topic_count": len(topics),
+        "topics": topics,
     }
 
-
-# ============================================================
-# FILE CONVERSION
-# ============================================================
 
 def convert_file(
     input_path: Path,
@@ -673,17 +1083,17 @@ def convert_file(
         encoding="utf-8-sig"
     )
 
-    data = convert_text(text)
+    data = convert_text(
+        text
+    )
 
     output_path.parent.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    temporary_path = (
-        output_path.with_suffix(
-            ".json.tmp"
-        )
+    temporary_path = output_path.with_suffix(
+        ".json.tmp"
     )
 
     temporary_path.write_text(
@@ -707,7 +1117,6 @@ def convert_file(
 # ============================================================
 
 def main() -> int:
-
     try:
         input_path = _find_input_file()
 
@@ -721,33 +1130,23 @@ def main() -> int:
             )
         )
 
-        print()
-        print("CONVERSION SUCCESSFUL")
-        print("---------------------")
         print(
-            f"Input:      {input_path}"
+            f"Converted: {input_path}"
         )
+
         print(
-            f"Created:    {output_path}"
+            f"Created:   {output_path}"
         )
+
         print(
-            "Date:       "
+            "Date:      "
             f"{data['publication_date']}"
         )
+
         print(
-            "Editorials: "
-            f"{data['editorial_count']}"
+            "ISO Date:  "
+            f"{data['publication_date_iso']}"
         )
-        print()
-
-        for editorial in data["editorials"]:
-            print(
-                f"{editorial['editorial_number']}. "
-                f"{editorial['heading']} "
-                f"({editorial['gs_paper']})"
-            )
-
-        print()
 
         return 0
 
@@ -755,19 +1154,10 @@ def main() -> int:
         OSError,
         ConversionError,
     ) as exc:
-
-        print()
         print(
-            "CONVERSION FAILED"
-        )
-        print(
-            "-----------------"
-        )
-        print(
-            str(exc),
+            f"CONVERSION FAILED: {exc}",
             file=sys.stderr,
         )
-        print()
 
         return 1
 

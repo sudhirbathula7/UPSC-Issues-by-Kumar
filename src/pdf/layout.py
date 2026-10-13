@@ -5,103 +5,123 @@ from dataclasses import dataclass
 from reportlab.lib.units import mm
 from reportlab.pdfgen.canvas import Canvas
 
-from src.pdf.page_setup import (
-    Rect,
-    get_content_rect,
+from src.config import (
+    CONTENT_HEIGHT,
+    CONTENT_WIDTH,
+    PAGE_MARGIN_BOTTOM,
+    PAGE_MARGIN_LEFT,
 )
+from src.pdf.page_setup import Rect
 from src.pdf.theme import (
+    BORDER_GREY,
     BOX_BORDER_WIDTH,
     BOX_RADIUS,
-    EDITORIAL_COLUMN_GAP,
-    EDITORIAL_ROW_GAP,
-    LIGHT_GREY,
-    PAGE_SECTION_GAP,
+    DIVIDER_WIDTH,
     WHITE,
 )
 
 
 # ============================================================
-# ONEPAGE STUDY — EDITORIALS DAILY
-# PAGE LAYOUT
+# DISPLAY SWITCHES
 # ============================================================
 
-
-# ============================================================
-# DISPLAY SETTINGS
-# ============================================================
-
-SHOW_EDITORIAL_BOXES = True
+SHOW_BOXES = True
+SHOW_DIVIDERS = True
+SHOW_ICONS = True
 SHOW_HEADER = True
 SHOW_FOOTER = True
+SHOW_OUTER_FRAME = False
 
 
 # ============================================================
-# MAJOR PAGE DIMENSIONS
+# PAGE AREA
 # ============================================================
 
-# Preserve the compact header/footer proportions used by the
-# existing project.
+PAGE_X = PAGE_MARGIN_LEFT
+PAGE_Y = PAGE_MARGIN_BOTTOM
+PAGE_WIDTH = CONTENT_WIDTH
+PAGE_HEIGHT = CONTENT_HEIGHT
+
+
+# ============================================================
+# MASTER FULL-PAGE DIMENSIONS
+# ============================================================
 
 HEADER_HEIGHT = 12 * mm
 FOOTER_HEIGHT = 6 * mm
 
+SECTION_GAP = 1.2 * mm
+COLUMN_GAP = 1.2* mm
+
+QUESTION_PANEL_HEIGHT = 18 * mm
+
+# Top question-panel split:
+# 83% Curiosity Question
+# 17% GS Mapping
+GS_MAPPING_RATIO = 0.17
+
+TOP_CONTENT_LEFT_RATIO = 0.50
+BOTTOM_CONTENT_LEFT_RATIO = 0.50
+
+CONCEPT_UNFOLD_RATIO = 0.73
+
 
 # ============================================================
-# PAGE LAYOUT MODEL
+# BOX APPEARANCE
+# ============================================================
+
+SECTION_BOX_RADIUS = BOX_RADIUS
+SECTION_BOX_BORDER_WIDTH = BOX_BORDER_WIDTH
+SECTION_BOX_BORDER_COLOR = BORDER_GREY
+SECTION_BOX_FILL_COLOR = WHITE
+
+INTERNAL_DIVIDER_WIDTH = DIVIDER_WIDTH
+INTERNAL_DIVIDER_COLOR = BORDER_GREY
+
+BOX_EDGE_INSET = 0 * mm
+
+
+# ============================================================
+# FULL-PAGE LAYOUT DATA
 # ============================================================
 
 @dataclass(frozen=True, slots=True)
-class EditorialPageLayout:
+class FullPageLayout:
     page: Rect
 
     header: Rect
-    body: Rect
     footer: Rect
 
-    editorial_1: Rect
-    editorial_2: Rect
-    editorial_3: Rect
-    editorial_4: Rect
+    body: Rect
+    top_half: Rect
+    bottom_half: Rect
 
-    @property
-    def editorial_rects(
-        self,
-    ) -> tuple[Rect, Rect, Rect, Rect]:
-        return (
-            self.editorial_1,
-            self.editorial_2,
-            self.editorial_3,
-            self.editorial_4,
-        )
+    question_panel: Rect
+    curiosity_box: Rect
+    gs_mapping: Rect
+
+    top_content: Rect
+    knowledge_points: Rect
+    right_top_column: Rect
+    concept_unfold: Rect
+    takeaway: Rect
+
+    bottom_content: Rect
+    mains_answer: Rect
+    mcqs: Rect
 
 
 # ============================================================
-# BUILD PAGE LAYOUT
+# FULL-PAGE GEOMETRY
 # ============================================================
 
-def build_page_layout() -> EditorialPageLayout:
-    """
-    Build the fixed A4 geometry for OnePage Study.
-
-    Structure:
-
-        Header
-
-        Editorial 01 | Editorial 02
-        -------------+-------------
-        Editorial 03 | Editorial 04
-
-        Footer
-
-    The existing project content margins are preserved through
-    get_content_rect().
-    """
-
-    page = get_content_rect()
-
-    # --------------------------------------------------------
-    # HEADER
-    # --------------------------------------------------------
+def build_full_page_layout() -> FullPageLayout:
+    page = Rect(
+        x=PAGE_X,
+        y=PAGE_Y,
+        width=PAGE_WIDTH,
+        height=PAGE_HEIGHT,
+    )
 
     header = Rect(
         x=page.x,
@@ -110,10 +130,6 @@ def build_page_layout() -> EditorialPageLayout:
         height=HEADER_HEIGHT,
     )
 
-    # --------------------------------------------------------
-    # FOOTER
-    # --------------------------------------------------------
-
     footer = Rect(
         x=page.x,
         y=page.y,
@@ -121,19 +137,8 @@ def build_page_layout() -> EditorialPageLayout:
         height=FOOTER_HEIGHT,
     )
 
-    # --------------------------------------------------------
-    # BODY
-    # --------------------------------------------------------
-
-    body_top = (
-        header.y
-        - PAGE_SECTION_GAP
-    )
-
-    body_bottom = (
-        footer.top
-        + PAGE_SECTION_GAP
-    )
+    body_top = header.y - SECTION_GAP
+    body_bottom = footer.top + SECTION_GAP
 
     body = Rect(
         x=page.x,
@@ -145,69 +150,172 @@ def build_page_layout() -> EditorialPageLayout:
         ),
     )
 
-    # --------------------------------------------------------
-    # TWO ROWS
-    # --------------------------------------------------------
+    half_height = (
+        body.height - SECTION_GAP
+    ) / 2
 
-    top_row, bottom_row = (
-        body.split_horizontal(
-            top_ratio=0.5,
-            gap=EDITORIAL_ROW_GAP,
+    bottom_half = Rect(
+        x=body.x,
+        y=body.y,
+        width=body.width,
+        height=half_height,
+    )
+
+    top_half = Rect(
+        x=body.x,
+        y=bottom_half.top + SECTION_GAP,
+        width=body.width,
+        height=half_height,
+    )
+
+    # ========================================================
+    # QUESTION PANEL
+    # ========================================================
+
+    question_panel = Rect(
+        x=top_half.x,
+        y=top_half.top - QUESTION_PANEL_HEIGHT,
+        width=top_half.width,
+        height=QUESTION_PANEL_HEIGHT,
+    )
+
+    gs_mapping_width = (
+        question_panel.width
+        * GS_MAPPING_RATIO
+    )
+
+    curiosity_width = max(
+        0,
+        question_panel.width
+        - gs_mapping_width,
+    )
+
+    curiosity_box = Rect(
+        x=question_panel.x,
+        y=question_panel.y,
+        width=curiosity_width,
+        height=question_panel.height,
+    )
+
+    gs_mapping = Rect(
+        x=curiosity_box.right,
+        y=question_panel.y,
+        width=gs_mapping_width,
+        height=question_panel.height,
+    )
+
+    # ========================================================
+    # TOP CONTENT
+    # ========================================================
+
+    top_content = Rect(
+        x=top_half.x,
+        y=top_half.y,
+        width=top_half.width,
+        height=max(
+            0,
+            question_panel.y
+            - SECTION_GAP
+            - top_half.y,
+        ),
+    )
+
+    knowledge_points, right_top_column = (
+        top_content.split_vertical(
+            left_ratio=TOP_CONTENT_LEFT_RATIO,
+            gap=COLUMN_GAP,
         )
     )
 
-    # --------------------------------------------------------
-    # TOP ROW
-    # --------------------------------------------------------
+    # ========================================================
+    # CONCEPT UNFOLD / KEY TAKEAWAY
+    # ========================================================
 
-    editorial_1, editorial_2 = (
-        top_row.split_vertical(
-            left_ratio=0.5,
-            gap=EDITORIAL_COLUMN_GAP,
+    available_right_height = (
+        right_top_column.height
+        - SECTION_GAP
+    )
+
+    concept_unfold_height = (
+        available_right_height
+        * CONCEPT_UNFOLD_RATIO
+    )
+
+    takeaway_height = (
+        available_right_height
+        - concept_unfold_height
+    )
+
+    concept_unfold = Rect(
+        x=right_top_column.x,
+        y=right_top_column.top
+        - concept_unfold_height,
+        width=right_top_column.width,
+        height=concept_unfold_height,
+    )
+
+    takeaway = Rect(
+        x=right_top_column.x,
+        y=right_top_column.y,
+        width=right_top_column.width,
+        height=takeaway_height,
+    )
+
+    # ========================================================
+    # BOTTOM CONTENT
+    # ========================================================
+
+    bottom_content = Rect(
+        x=bottom_half.x,
+        y=bottom_half.y,
+        width=bottom_half.width,
+        height=bottom_half.height,
+    )
+
+    mains_answer, mcqs = (
+        bottom_content.split_vertical(
+            left_ratio=BOTTOM_CONTENT_LEFT_RATIO,
+            gap=COLUMN_GAP,
         )
     )
 
-    # --------------------------------------------------------
-    # BOTTOM ROW
-    # --------------------------------------------------------
-
-    editorial_3, editorial_4 = (
-        bottom_row.split_vertical(
-            left_ratio=0.5,
-            gap=EDITORIAL_COLUMN_GAP,
-        )
-    )
-
-    return EditorialPageLayout(
+    return FullPageLayout(
         page=page,
         header=header,
-        body=body,
         footer=footer,
-        editorial_1=editorial_1,
-        editorial_2=editorial_2,
-        editorial_3=editorial_3,
-        editorial_4=editorial_4,
+        body=body,
+        top_half=top_half,
+        bottom_half=bottom_half,
+        question_panel=question_panel,
+        curiosity_box=curiosity_box,
+        gs_mapping=gs_mapping,
+        top_content=top_content,
+        knowledge_points=knowledge_points,
+        right_top_column=right_top_column,
+        concept_unfold=concept_unfold,
+        takeaway=takeaway,
+        bottom_content=bottom_content,
+        mains_answer=mains_answer,
+        mcqs=mcqs,
     )
 
 
 # ============================================================
-# EDITORIAL BOX
+# CENTRAL BOX DRAWING
 # ============================================================
 
-def draw_editorial_box(
+def draw_layout_box(
     canvas: Canvas,
     rect: Rect,
     *,
     enabled: bool | None = None,
+    radius: float = SECTION_BOX_RADIUS,
+    border_width: float = SECTION_BOX_BORDER_WIDTH,
+    stroke_color=SECTION_BOX_BORDER_COLOR,
+    fill_color=SECTION_BOX_FILL_COLOR,
 ) -> None:
-    """
-    Draw the rounded outer border for one editorial.
-
-    Content rendering is intentionally kept out of this file.
-    """
-
     should_draw = (
-        SHOW_EDITORIAL_BOXES
+        SHOW_BOXES
         if enabled is None
         else enabled
     )
@@ -217,24 +325,16 @@ def draw_editorial_box(
 
     canvas.saveState()
 
-    canvas.setStrokeColor(
-        LIGHT_GREY
-    )
-
-    canvas.setFillColor(
-        WHITE
-    )
-
-    canvas.setLineWidth(
-        BOX_BORDER_WIDTH
-    )
+    canvas.setStrokeColor(stroke_color)
+    canvas.setFillColor(fill_color)
+    canvas.setLineWidth(border_width)
 
     canvas.roundRect(
-        rect.x,
-        rect.y,
-        rect.width,
-        rect.height,
-        BOX_RADIUS,
+        rect.x + BOX_EDGE_INSET,
+        rect.y + BOX_EDGE_INSET,
+        rect.width - 2 * BOX_EDGE_INSET,
+        rect.height - 2 * BOX_EDGE_INSET,
+        radius,
         stroke=1,
         fill=1,
     )
@@ -242,16 +342,74 @@ def draw_editorial_box(
     canvas.restoreState()
 
 
+def draw_horizontal_divider(
+    canvas: Canvas,
+    *,
+    x_left: float,
+    x_right: float,
+    y: float,
+) -> None:
+    if not SHOW_DIVIDERS:
+        return
+
+    canvas.saveState()
+
+    canvas.setStrokeColor(
+        INTERNAL_DIVIDER_COLOR
+    )
+    canvas.setLineWidth(
+        INTERNAL_DIVIDER_WIDTH
+    )
+
+    canvas.line(
+        x_left,
+        y,
+        x_right,
+        y,
+    )
+
+    canvas.restoreState()
+
+
+def draw_vertical_divider(
+    canvas: Canvas,
+    *,
+    x: float,
+    y_bottom: float,
+    y_top: float,
+) -> None:
+    if not SHOW_DIVIDERS:
+        return
+
+    canvas.saveState()
+
+    canvas.setStrokeColor(
+        INTERNAL_DIVIDER_COLOR
+    )
+    canvas.setLineWidth(
+        INTERNAL_DIVIDER_WIDTH
+    )
+
+    canvas.line(
+        x,
+        y_bottom,
+        x,
+        y_top,
+    )
+
+    canvas.restoreState()
+
+
 # ============================================================
-# LAYOUT ACCESSOR
+# ACCESSOR
 # ============================================================
 
-_PAGE_LAYOUT = build_page_layout()
+_FULL_PAGE_LAYOUT = build_full_page_layout()
 
 
-def get_page_layout() -> EditorialPageLayout:
-    """
-    Return the fixed page geometry.
-    """
+def get_full_page_layout() -> FullPageLayout:
+    return _FULL_PAGE_LAYOUT
 
-    return _PAGE_LAYOUT
+
+def get_layout() -> FullPageLayout:
+    return _FULL_PAGE_LAYOUT
